@@ -23,30 +23,33 @@
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
     <link rel="stylesheet" href="style.css">
-    <script src="startup.js"></script>
     <script src="script.js" type="module"></script>
+
+    <script src="startup.js"></script>
+
+
   </head>
-  <body>
-      <h1 id="home" onclick="goToIndex()">Brimstone Ranked Mini</h1>
-      <div class="tab">
-          <button class="tablinks" onclick="goToIndex()" style="background-color: #ccc">Leaderboard</button>
-          <button class="tablinks" onclick="goToFAQ()">FAQ</button>
-          <button class="tablinks" onclick="goToReport()">Report Scores</button>
-      </div>
-  
-      <div id="leaderboard" class="tabcontent"></div>
-      
-      <form class="newPlayer">
-        <input type="text" name="playerNameBox" id="playerNameBox" placeholder="Add New Player">
-        <input type="submit" id="addPlayer" value="Add Player" style="display: none;">
-      </form>
-      <p id="statusmsg">___</p>
+    <body>
+        <h1 id="home" onclick="goToIndex()">Brimstone Ranked Mini</h1>
+        <div class="tab">
+            <button class="tablinks" onclick="goToIndex()">Leaderboard</button>
+            <button class="tablinks" onclick="goToFAQ()">FAQ</button>
+            <button class="tablinks" onclick="goToReport()" style="background-color: #ccc">Report Scores</button>
+        </div>
 
-
-
+        <div class="dropdown">
+          <button onclick="toggleDropdown()" class="dropbtn">Dropdown</button>
+          <div id="myDropdown" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+            <a href="#about">About</a>
+            <a href="#base">Base</a>
+            <a href="#blog">Blog</a>
+            <a href="#contact">Contact</a>
+            <a href="#custom">Custom</a>
+            <a href="#support">Support</a>
+            <a href="#tools">Tools</a>
+          </div>
+        </div>
     </body>
-
-    <script>
-        startup()
-    </script>
+  </head>
 </html>

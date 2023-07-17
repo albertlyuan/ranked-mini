@@ -23,30 +23,20 @@
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
     <link rel="stylesheet" href="style.css">
-    <script src="startup.js"></script>
     <script src="script.js" type="module"></script>
+
+    <script src="startup.js"></script>
+
+
   </head>
-  <body>
-      <h1 id="home" onclick="goToIndex()">Brimstone Ranked Mini</h1>
-      <div class="tab">
-          <button class="tablinks" onclick="goToIndex()" style="background-color: #ccc">Leaderboard</button>
-          <button class="tablinks" onclick="goToFAQ()">FAQ</button>
-          <button class="tablinks" onclick="goToReport()">Report Scores</button>
-      </div>
-  
-      <div id="leaderboard" class="tabcontent"></div>
-      
-      <form class="newPlayer">
-        <input type="text" name="playerNameBox" id="playerNameBox" placeholder="Add New Player">
-        <input type="submit" id="addPlayer" value="Add Player" style="display: none;">
-      </form>
-      <p id="statusmsg">___</p>
-
-
+    <body>
+        <h1 id="home" onclick="goToIndex()">Brimstone Ranked Mini</h1>
+        <div class="tab">
+            <button class="tablinks" onclick="goToIndex()">Leaderboard</button>
+            <button class="tablinks" onclick="goToFAQ()" style="background-color: #ccc">FAQ</button>
+            <button class="tablinks" onclick="goToReport()">Report Scores</button>
+        </div>
 
     </body>
-
-    <script>
-        startup()
-    </script>
+  </head>
 </html>
