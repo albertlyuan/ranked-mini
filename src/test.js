@@ -49,7 +49,6 @@ async function firebase_getPlayers(){
     return playerObjects
 }
 // firebase_getPlayers().then(console.log)
-
 async function firebase_logNewGame(winner1, winner2, winner3, loser1, loser2,loser3){
     const newGameID = await getNewGameID()
     const winners = [winner1,winner2,winner3]
@@ -61,44 +60,41 @@ async function firebase_logNewGame(winner1, winner2, winner3, loser1, loser2,los
 
     const players = await firebase_getPlayers()
     
-    const winnerData = new Map()
-    const loserData = new Map()
-    for (const i of winners){
-        winnerData.set(i, players[i])
-    }
-    for (const i of losers){
-        loserData.set(i, players[i])
-    }
+    
+    const winnerData = getPlayerObjects(winners, players)
+    const loserData = getPlayerObjects(losers, players)
 
     const winningTeamElo = calculateTeamElo(Array.from(winnerData.values()))
     const losingTeamElo = calculateTeamElo(Array.from(loserData.values()))
     
+    await updateNewPlayerElo(winnerData,winningTeamElo,losingTeamElo,newGameID,true)
+    await updateNewPlayerElo(loserData,winningTeamElo,losingTeamElo,newGameID,false)
 
-    for (const name of winnerData.keys()){
-        const oldElo = winnerData.get(name)['elo']
-        const newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, true)
-        const wins = winnerData.get(name)['wins']+1
-        const losses = winnerData.get(name)['losses']
+    // console.log("added to playertables")
+}
+
+//helper function for firebase_logNewGame
+function getPlayerObjects(playernames, players){
+    const playerObjects = new Map()
+    for (const i of playernames){
+        playerObjects.set(i, players[i])
+    }
+    return playerObjects
+}
+
+async function updateNewPlayerElo(playerData, winningTeamElo, losingTeamElo, newGameID, win_status){
+    for (const name of playerData.keys()){
+        const oldElo = playerData.get(name)['elo']
+        const newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, win_status)
+        const wins = playerData.get(name)['wins']
+        const losses = playerData.get(name)['losses']+1
+
         const diff = newElo - oldElo
+        console.log(name,`(${wins}-${losses})`, newElo,newGameID, `diff: ${diff}`)
+
         await updatePlayerHistory(name,newElo,newGameID)
         await updatePlayerNow(name,newElo,newGameID,wins,losses)
-
-        console.log(name,`(${wins}-${losses})`, newElo,newGameID, `diff: ${diff}`)
     }
-
-    for (const name of loserData.keys()){
-        const oldElo = loserData.get(name)['elo']
-        const newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, false)
-        const wins = loserData.get(name)['wins']
-        const losses = loserData.get(name)['losses']+1
-        const diff = newElo - oldElo
-        await updatePlayerHistory(name,newElo,newGameID)
-        await updatePlayerNow(name,newElo,newGameID,wins,losses)
-
-        console.log(name,`(${wins}-${losses})`, newElo,newGameID, `diff: ${diff}`)
-
-    }
-    console.log("added to playertables")
 }
 
 async function updatePlayerHistory(playerName,elo,game_id){

@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {firebase_addNewPlayer, firebase_getPlayers, firebase_logNewGame, getNewGameID} from './firebase.js'
+import {firebase_addNewPlayer, buildLeaderboard, firebase_logNewGame, getNewGameID} from './firebase.js'
 
 var fakeData = [
     ['a',400],
@@ -98,7 +98,7 @@ export default function Leaderboard({setTab, setPlayer}){
                             new game id    
                         </button>
                         <button onClick={() => {
-                            firebase_getPlayers(setRoster)
+                            buildLeaderboard().then(players => setRoster(players))
                             // alert(outp)
                         }}>getplayers</button>
                     </td>

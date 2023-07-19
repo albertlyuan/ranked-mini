@@ -1,9 +1,9 @@
 import './App.css';
 import Leaderboard from './leaderboard.js';
 import ReportScore from './reportscore.js';
-import FAQ from './faq';
-import Games from './games';
-import GameInfo from './gameInfo'
+import FAQ from './faq.js';
+import Games from './games.js';
+import GameInfo from './gameInfo.js'
 import PlayerBio from './playerbio.js';
 import TabButton from './TabButton.js';
 import { Suspense, useState } from 'react';

@@ -24,58 +24,142 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app)
 const player_history = ref(db, '/player_history')
-const player_ref = ref(db, '/player_ref')
+const player_now = ref(db, '/player_now')
 const games = ref(db, '/games')
-// const games = db.child('games')
-const STARTING_ELO = 0
+const STARTING_ELO = 400
+const STARTING_GAMEID = -1
+
+export async function buildLeaderboard(){
+    const players = await firebase_getPlayers()
+    
+    const leaderboard = []
+
+    for (const name in players){
+        leaderboard.push([name, players[name].elo])
+    }
+    leaderboard.sort((a,b) => b[1]-a[1])
+    return leaderboard
+}
 
 export function firebase_addNewPlayer(playerName){
-    set(push(player_history), {
-        name: playerName,
-        elo: STARTING_ELO,
-        game_id: -1,
-        name_game: playerName+"_"+-1 
-    })
-
-    set(ref(db, '/player_ref/'+playerName), {
-        name: playerName,
-        most_recent_game: -1
-    })
-}
-async function findMostRecentElo(name_game){
-    // console.log("searching: ", name_game)
-    const result = await get(query(player_history,orderByChild("name_game"),equalTo(name_game)))
-    let obj = Object.values(result.val())[0]
-    let ret = [obj.name, obj.elo]
-    // console.log("found: " + ret)
-    return ret
+    updatePlayerHistory(playerName,STARTING_ELO,-1,0,0)
+    updatePlayerNow(playerName,STARTING_ELO,-1,0,0)
 }
 
-export async function firebase_getPlayers(){
-    const players = await get(query(player_ref))
-    // console.log(Object.values(players.val()))
 
-    const eloPromises = Object.values(players.val()).map(async player => {
-        const name_game = player.name + "_" + player.most_recent_game
-        const elo = await findMostRecentElo(name_game)
-        // console.log(name_game + " : " + elo)
-        return elo
-    })
+// firebase_getPlayers().then(console.log)
 
-    return Promise.all(eloPromises)
-}
-
-export function firebase_logNewGame(winner1, winner2, winner3, loser1, loser2,loser3){
-    const newGameID = getNewGameID()
+export async function firebase_logNewGame(winner1, winner2, winner3, loser1, loser2,loser3){
+    const newGameID = await getNewGameID()
     const winners = [winner1,winner2,winner3]
-    const losers = [loser1, loser2, loser3]
+    const losers = [loser1,loser2,loser3]
 
+    // console.log('gameid: ' + (newGameID))
     addToGamesTable(newGameID, winners, losers)
-    //add to player_history
-    //update player_ref
+    // console.log('Added To Games Table')
+
+    const players = await firebase_getPlayers()
+    
+    const winnerData = getPlayerObjects(winners, players)
+    const loserData = getPlayerObjects(losers, players)
+
+    const winningTeamElo = calculateTeamElo(Array.from(winnerData.values()))
+    const losingTeamElo = calculateTeamElo(Array.from(loserData.values()))
+    
+    await updateNewPlayerElo(winnerData,winningTeamElo,losingTeamElo,newGameID,true)
+    await updateNewPlayerElo(loserData,winningTeamElo,losingTeamElo,newGameID,false)
+
+    // console.log("added to playertables")
 }
 
-function addToGamesTable(newGameID,winners, losers){
+//helper function for firebase_logNewGame
+function getPlayerObjects(playernames, players){
+    const playerObjects = new Map()
+    for (const i of playernames){
+        playerObjects.set(i, players[i])
+    }
+    return playerObjects
+}
+
+async function updateNewPlayerElo(playerData, winningTeamElo, losingTeamElo, newGameID, win_status){
+    for (const name of playerData.keys()){
+        const oldElo = playerData.get(name)['elo']
+        const newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, win_status)
+        const wins = playerData.get(name)['wins']
+        const losses = playerData.get(name)['losses']+1
+
+        // const diff = newElo - oldElo
+        // console.log(name,`(${wins}-${losses})`, newElo,newGameID, `diff: ${diff}`)
+
+        await updatePlayerHistory(name,newElo,newGameID)
+        await updatePlayerNow(name,newElo,newGameID,wins,losses)
+
+    }
+}
+
+async function firebase_getPlayers(){
+    const players = await get(query(player_now))
+    const playerObjects = players.val()
+    return playerObjects
+}
+
+async function updatePlayerHistory(playerName,elo,game_id){
+    set(ref(db, '/player_history/'+playerName+"_"+game_id), {
+        name: playerName,
+        elo: elo,
+        game_id: game_id,
+    })
+}
+
+async function updatePlayerNow(playerName, elo, game_id, wins, losses){
+    await set(ref(db, '/player_now/'+playerName), {
+        most_recent_game: game_id,
+        elo: elo,
+        wins: wins,
+        losses: losses
+    })
+}
+//elo expected value
+const K = 32
+const D = 400
+
+function calculateNewElo(playerElo, winningTeamElo, losingTeamElo, win_boolean){
+    if (win_boolean){
+        return playerElo + K*(1-expectedValue(playerElo,losingTeamElo))
+    }else{
+        const player_team_elo = Math.min(playerElo,losingTeamElo)
+        return Math.max(0,playerElo + K*(0-expectedValue(player_team_elo,winningTeamElo)))
+    }
+}
+function expectedValue(playerElo, opponentElo){
+    return 1/(1+10**((opponentElo-playerElo)/D))
+}
+
+//logistic curve for weighted individual elo
+const L = 100
+const slope = 0.005
+const midpoint = 500
+
+function calculateTeamElo(team){
+    
+    const weightedRank = (elo) => {
+        return elo
+        // return L / (1+ Math.E**(-slope*(elo-midpoint)))
+    }
+
+    const p1 = team[0].elo
+    const p2 = team[1].elo
+    const p3 = team[2].elo
+
+    const teamElo = (weightedRank(p1) + weightedRank(p2) + weightedRank(p3)) / 3
+    // console.log("team: " + teamElo)
+    // console.log("people:"+ p1 + " " + p2 + " " + p3)
+    return teamElo
+}
+// console.log(calculateTeamElo(0, 0, 0))
+
+//helper function for firebase_logNewGame
+function addToGamesTable(newGameID, winners, losers){
     const ts = new Date().toString()
 
     winners.sort((a, b) => a.localeCompare(b))
@@ -93,6 +177,7 @@ function addToGamesTable(newGameID,winners, losers){
     })
 }
 
+//helper function for firebase_logNewGame
 export async function getNewGameID(){
     const result = await get(query(games, orderByKey(), limitToLast(1)))
     if (result.val() != null){
@@ -101,3 +186,5 @@ export async function getNewGameID(){
     }
     return 0
 }
+// getNewGameID().then(a => console.log("game_id: " + a))
+
