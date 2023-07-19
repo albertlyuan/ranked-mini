@@ -89,6 +89,10 @@ tr #addplayerRow{
       to {opacity: 1;}
   }
 
+  .playerRow{
+    cursor: pointer;
+  }
+
 #myInput {
   box-sizing: border-box;
   /* background-image: url('searchicon.png'); */

@@ -1,20 +1,11 @@
 import {useState} from 'react';
+import {firebase_addNewPlayer, firebase_getPlayers, firebase_logNewGame, getNewGameID} from './firebase.js'
 
 var fakeData = [
     ['a',400],
     ['b',500],
     ['c',1000]
   ]
-
-//   playerNameBox.addEventListener('keydown', (e) => { 
-//     if (e.key === 'Enter') {
-//       e.preventDefault()
-//       var playerName = document.getElementById("playerNameBox").value
-//       document.getElementById("statusmsg").textContent = playerName
-  
-//       // document.getElementById("addPlayer").submit()//  Trigger form submission
-//     }
-//   })
 
 function AddPlayer({setStatusMsgFunc}){
     const [inputName, setInputName] = useState('');
@@ -38,8 +29,7 @@ function AddPlayer({setStatusMsgFunc}){
         }
 
         if (validNewName){
-            fakeData.push([inputName, 0])
-            alert("added " + inputName)
+            firebase_addNewPlayer(inputName)
         }else{
             event.preventDefault()
         }
@@ -58,18 +48,35 @@ function AddPlayer({setStatusMsgFunc}){
     );
 }
 
-export default function Leaderboard(){
+function PlayerRow({name, elo, setTab, setPlayer}){
+
+    const goToPlayer = () => {
+        setTab('playerbio')
+        setPlayer(name)
+    }
+
+    return(
+    <tr class="playerRow" onClick={goToPlayer}>
+        <td>{name}</td>
+        <td style={{textAlign: "right"}}>{elo} </td>
+
+    </tr>
+    );
+}
+export default function Leaderboard({setTab, setPlayer}){
     const [statusMsg, setStatusMsg] = useState('');
 
-    const listItems = fakeData.map(person => 
-        <tr>
-            <td>{person[0]}</td>
-            <td style={{textAlign: "right"}}>{person[1]} </td>
-        </tr>
+    const listItems = fakeData.map((person) => 
+        <PlayerRow
+            name={person[0]}
+            elo={person[1]}
+            setTab={setTab}
+            setPlayer={setPlayer}
+
+        />
     ); 
     return (
-        <div className="leaderboard">
-          <div id="leaderboard" class="tabcontent">
+        <div id="leaderboard" class="tabcontent">
             <table>
                 {listItems}
                 <tr id="addplayerRow">
@@ -82,13 +89,20 @@ export default function Leaderboard(){
                     </td>
                     <td>
                         <p id="statusmsg">{statusMsg}</p>
+                        <button onClick={() =>{
+                            let outp = getNewGameID()
+                            alert(outp)
+                        }}>
+                            new game id    
+                        </button>
+                        <button onClick={() => {
+                            let outp = firebase_getPlayers()
+                            alert(outp)
+                        }}>getplayers</button>
                     </td>
                 </tr>
             </table>
-          </div>
-          
-
-          
+            
         </div>
       );
 }

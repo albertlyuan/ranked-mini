@@ -1,6 +1,5 @@
 import {useState, useRef, useEffect } from 'react';
 import { useComponentVisible } from './DetectExternalClick.js';
-import { func } from 'prop-types';
 
 const dropdownOptions = new Set(["a","b","c","ab","bc","ac","abc"])
 
@@ -48,11 +47,11 @@ function Player({filter, name, setSelectionHandler}){
     }
 
     return(
-        <a 
+        <p
             style={{display: name.toLowerCase().indexOf(filter) > -1 ? "block" : "none"}}
             onClick={sendSelection}
         >
-        {name}</a>
+        {name}</p>
     )
 }
 
