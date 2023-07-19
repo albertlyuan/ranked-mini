@@ -63,10 +63,12 @@ function PlayerRow({name, elo, setTab, setPlayer}){
     </tr>
     );
 }
+
 export default function Leaderboard({setTab, setPlayer}){
     const [statusMsg, setStatusMsg] = useState('');
+    const [roster, setRoster] = useState([]);
 
-    const listItems = fakeData.map((person) => 
+    const listItems = roster.map((person) => 
         <PlayerRow
             name={person[0]}
             elo={person[1]}
@@ -96,8 +98,8 @@ export default function Leaderboard({setTab, setPlayer}){
                             new game id    
                         </button>
                         <button onClick={() => {
-                            let outp = firebase_getPlayers()
-                            alert(outp)
+                            firebase_getPlayers(setRoster)
+                            // alert(outp)
                         }}>getplayers</button>
                     </td>
                 </tr>

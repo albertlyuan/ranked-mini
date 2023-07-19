@@ -24,58 +24,53 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app)
 const player_history = ref(db, '/player_history')
-const player_ref = ref(db, '/player_ref')
+const player_now = ref(db, '/player_now')
 const games = ref(db, '/games')
 // const games = db.child('games')
 const STARTING_ELO = 0
 
-export function firebase_addNewPlayer(playerName){
-    set(push(player_history), {
-        name: playerName,
-        elo: STARTING_ELO,
-        game_id: -1,
-        name_game: playerName+"_"+-1 
-    })
+// async function findMostRecentElo(name_game){
+//     // console.log("searching: ", name_game)
+//     const result = await get(query(player_history,orderByChild("name_game"),equalTo(name_game)))
+//     let obj = Object.values(result.val())[0]
+//     let ret = [obj.name, obj.elo]
+//     // console.log("found: " + ret)
+//     return ret
+// }
 
-    set(ref(db, '/player_ref/'+playerName), {
-        name: playerName,
-        most_recent_game: -1
-    })
-}
-async function findMostRecentElo(name_game){
-    // console.log("searching: ", name_game)
-    const result = await get(query(player_history,orderByChild("name_game"),equalTo(name_game)))
-    let obj = Object.values(result.val())[0]
-    let ret = [obj.name, obj.elo]
-    // console.log("found: " + ret)
-    return ret
-}
-
-export async function firebase_getPlayers(){
-    const players = await get(query(player_ref))
+async function firebase_getPlayers(){
+    const players = await get(query(player_now))
     // console.log(Object.values(players.val()))
 
-    const eloPromises = Object.values(players.val()).map(async player => {
-        const name_game = player.name + "_" + player.most_recent_game
-        const elo = await findMostRecentElo(name_game)
+    const eloPromises = Object.values(players.val()).map(player => {
+        // const name_game = player.name + "_" + player.most_recent_game
+        // const elo = await findMostRecentElo(name_game)
         // console.log(name_game + " : " + elo)
-        return elo
+        return [player.name, player.elo]
     })
 
-    return Promise.all(eloPromises)
+    return eloPromises
 }
 
-export function firebase_logNewGame(winner1, winner2, winner3, loser1, loser2,loser3){
-    const newGameID = getNewGameID()
+// firebase_getPlayers().then(console.log)
+
+
+function firebase_logNewGame(winner1, winner2, winner3, loser1, loser2,loser3){
     const winners = [winner1,winner2,winner3]
     const losers = [loser1, loser2, loser3]
+    getNewGameID().then( newGameID => {
+        console.log('gameid: ' + (newGameID))
+        
+        addToGamesTable(newGameID, winners, losers)
+        console.log('DONE')
+    })
 
-    addToGamesTable(newGameID, winners, losers)
     //add to player_history
     //update player_ref
 }
+// firebase_logNewGame("a", "b", "c", "d", "e","f")
 
-function addToGamesTable(newGameID,winners, losers){
+function addToGamesTable(newGameID, winners, losers){
     const ts = new Date().toString()
 
     winners.sort((a, b) => a.localeCompare(b))
@@ -93,7 +88,7 @@ function addToGamesTable(newGameID,winners, losers){
     })
 }
 
-export async function getNewGameID(){
+async function getNewGameID(){
     const result = await get(query(games, orderByKey(), limitToLast(1)))
     if (result.val() != null){
         const mostRecentGameID = parseInt(Object.keys(result.val())[0])
@@ -101,3 +96,27 @@ export async function getNewGameID(){
     }
     return 0
 }
+// getNewGameID().then(a => console.log("game_id: " + a))
+
+function firebase_addNewPlayer(playerName){
+    set(push(player_history), {
+        name: playerName,
+        elo: STARTING_ELO,
+        game_id: -1,
+    })
+
+    set(ref(db, '/player_now/'+playerName), {
+        name: playerName,
+        most_recent_game: -1,
+        elo: STARTING_ELO
+    })
+}
+
+// firebase_addNewPlayer("a")
+// firebase_addNewPlayer("b")
+// firebase_addNewPlayer("c")
+// firebase_addNewPlayer("d")
+// firebase_addNewPlayer("e")
+// firebase_addNewPlayer("f")
+
+
