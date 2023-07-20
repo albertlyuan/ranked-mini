@@ -35,7 +35,7 @@ export async function buildLeaderboard(){
     const leaderboard = []
 
     for (const name in players){
-        leaderboard.push([name, players[name].elo])
+        leaderboard.push([name, players[name].elo, players[name].wins,players[name].losses])
     }
     leaderboard.sort((a,b) => b[1]-a[1])
     return leaderboard
@@ -85,8 +85,14 @@ async function updateNewPlayerElo(playerData, winningTeamElo, losingTeamElo, new
     for (const name of playerData.keys()){
         const oldElo = playerData.get(name)['elo']
         const newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, win_status)
-        const wins = playerData.get(name)['wins']
-        const losses = playerData.get(name)['losses']+1
+        let wins = playerData.get(name)['wins']
+        let losses = playerData.get(name)['losses']
+
+        if (win_status){
+            wins+=1
+        }else{
+            losses+=1
+        }        
 
         // const diff = newElo - oldElo
         // console.log(name,`(${wins}-${losses})`, newElo,newGameID, `diff: ${diff}`)

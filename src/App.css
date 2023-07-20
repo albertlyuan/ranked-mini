@@ -106,7 +106,7 @@ tr #addplayerRow{
 
 #searchInput:focus {outline: 3px solid #ddd;}
 
-#statusmsg{
+.statusmsg{
   color: red;
 }
 /* dropdown menu */

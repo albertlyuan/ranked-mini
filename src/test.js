@@ -49,7 +49,7 @@ async function firebase_getPlayers(){
     return playerObjects
 }
 // firebase_getPlayers().then(console.log)
-async function firebase_logNewGame(winner1, winner2, winner3, loser1, loser2,loser3){
+async function firebase_logNewGame(winner1, winner2, winner3, loser1, loser2, loser3){
     const newGameID = await getNewGameID()
     const winners = [winner1,winner2,winner3]
     const losers = [loser1,loser2,loser3]
@@ -86,8 +86,14 @@ async function updateNewPlayerElo(playerData, winningTeamElo, losingTeamElo, new
     for (const name of playerData.keys()){
         const oldElo = playerData.get(name)['elo']
         const newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, win_status)
-        const wins = playerData.get(name)['wins']
-        const losses = playerData.get(name)['losses']+1
+        let wins = playerData.get(name)['wins']
+        let losses = playerData.get(name)['losses']
+
+        if (win_status){
+            wins=wins+1
+        }else{
+            losses=losses+1
+        }     
 
         const diff = newElo - oldElo
         console.log(name,`(${wins}-${losses})`, newElo,newGameID, `diff: ${diff}`)
@@ -224,9 +230,10 @@ async function randomgame(){
     
     await firebase_logNewGame(winners[0], winners[1], winners[2], losers[0], losers[1], losers[2])
 }
-// addPlayers()
+addPlayers()
 
-for (let i=0; i < 10;i++){
-    await randomgame()
-}
+// for (let i=0; i < 10;i++){
+//     await randomgame()
+// }
 
+// firebase_logNewGame("a", "b", "c", "d", "e","f")

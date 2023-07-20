@@ -1,13 +1,8 @@
 import {useState} from 'react';
 import {firebase_addNewPlayer, buildLeaderboard, firebase_logNewGame, getNewGameID} from './firebase.js'
 
-var fakeData = [
-    ['a',400],
-    ['b',500],
-    ['c',1000]
-  ]
 
-function AddPlayer({setStatusMsgFunc}){
+function AddPlayer({setStatusMsgFunc, roster}){
     const [inputName, setInputName] = useState('');
 
     const handleChange = (event) => {
@@ -20,8 +15,8 @@ function AddPlayer({setStatusMsgFunc}){
             validNewName = false
             setStatusMsgFunc("name cannot be empty")
         }else{
-            for (let i = 0; i < fakeData.length; i++) {
-                if (inputName === fakeData[i][0]){
+            for (let i = 0; i < roster.length; i++) {
+                if (inputName === roster[i][0]){
                     validNewName = false
                     setStatusMsgFunc("name already exists")
                 }
@@ -48,7 +43,7 @@ function AddPlayer({setStatusMsgFunc}){
     );
 }
 
-function PlayerRow({name, elo, setTab, setPlayer}){
+function PlayerRow({name, elo, setTab, setPlayer, wins, losses}){
 
     const goToPlayer = () => {
         setTab('playerbio')
@@ -57,21 +52,22 @@ function PlayerRow({name, elo, setTab, setPlayer}){
 
     return(
     <tr class="playerRow" onClick={goToPlayer}>
-        <td>{name}</td>
+        <td>{name} ({wins}-{losses})</td>
         <td style={{textAlign: "right"}}>{elo} </td>
 
     </tr>
     );
 }
 
-export default function Leaderboard({setTab, setPlayer}){
+export default function Leaderboard({roster, setTab, setPlayer}){
     const [statusMsg, setStatusMsg] = useState('');
-    const [roster, setRoster] = useState([]);
 
     const listItems = roster.map((person) => 
         <PlayerRow
             name={person[0]}
             elo={person[1]}
+            wins={person[2]}
+            losses={person[3]}
             setTab={setTab}
             setPlayer={setPlayer}
 
@@ -84,23 +80,26 @@ export default function Leaderboard({setTab, setPlayer}){
                 <tr id="addplayerRow">
                     <td>
                         <AddPlayer
+                            roster={roster}
                             setStatusMsgFunc={(msg) => {
                                 setStatusMsg(msg)
                             }}
                         />
                     </td>
                     <td>
-                        <p id="statusmsg">{statusMsg}</p>
-                        <button onClick={() =>{
+                        <p class="statusmsg">{statusMsg}</p>
+                        {/* <button onClick={() =>{
                             let outp = getNewGameID()
                             alert(outp)
                         }}>
                             new game id    
-                        </button>
-                        <button onClick={() => {
+                        </button> */}
+                        {/* <button onClick={() => {
                             buildLeaderboard().then(players => setRoster(players))
                             // alert(outp)
-                        }}>getplayers</button>
+                        }}>
+                            getplayers
+                        </button> */}
                     </td>
                 </tr>
             </table>

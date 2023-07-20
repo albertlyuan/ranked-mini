@@ -1,7 +1,6 @@
 import {useState, useRef, useEffect } from 'react';
 import { useComponentVisible } from './DetectExternalClick.js';
-
-const dropdownOptions = new Set(["a","b","c","ab","bc","ac","abc"])
+import {firebase_addNewPlayer, buildLeaderboard, firebase_logNewGame, getNewGameID} from './firebase.js'
 
 function DropdownSearch({sendSearchInput, inputRef}){
 
@@ -40,18 +39,16 @@ function DropdownButton({toggle, selection}){
 }
 
 function Player({filter, name, setSelectionHandler}){
-
-    
     const sendSelection = () => {
         setSelectionHandler(name)
     }
 
     return(
-        <p
+        <a
             style={{display: name.toLowerCase().indexOf(filter) > -1 ? "block" : "none"}}
             onClick={sendSelection}
         >
-        {name}</p>
+        {name}</a>
     )
 }
 
@@ -133,15 +130,17 @@ function Dropdown({availablePlayers, setAvailablePlayers, selection, setSelectio
     );
 }
 
-export default function ReportScore(){
-    const [availablePlayers, setAvailablePlayers] = useState(dropdownOptions);
+export default function ReportScore({roster, setRoster}){
+    const [availablePlayers, setAvailablePlayers] = useState(new Set(roster.map((person) => person[0])));
     const [winner1, setWinner1] = useState('');
     const [winner2, setWinner2] = useState('');
     const [winner3, setWinner3] = useState('');
     const [loser1, setLoser1] = useState('');
     const [loser2, setLoser2] = useState('');
     const [loser3, setLoser3] = useState('');
+    const [statusMsg, setStatusMsg] = useState('');
 
+    // const justPlayerNames = roster.map((person) => person[0])
     function clearSelection(){
         const newItems = [winner1,winner2,winner3,loser1,loser2,loser3]
         for (let val of newItems){
@@ -155,6 +154,29 @@ export default function ReportScore(){
         setLoser1('')
         setLoser2('')
         setLoser3('')
+    }
+    function handleSubmit(event){
+        //check for 6 players
+        event.preventDefault()
+
+        if (winner1 ==="" || winner2 ==="" || winner3 ===""){
+            setStatusMsg('Must Have 3 Winners Selected')
+            return
+        }
+        if (loser1 ==="" || loser2 ==="" || loser3 ===""){
+            setStatusMsg('Must Have 3 Losers Selected')
+            return
+        }
+        firebase_logNewGame(winner1,winner2,winner3,loser1,loser2,loser3)
+        // const newLeaderboard = await buildLeaderboard()
+        // setRoster(newLeaderboard)
+        buildLeaderboard().then(newLeaderboard => {
+            setRoster(newLeaderboard)
+            clearSelection()
+            setStatusMsg("Game Submitted")
+        })
+        
+        
     }
 
     return(
@@ -202,8 +224,11 @@ export default function ReportScore(){
                     setSelection={setLoser3}
                 />
             </div>
-            <button>Submit</button>  {/* TODO */}
-            <button onClick={clearSelection}>Clear</button>  {/* TODO */}
+            <form onSubmit={handleSubmit}>
+                <input type="submit"></input>  
+            </form>
+            <button onClick={clearSelection}>Clear</button> 
+            <p class="statusmsg">{statusMsg}</p>
 
         </div>
     )
