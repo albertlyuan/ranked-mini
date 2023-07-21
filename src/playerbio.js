@@ -1,7 +1,8 @@
 import {firebase_getTotalPlayerData, blankPlayer} from './firebase.js'
 import { useEffect, useState, useRef } from 'react'
-import { Line, getElementAtEvent  } from "react-chartjs-2"
+import { Line  } from "react-chartjs-2"
 import {Chart, LinearScale, CategoryScale, PointElement, LineElement, Tooltip} from "chart.js";
+import Games from "./games.js";
 
 Chart.register(CategoryScale,LinearScale, PointElement, LineElement, Tooltip);
 
@@ -139,6 +140,9 @@ export default function PlayerBio({player, games, setTab, setGame}){
         return [elos, timestamps, elogain]
     }
 
+        
+    
+
     return(
         <div>
             <h2>{player} ({currWins}-{currLosses})</h2>
@@ -153,6 +157,11 @@ export default function PlayerBio({player, games, setTab, setGame}){
             <br></br>
             <div>
                 <h3>Game History</h3>
+                <Games
+                    gamesLog={playerGames}
+                    setTab={setTab} 
+                    setGame={setGame}
+                />
             </div>
         </div>
 
