@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {firebase_addNewPlayer, buildLeaderboard, firebase_logNewGame, getNewGameID} from './firebase.js'
+import {firebase_addNewPlayer} from './firebase.js'
 
 
 function AddPlayer({setStatusMsgFunc, roster}){
@@ -54,7 +54,6 @@ function PlayerRow({name, elo, setTab, setPlayer, wins, losses}){
     <tr class="playerRow" onClick={goToPlayer}>
         <td>{name} ({wins}-{losses})</td>
         <td style={{textAlign: "right"}}>{elo} </td>
-
     </tr>
     );
 }
@@ -88,18 +87,6 @@ export default function Leaderboard({roster, setTab, setPlayer}){
                     </td>
                     <td>
                         <p class="statusmsg">{statusMsg}</p>
-                        {/* <button onClick={() =>{
-                            let outp = getNewGameID()
-                            alert(outp)
-                        }}>
-                            new game id    
-                        </button> */}
-                        {/* <button onClick={() => {
-                            buildLeaderboard().then(players => setRoster(players))
-                            // alert(outp)
-                        }}>
-                            getplayers
-                        </button> */}
                     </td>
                 </tr>
             </table>

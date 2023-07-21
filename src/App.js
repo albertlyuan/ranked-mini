@@ -7,7 +7,7 @@ import GameInfo from './gameInfo.js'
 import PlayerBio from './playerbio.js';
 import TabButton from './TabButton.js';
 import { Suspense, useState, useEffect } from 'react';
-import {buildLeaderboard} from './firebase.js'
+import {buildLeaderboard, getGamesLog} from './firebase.js'
 
 
 function App() {
@@ -15,9 +15,12 @@ function App() {
   const [player, setPlayer] = useState('');
   const [game, setGame] = useState('');
   const [roster, setRoster] = useState([]);
+  const [gameLog, setGameLog] = useState([]);
 
   useEffect(() => {
     buildLeaderboard().then(leaderboard => setRoster(leaderboard))
+    getGamesLog().then(gameLog => setGameLog(gameLog))
+
   },[])
 
   return (
@@ -53,10 +56,11 @@ function App() {
       
       {tab === 'leaderboard' && <Leaderboard roster={roster} setTab={setTab} setPlayer={setPlayer}/>}
       {tab === 'reportscore' && <ReportScore roster={roster} setRoster={setRoster}/>}
-      {tab === 'games' && <Games setTab={setTab} setGame={setGame}/>}
+      {tab === 'games' && <Games gamesLog={gameLog} setTab={setTab} setGame={setGame}/>}
       {tab === 'faq' && <FAQ />}
+
       {tab === 'game' && <GameInfo game={game} setTab={setTab} setPlayer={setPlayer}/>}
-      {tab === 'playerbio' && <PlayerBio player={player} setTab={setTab} setPlayer={setPlayer}/>}
+      {tab === 'playerbio' && <PlayerBio player={player} setTab={setTab} setGame={setGame}/>}
 
     </Suspense>
   );
