@@ -254,9 +254,9 @@ async function getGamesLog(){
 
 // addPlayers()
 
-for (let i=0; i < 10;i++){
-    await randomgame()
-}
+// for (let i=0; i < 10;i++){
+//     await randomgame()
+// }
 
 
 async function firebase_getPlayerData(name, gameid){
@@ -307,22 +307,21 @@ function firebase_getTotalPlayerData(name){
                     wins: -1
                 }
             }
-            reject(blankPlayer)
+            reject(blankPlayer(name))
         })
     })
 }
 
-function asdf(){
-    const playerElo = (playerData) => {
-        if (playerData.length == 1){
-            return playerData[0].elo
-        } else{
-            return playerData[playerData.length-2].elo
-        }
+firebase_getTotalPlayerData("a").then(playerData => {
+
+    let gameIDs = Object.keys(playerData)
+    if (gameIDs.length < 1){
+        return blankPlayer("")
     }
-    firebase_getTotalPlayerData('a').then(data => {
-        const a = Object.values(data)
-        console.log(playerElo(a))
-        
-    })
-}
+    let maxGameID = Math.max.apply(0,gameIDs)
+    let i = playerData[maxGameID]
+    console.log(i)
+})
+// console.log(
+    // asdf().then(console.log)
+// )

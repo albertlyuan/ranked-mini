@@ -60,7 +60,7 @@ function App() {
       {tab === 'faq' && <FAQ />}
 
       {tab === 'game' && <GameInfo game={game} setTab={setTab} setPlayer={setPlayer}/>}
-      {tab === 'playerbio' && <PlayerBio player={player} setTab={setTab} setGame={setGame}/>}
+      {tab === 'playerbio' && <PlayerBio player={player} games={gameLog} setTab={setTab} setGame={setGame}/>}
 
     </Suspense>
   );
