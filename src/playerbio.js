@@ -188,7 +188,7 @@ function LineChart({chartData}) {
                     },
                     label: function(context){
                         const elogain = chartData.datasets[2].data[context.dataIndex]
-                        return context.formattedValue + ` (${elogain > 0 ? "+" : ""}${elogain.toFixed(2)})`
+                        return context.formattedValue + ` (${elogain > 0 ? "+" : ""}${elogain ? elogain.toFixed(2) : ""})`
                     },
                     labelTextColor: function(context) {
                         const elogain = chartData.datasets[2].data[context.dataIndex]
