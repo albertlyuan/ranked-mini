@@ -24,7 +24,7 @@ tr{
   border-bottom: 1px solid #ddd;
   height: 20%;
 }
-th, td {
+th, thead, td {
   padding: 1%;
 }
 tr #addplayerRow{
@@ -36,6 +36,7 @@ tr #addplayerRow{
 #home {
   cursor: pointer
 }
+
 /* Style the tab */
 .toolbar {
       font-family: Georgia, 'Times New Roman', Times, serif;
@@ -80,9 +81,11 @@ tr #addplayerRow{
       display: flex;
       padding: 6px 12px;
       border: none;
-      animation: fadeEffect 1s; /* Fading effect takes 1 second */
   }
-    
+  
+  .animatedLoad{
+    animation: fadeEffect 1s; /* Fading effect takes 1 second */
+  }
   /* Go from zero to full opacity */
   @keyframes fadeEffect {
       from {opacity: 0;}
@@ -95,6 +98,21 @@ tr #addplayerRow{
 
   .playerRow:hover {
     background-color: #ddd;
+  }
+
+  #playerNameBox {
+    font-size: 1rem;
+    border-width: 0px;
+    border-style: solid;
+    background: transparent;
+    outline: transparent;
+    width: 100%;
+    text-align: left;
+    color: #aaa;
+  }
+
+  #playerNameBox::placeholder {
+
   }
 
   .gameRow{

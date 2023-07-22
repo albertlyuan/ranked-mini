@@ -1,5 +1,7 @@
 export default function FAQ(){
     return(
-        <p>FAQ</p>
+        <div class="animatedLoad">
+            <p>FAQ</p>
+        </div>
     );
 }

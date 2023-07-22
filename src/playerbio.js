@@ -1,8 +1,8 @@
 import {firebase_getTotalPlayerData, blankPlayer} from './firebase.js'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { Line  } from "react-chartjs-2"
 import {Chart, LinearScale, CategoryScale, PointElement, LineElement, Tooltip} from "chart.js";
-import Games from "./games.js";
+import GamesLog from "./gamesLog.js";
 
 Chart.register(CategoryScale,LinearScale, PointElement, LineElement, Tooltip);
 
@@ -103,7 +103,7 @@ export default function PlayerBio({player, games, setTab, setGame}){
                 gameLosers.push([g[0],g[3]])
                 thisplayerGames.push(g)
             }
-            if (gameWinners.length == gameIDs.length){
+            if (gameWinners.length === gameIDs.length){
                 break
             }
         }
@@ -144,7 +144,7 @@ export default function PlayerBio({player, games, setTab, setGame}){
     
 
     return(
-        <div>
+        <div class="animatedLoad">
             <h2>{player} ({currWins}-{currLosses})</h2>
 
             {/* <p>{ chartData.datasets[0].data.join(",")}</p> */}
@@ -157,7 +157,7 @@ export default function PlayerBio({player, games, setTab, setGame}){
             <br></br>
             <div>
                 <h3>Game History</h3>
-                <Games
+                <GamesLog
                     gamesLog={playerGames}
                     setTab={setTab} 
                     setGame={setGame}

@@ -180,7 +180,7 @@ export default function ReportScore({roster, setRoster}){
     }
 
     return(
-        <div class="scoreReport">
+        <div class="scoreReport animatedLoad">
             <div class="winningSide">
                 <h3>Winners</h3>
                 <Dropdown

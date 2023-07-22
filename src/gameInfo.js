@@ -55,7 +55,7 @@ function Teams({gameID, winners, losers, setTab, setPlayer}){
     ); 
 
     return (
-        <table>
+        <table class="animatedLoad">
             <tr>
                 <th>Winning Team</th>
                 <th>Losing Team</th>

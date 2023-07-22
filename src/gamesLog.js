@@ -1,4 +1,4 @@
-export default function Games({gamesLog, setTab, setGame}){
+export default function GamesLog({gamesLog, setTab, setGame}){
 
     const gameList = gamesLog.map((game) =>
         <GameRow 
@@ -9,7 +9,7 @@ export default function Games({gamesLog, setTab, setGame}){
     )
 
     return(
-        <div>
+        <div class="animatedLoad">
             <table>
                 <tr>
                     <th>Game ID</th>

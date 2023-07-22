@@ -2,7 +2,7 @@ import './App.css';
 import Leaderboard from './leaderboard.js';
 import ReportScore from './reportscore.js';
 import FAQ from './faq.js';
-import Games from './games.js';
+import GamesLog from './gamesLog.js';
 import GameInfo from './gameInfo.js'
 import PlayerBio from './playerbio.js';
 import TabButton from './TabButton.js';
@@ -56,7 +56,7 @@ function App() {
       
       {tab === 'leaderboard' && <Leaderboard roster={roster} setTab={setTab} setPlayer={setPlayer}/>}
       {tab === 'reportscore' && <ReportScore roster={roster} setRoster={setRoster}/>}
-      {tab === 'games' && <Games gamesLog={gameLog} setTab={setTab} setGame={setGame}/>}
+      {tab === 'games' && <GamesLog gamesLog={gameLog} setTab={setTab} setGame={setGame}/>}
       {tab === 'faq' && <FAQ />}
 
       {tab === 'game' && <GameInfo game={game} setTab={setTab} setPlayer={setPlayer}/>}

@@ -37,8 +37,8 @@ function AddPlayer({setStatusMsgFunc, roster}){
                 id="playerNameBox" 
                 placeholder="Add New Player" 
                 value={inputName}
-                onChange={handleChange}>
-            </input>
+                onChange={handleChange}
+            />
         </form>
     );
 }
@@ -73,8 +73,12 @@ export default function Leaderboard({roster, setTab, setPlayer}){
         />
     ); 
     return (
-        <div id="leaderboard" class="tabcontent">
+        <div id="leaderboard" class="tabcontent animatedLoad">
             <table>
+                <thead>
+                    <th>Player (record)</th>
+                    <th>Elo</th>
+                </thead>
                 {listItems}
                 <tr id="addplayerRow">
                     <td>
