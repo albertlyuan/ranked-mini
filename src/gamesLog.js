@@ -31,7 +31,7 @@ function GameRow({game, setTab, setGame}){
         setGame(game)
     }
     return(
-        <tr class="gameRow" onClick={goToGame}>
+        <tr class="clickable highlights" onClick={goToGame}>
             <td>{game[0]}</td>
             <td>{game[1]}</td>
             <td>{game[2].join(", ")} </td>

@@ -76,7 +76,7 @@ function PlayerCell({player, setTab, setPlayer}){
     }
 
     return(
-        <td class="playerCell" onClick={goToPlayer}>
+        <td class="clickable highlights" onClick={goToPlayer}>
             <h3>{player[0]} ({player[2]}-{player[3]})</h3>
             <p>elo: {player[1]}</p>
         </td>

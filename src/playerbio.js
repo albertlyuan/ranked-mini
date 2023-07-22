@@ -92,8 +92,8 @@ export default function PlayerBio({player, games, setTab, setGame}){
     }
 
     function getGamePlayers(){
-        const gameWinners = []
-        const gameLosers = []
+        const gameWinners = [[-1,null]]
+        const gameLosers = [[-1,null]]
         const thisplayerGames = []
         let gameIDs = new Set(Object.keys(playerData))
         
@@ -197,14 +197,14 @@ function LineChart({chartData}) {
                     },
                     label: function(context){
                         const elogain = chartData.datasets[2].data[context.dataIndex]
-                        return context.formattedValue + ` (${elogain > 0 ? "+" : ""}${elogain ? elogain.toFixed(2) : ""})`
+                        return context.formattedValue + ` (${elogain > 0 ? "+" : ""}${elogain ? elogain.toFixed(2) : "-"})`
                     },
                     labelTextColor: function(context) {
                         const elogain = chartData.datasets[2].data[context.dataIndex]
                         if (elogain > 0){
-                            return 'green'
+                            return '#77DD77'
                         }else if (elogain < 0){
-                            return 'red'
+                            return '#ff6961'
                         }
                         return 'white';
                     },

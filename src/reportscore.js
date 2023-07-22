@@ -1,6 +1,6 @@
 import {useState, useRef, useEffect } from 'react';
 import { useComponentVisible } from './DetectExternalClick.js';
-import {firebase_addNewPlayer, buildLeaderboard, firebase_logNewGame, getNewGameID} from './firebase.js'
+import {buildLeaderboard, firebase_logNewGame, getNewGameID} from './firebase.js'
 
 function DropdownSearch({sendSearchInput, inputRef}){
 
@@ -29,12 +29,12 @@ function DropdownSearch({sendSearchInput, inputRef}){
 
 function DropdownButton({toggle, selection}){
     return(
-        <button 
+        <a 
             onClick={toggle} 
             class="dropbtn">
         {selection === "" ? "Select Player" : selection}
         
-        </button>
+        </a>
     );
 }
 
@@ -44,7 +44,8 @@ function Player({filter, name, setSelectionHandler}){
     }
 
     return(
-        <a
+        <a  
+            class="clickable highlights"
             style={{display: name.toLowerCase().indexOf(filter) > -1 ? "block" : "none"}}
             onClick={sendSelection}
         >
@@ -143,6 +144,7 @@ export default function ReportScore({roster, setRoster}){
     // const justPlayerNames = roster.map((person) => person[0])
     function clearSelection(){
         const newItems = [winner1,winner2,winner3,loser1,loser2,loser3]
+        setStatusMsg('')
         for (let val of newItems){
             if (val !== ""){
                 setAvailablePlayers(prevSet => new Set(prevSet.add(val)));
@@ -154,19 +156,17 @@ export default function ReportScore({roster, setRoster}){
         setLoser1('')
         setLoser2('')
         setLoser3('')
+        
     }
     function handleSubmit(event){
         //check for 6 players
         event.preventDefault()
 
-        if (winner1 ==="" || winner2 ==="" || winner3 ===""){
-            setStatusMsg('Must Have 3 Winners Selected')
+        if (winner1 ==="" || winner2 ==="" || winner3 ==="" || loser1 ==="" || loser2 ==="" || loser3 ===""){
+            setStatusMsg('Must Have 6 Players Selected')
             return
         }
-        if (loser1 ==="" || loser2 ==="" || loser3 ===""){
-            setStatusMsg('Must Have 3 Losers Selected')
-            return
-        }
+
         firebase_logNewGame(winner1,winner2,winner3,loser1,loser2,loser3)
         // const newLeaderboard = await buildLeaderboard()
         // setRoster(newLeaderboard)
@@ -181,55 +181,81 @@ export default function ReportScore({roster, setRoster}){
 
     return(
         <div class="scoreReport animatedLoad">
-            <div class="winningSide">
-                <h3>Winners</h3>
-                <Dropdown
-                    availablePlayers={availablePlayers}
-                    setAvailablePlayers={setAvailablePlayers}
-                    selection={winner1}
-                    setSelection={setWinner1}
-                />                
-                <Dropdown 
-                    availablePlayers={availablePlayers}
-                    setAvailablePlayers={setAvailablePlayers}
-                    selection={winner2}
-                    setSelection={setWinner2}
-                />
-                <Dropdown 
-                    availablePlayers={availablePlayers}
-                    setAvailablePlayers={setAvailablePlayers}
-                    selection={winner3}
-                    setSelection={setWinner3}
-                />
-            </div>
-            <br></br>
-            <div class="losingSide">
-                <h3>Losers</h3>
-                <Dropdown 
-                    availablePlayers={availablePlayers}
-                    setAvailablePlayers={setAvailablePlayers}
-                    selection={loser1}
-                    setSelection={setLoser1}
-                />
-                <Dropdown 
-                    availablePlayers={availablePlayers}
-                    setAvailablePlayers={setAvailablePlayers}
-                    selection={loser2}
-                    setSelection={setLoser2}
-                />
-                <Dropdown 
-                    availablePlayers={availablePlayers}
-                    setAvailablePlayers={setAvailablePlayers}
-                    selection={loser3}
-                    setSelection={setLoser3}
-                />
-            </div>
-            <form onSubmit={handleSubmit}>
-                <input type="submit"></input>  
-            </form>
-            <button onClick={clearSelection}>Clear</button> 
+            <table >
+                <tr>
+                    <th>Winning Team</th>
+                    <th>Losing Team</th>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <Dropdown
+                            availablePlayers={availablePlayers}
+                            setAvailablePlayers={setAvailablePlayers}
+                            selection={winner1}
+                            setSelection={setWinner1}
+                        />   
+                    </td>
+                    <td>
+                        <Dropdown 
+                            availablePlayers={availablePlayers}
+                            setAvailablePlayers={setAvailablePlayers}
+                            selection={loser1}
+                            setSelection={setLoser1}
+                        />
+                    </td>
+                </tr>
+                <tr>             
+                    <td>
+                        <Dropdown 
+                            availablePlayers={availablePlayers}
+                            setAvailablePlayers={setAvailablePlayers}
+                            selection={winner2}
+                            setSelection={setWinner2}
+                        />
+                    </td>
+                    <td>
+                        <Dropdown 
+                            availablePlayers={availablePlayers}
+                            setAvailablePlayers={setAvailablePlayers}
+                            selection={loser2}
+                            setSelection={setLoser2}
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <Dropdown 
+                            availablePlayers={availablePlayers}
+                            setAvailablePlayers={setAvailablePlayers}
+                            selection={winner3}
+                            setSelection={setWinner3}
+                        />
+                    </td>
+                    <td>
+                        <Dropdown 
+                            availablePlayers={availablePlayers}
+                            setAvailablePlayers={setAvailablePlayers}
+                            selection={loser3}
+                            setSelection={setLoser3}
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form onSubmit={handleSubmit} id="submitGame" >
+                            <input type="submit" class="scoreReportButton clickable highlights"></input>  
+                        </form>
+                    </td>
+                    <td>
+                        <button onClick={clearSelection} class="scoreReportButton clickable highlights">Clear</button>
+                    </td>
+                </tr>
+            </table>
             <p class="statusmsg">{statusMsg}</p>
 
         </div>
+        
+        
     )
 }

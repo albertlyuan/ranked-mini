@@ -24,8 +24,12 @@ tr{
   border-bottom: 1px solid #ddd;
   height: 20%;
 }
-th, thead, td {
+th, td {
   padding: 1%;
+}
+thead {
+  padding: 1%;
+  font-size: 20px;
 }
 tr #addplayerRow{
   border-bottom: none;
@@ -33,10 +37,13 @@ tr #addplayerRow{
   width: 100%;
 }
 
-#home {
-  cursor: pointer
+.clickable{
+  cursor: pointer;
 }
 
+.highlights:hover{
+  background-color: #ddd;
+}
 /* Style the tab */
 .toolbar {
       font-family: Georgia, 'Times New Roman', Times, serif;
@@ -92,10 +99,6 @@ tr #addplayerRow{
       to {opacity: 1;}
   }
 
-  .playerRow{
-    cursor: pointer;
-  }
-
   .playerRow:hover {
     background-color: #ddd;
   }
@@ -111,44 +114,16 @@ tr #addplayerRow{
     color: #aaa;
   }
 
-  #playerNameBox::placeholder {
-
-  }
-
-  .gameRow{
-    cursor: pointer;
-  }
+  
 
   .gameRow:hover {
     background-color: #ddd;
-  }
-
-  .playerCell{
-    cursor: pointer;
   }
 
   .playerCell:hover {
     background-color: #ddd;
   }
 
-
-  .split {
-    height: 100%;
-    width: 50%;
-    position: fixed;
-    z-index: 1;
-    overflow-x: hidden;
-  }
-  
-  /* Control the left side */
-  .left {
-    left: 20%;
-  }
-  
-  /* Control the right side */
-  .right {
-    right: 0;
-  }
 
 #myInput {
   box-sizing: border-box;
@@ -163,27 +138,29 @@ tr #addplayerRow{
 
 #searchInput:focus {outline: 3px solid #ddd;}
 
-.statusmsg{
-  color: red;
+/* REPORT SCORE */
+.scoreReport{
+  padding-top: 10px;
+  width: 100%;
 }
+
 /* dropdown menu */
 .dropbtn {
-  background-color: #04AA6D;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
+  display:block;
+  width: 100%;
+  height: 100%;  
   border: none;
   cursor: pointer;
+  padding: 10px 10px;
 }
 
 .dropbtn:hover, .dropbtn:focus {
-  background-color: #3e8e41;
+  background-color: #ddd;
 }
 
 .dropdown {
-  position: relative;
-  display: inline-block;
-  padding: 12px 16px;
+  display:block;
+  text-align: center;
 }
 
 .dropdown-hide {
@@ -219,4 +196,27 @@ tr #addplayerRow{
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+}
+
+/* report score buttons and statusmsg */
+.scoreReportButton{
+  border: none;
+  border-radius: 25px;
+  width: 100%;
+  padding: 15px;
+  background-color: #ddd;
+}
+
+.scoreReportButton:hover{
+  background-color: #ccc;
+}
+
+#submitGame{
+  text-align: right;
+}
+
+.statusmsg{
+  color: #ff6961;
+  overflow: hidden;
+  text-align: center;
 }

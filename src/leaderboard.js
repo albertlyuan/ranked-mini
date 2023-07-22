@@ -51,7 +51,7 @@ function PlayerRow({name, elo, setTab, setPlayer, wins, losses}){
     }
 
     return(
-    <tr class="playerRow" onClick={goToPlayer}>
+    <tr class="clickable highlights" onClick={goToPlayer}>
         <td>{name} ({wins}-{losses})</td>
         <td style={{textAlign: "right"}}>{elo} </td>
     </tr>
@@ -76,8 +76,8 @@ export default function Leaderboard({roster, setTab, setPlayer}){
         <div id="leaderboard" class="tabcontent animatedLoad">
             <table>
                 <thead>
-                    <th>Player (record)</th>
-                    <th>Elo</th>
+                    <th style={{"text-align": "left"}}>Player (record)</th>
+                    <th style={{"text-align": "right"}}>Elo</th>
                 </thead>
                 {listItems}
                 <tr id="addplayerRow">
