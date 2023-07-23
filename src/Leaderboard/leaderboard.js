@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {firebase_addNewPlayer} from './firebase.js'
+import {firebase_addNewPlayer} from '../firebase.js'
 
 
 function AddPlayer({setStatusMsgFunc, roster}){

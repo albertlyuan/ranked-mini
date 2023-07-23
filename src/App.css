@@ -163,6 +163,10 @@ tr #addplayerRow{
   text-align: center;
 }
 
+#dropdownOptions{
+
+}
+
 .dropdown-hide {
   display: none;
   position: absolute;

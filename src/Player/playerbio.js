@@ -1,10 +1,9 @@
-import {firebase_getTotalPlayerData, blankPlayer} from './firebase.js'
+import {firebase_getTotalPlayerData, blankPlayer} from '../firebase.js'
 import { useEffect, useState } from 'react'
-import { Line  } from "react-chartjs-2"
-import {Chart, LinearScale, CategoryScale, PointElement, LineElement, Tooltip} from "chart.js";
-import GamesLog from "./gamesLog.js";
+import GamesLog from "../Game/gamesLog.js";
+import {EloChart, blankChartData} from "./eloChart.js"
 
-Chart.register(CategoryScale,LinearScale, PointElement, LineElement, Tooltip);
+
 
 export default function PlayerBio({player, games, setTab, setGame}){
     const [playerGames, setPlayerGames] = useState([])
@@ -12,22 +11,7 @@ export default function PlayerBio({player, games, setTab, setGame}){
     const [currWins, setCurrWins] = useState(0)
     const [currLosses, setCurrLosses] = useState(0)
     const [currElo, setCurrElo] = useState(0)
-    const [chartData, setChartData] = useState({
-        labels: [],
-        datasets: [{ //const elos
-            label: "Elo",
-            data: [],
-            backgroundColor: "black",
-            borderColor:"black",
-            borderWidth: 2
-        },
-        {data: []}, //const timestamps 1
-        {data: []}, //for showing elogain 2
-        {data: []}, //for showing teammates 3
-        {data: []}, //for showing opponents 4
-
-        ]
-    })
+    const [chartData, setChartData] = useState(blankChartData)
 
     useEffect(() => {     
         firebase_getTotalPlayerData(player)
@@ -140,9 +124,6 @@ export default function PlayerBio({player, games, setTab, setGame}){
         return [elos, timestamps, elogain]
     }
 
-        
-    
-
     return(
         <div class="animatedLoad">
             <h2>{player} ({currWins}-{currLosses})</h2>
@@ -152,7 +133,7 @@ export default function PlayerBio({player, games, setTab, setGame}){
             <br></br>
             <div>
                 <h3>Elo: {currElo}</h3>
-                <LineChart chartData={chartData}/>
+                <EloChart chartData={chartData}/>
             </div>
             <br></br>
             <div>
@@ -169,67 +150,3 @@ export default function PlayerBio({player, games, setTab, setGame}){
 }
 
 
-function LineChart({chartData}) {    
-    const options = {
-        scales: {
-            x: {
-               ticks: {
-                   display: false
-              }
-           },
-        },
-        interaction: {
-            intersect: false,
-            mode: 'index',
-        },
-        plugins:{
-            tooltip: {
-                // enabled: true,
-                callbacks: {
-                    beforeTitle: (context) => {
-                        // const dataidx = Object.values(context)[0].dataIndex
-
-                        // return Object.keys(Object.values(context)[0])
-                        return "Game ID: " + Object.values(context)[0].label 
-                    },
-                    title: (context) => {
-                        return "Timestamp: " + chartData.datasets[1].data[Object.values(context)[0].dataIndex]
-                    },
-                    label: function(context){
-                        const elogain = chartData.datasets[2].data[context.dataIndex]
-                        return context.formattedValue + ` (${elogain > 0 ? "+" : ""}${elogain ? elogain.toFixed(2) : "-"})`
-                    },
-                    labelTextColor: function(context) {
-                        const elogain = chartData.datasets[2].data[context.dataIndex]
-                        if (elogain > 0){
-                            return '#77DD77'
-                        }else if (elogain < 0){
-                            return '#ff6961'
-                        }
-                        return 'white';
-                    },
-                    body: (context) => {
-                        return Object.values(context)[0];
-                        // context.dataset.label + ": " + 
-
-                    },
-
-                    footer: (context) => {
-                        return "Winning team: " + chartData.datasets[3].data[Object.values(context)[0].dataIndex]
-                    },
-                    afterFooter: (context) => {
-                        return "Losing team: " + chartData.datasets[4].data[Object.values(context)[0].dataIndex]
-                    },
-                },
-            },
-        }
-      }
-
-    return (
-        <Line 
-            data={chartData} 
-            options={options} 
-        />
-    );
-
-}

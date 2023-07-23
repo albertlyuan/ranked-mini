@@ -1,3 +1,4 @@
+import GameRow from './gameRow.js'
 export default function GamesLog({gamesLog, setTab, setGame}){
 
     const gameList = gamesLog.map((game) =>
@@ -25,18 +26,3 @@ export default function GamesLog({gamesLog, setTab, setGame}){
     );
 }
 
-function GameRow({game, setTab, setGame}){
-    const goToGame = () => {
-        setTab('game')
-        setGame(game)
-    }
-    return(
-        <tr class="clickable highlights" onClick={goToGame}>
-            <td>{game[0]}</td>
-            <td>{game[1]}</td>
-            <td>{game[2].join(", ")} </td>
-            <td>{game[3].join(", ")} </td>
-        </tr>
-        
-    )
-}

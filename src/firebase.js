@@ -29,7 +29,10 @@ const games = ref(db, '/games')
 const STARTING_ELO = 400
 const STARTING_GAMEID = -1
 
-export function blankPlayer(name){
+/**
+ * 
+ * @returns placeholder player object
+ */export function blankPlayer(name){
     return {
         name: {
             elo: -1,
@@ -43,7 +46,12 @@ export function blankPlayer(name){
     }
 }
 
+/**
+ * Async function
+ * @returns list of [name, elo, num wins, num losses]
+ */
 export async function buildLeaderboard(){
+
     const players = await firebase_getPlayers()
     
     const leaderboard = []
@@ -55,6 +63,10 @@ export async function buildLeaderboard(){
     return leaderboard
 }
 
+/**
+ * 
+ * @returns sorted list of [game_id, ts, winningTeam (list of names), losingTeam (list of names)]
+ */
 export async function getGamesLog(){
     const gameLog = (await get(query(games))).val()
     const gameLogObjects = []
@@ -71,15 +83,25 @@ export async function getGamesLog(){
     return gameLogObjects
 }
 
+/**
+ * adds new player to the database
+ * @param {str} playerName 
+ */
 export function firebase_addNewPlayer(playerName){
     const ts = new Date().toString()
     updatePlayerHistory(playerName,STARTING_ELO,STARTING_GAMEID,0,0, ts, null)
     updatePlayerNow(playerName,STARTING_ELO,STARTING_GAMEID,0,0)
 }
 
-
-// firebase_getPlayers().then(console.log)
-
+/**
+ * Log new game. updates player_now, adds row to player_history and games 
+ * @param {str} winner1 
+ * @param {str} winner2 
+ * @param {str} winner3 
+ * @param {str} loser1 
+ * @param {str} loser2 
+ * @param {str} loser3 
+ */
 export async function firebase_logNewGame(winner1, winner2, winner3, loser1, loser2,loser3){
     const newGameID = await getNewGameID()
     const winners = [winner1,winner2,winner3]
@@ -92,8 +114,8 @@ export async function firebase_logNewGame(winner1, winner2, winner3, loser1, los
 
     const players = await firebase_getPlayers()
     
-    const winnerData = getPlayerObjects(winners, players)
-    const loserData = getPlayerObjects(losers, players)
+    const winnerData = filterPlayerObjects(winners, players)
+    const loserData = filterPlayerObjects(losers, players)
 
     const winningTeamElo = calculateTeamElo(Array.from(winnerData.values()))
     const losingTeamElo = calculateTeamElo(Array.from(loserData.values()))
@@ -104,8 +126,12 @@ export async function firebase_logNewGame(winner1, winner2, winner3, loser1, los
     // console.log("added to playertables")
 }
 
-//helper function for firebase_logNewGame
-function getPlayerObjects(playernames, players){
+/** 
+ * @param {list} playernames - list of names 
+ * @param {list} players - list of player objects
+ * @returns map of player objects for each name in playernames
+ */
+function filterPlayerObjects(playernames, players){
     const playerObjects = new Map()
     for (const i of playernames){
         playerObjects.set(i, players[i])
@@ -113,6 +139,15 @@ function getPlayerObjects(playernames, players){
     return playerObjects
 }
 
+/**
+ * update player_history and player_now tables
+ * @param {map} playerData - map of {name: player object}
+ * @param {float} winningTeamElo - team elo of winning team
+ * @param {float} losingTeamElo - team elo of losing team
+ * @param {int} newGameID - game id 
+ * @param {str} ts - timestamp
+ * @param {boolean} win_status - true if team won
+ */
 async function updateNewPlayerElo(playerData, winningTeamElo, losingTeamElo, newGameID, ts, win_status){
     for (const name of playerData.keys()){
         const oldElo = playerData.get(name)['elo']
@@ -135,12 +170,26 @@ async function updateNewPlayerElo(playerData, winningTeamElo, losingTeamElo, new
     }
 }
 
+/**
+ * player_now object = {name: {elo, losses, most_recent_game, wins}}
+ * @returns list of all player_now player objects
+ */
 async function firebase_getPlayers(){
     const players = await get(query(player_now))
     const playerObjects = players.val()
     return playerObjects
 }
 
+/**
+ * add new row to player_history
+ * @param {str} playerName 
+ * @param {float} elo 
+ * @param {int} game_id 
+ * @param {int} wins 
+ * @param {int} losses 
+ * @param {str} ts 
+ * @param {boolean} win_status 
+ */
 async function updatePlayerHistory(playerName,elo,game_id, wins, losses, ts, win_status){
     set(ref(db, '/player_history/'+playerName+"/"+game_id), {
         name: playerName,
@@ -153,6 +202,14 @@ async function updatePlayerHistory(playerName,elo,game_id, wins, losses, ts, win
     })
 }
 
+/**
+ * update player_now
+ * @param {str} playerName 
+ * @param {float} elo 
+ * @param {int} game_id 
+ * @param {int} wins 
+ * @param {int} losses 
+ */
 async function updatePlayerNow(playerName, elo, game_id, wins, losses){
     await set(ref(db, '/player_now/'+playerName), {
         most_recent_game: game_id,
@@ -161,27 +218,57 @@ async function updatePlayerNow(playerName, elo, game_id, wins, losses){
         losses: losses
     })
 }
-//elo expected value
+
 const K = 32
 const D = 400
-
-function calculateNewElo(playerElo, winningTeamElo, losingTeamElo, win_boolean){
+/**
+ * Calculated new player Elo using equation:
+ * 
+ * oldElo + K*(1- (1/ (1+10^((oppoElo - oldElo)/D) ) ) ) 
+ * 
+ * Currently K=32 D=400
+ * @param {float} oldPlayerElo
+ * @param {float} winningTeamElo 
+ * @param {float} losingTeamElo 
+ * @param {boolean} win_boolean 
+ * @returns 
+ */
+function calculateNewElo(oldPlayerElo, winningTeamElo, losingTeamElo, win_boolean){
     if (win_boolean){
-        return playerElo + K*(1-expectedValue(playerElo,losingTeamElo))
+        return oldPlayerElo + K*(1-expectedValue(oldPlayerElo,losingTeamElo))
     }else{
-        const player_team_elo = Math.min(playerElo,losingTeamElo)
-        return Math.max(0,playerElo + K*(0-expectedValue(player_team_elo,winningTeamElo)))
+        const player_team_elo = Math.min(oldPlayerElo,losingTeamElo)
+        return Math.max(0,oldPlayerElo + K*(0-expectedValue(player_team_elo,winningTeamElo)))
     }
 }
-function expectedValue(playerElo, opponentElo){
-    return 1/(1+10**((opponentElo-playerElo)/D))
+
+/**
+ * helper func for calclulating new elo
+ * 
+ * equation: 1/ (1+10^((oppoElo - oldElo)/D) )
+ * @param {float} oldPlayerElo 
+ * @param {float} opponentElo 
+ * @returns expected win between 1(win) and 0(loss)
+ */
+function expectedValue(oldPlayerElo, opponentElo){
+    return 1/(1+10**((opponentElo-oldPlayerElo)/D))
 }
 
-//logistic curve for weighted individual elo
-// const L = 100
-// const slope = 0.005
-// const midpoint = 500
+const L = 200
+const slope = 0.0055
+const midpoint = 850
+/**
+ * calculates team elo. higher ranked players get weighted more heavily using equation: 
+ * 
+ * L / (1+ Math.E**(-slope*(elo-midpoint)))
+ * 
+ * L = 200 max weight
+// const slope = 0.0055
+// const midpoint = 850 elo to get 100 weight
 
+ * @param {list} team - list of player objects 
+ * @returns float - team elo 
+ */
 function calculateTeamElo(team){
     
     const weightedRank = (elo) => {
@@ -200,7 +287,14 @@ function calculateTeamElo(team){
 }
 // console.log(calculateTeamElo(0, 0, 0))
 
-//helper function for firebase_logNewGame
+
+/**
+ * add new row to games table. also sorts winners and losers alphabetically
+ * @param {int} newGameID 
+ * @param {list} winners 
+ * @param {list} losers 
+ * @param {str} ts 
+ */
 function addToGamesTable(newGameID, winners, losers, ts){
     winners.sort((a, b) => a.localeCompare(b))
     losers.sort((a, b) => a.localeCompare(b))
@@ -217,7 +311,10 @@ function addToGamesTable(newGameID, winners, losers, ts){
     })
 }
 
-//helper function for firebase_logNewGame
+/**
+ * finds most recently used gameid and returns that + 1
+ * @returns int
+ */
 export async function getNewGameID(){
     const result = await get(query(games, orderByKey(), limitToLast(1)))
     if (result.val() != null){
@@ -227,6 +324,11 @@ export async function getNewGameID(){
     return 0
 }
 
+/**
+ * 
+ * @param {str} name 
+ * @returns list of player Objects for each game played by a player
+ */
 export function firebase_getTotalPlayerData(name){
     return new Promise((resolve, reject) => {
         get(query(ref(db,"player_history/"+name), orderByChild('game_id')))
@@ -240,6 +342,12 @@ export function firebase_getTotalPlayerData(name){
     })
 }
 
+/**
+ * 
+ * @param {str} name 
+ * @param {int} gameid 
+ * @returns player object of (gameid - 1). used to see elo of player at time of gameid 
+ */
 export function firebase_getPlayerData(name, gameid){
     return new Promise((resolve, reject) => {
         get(query(ref(db,"player_history/"+name), orderByChild('game_id'), endAt(gameid - 1), limitToLast(1)))
@@ -252,9 +360,12 @@ export function firebase_getPlayerData(name, gameid){
     })
 }
 
-// getPlayerData("b", 7).then(console.log)
-// getPlayerData("a",0).then(console.log)
-
+/**
+ * 
+ * @param {list} players
+ * @param {int} gameID 
+ * @returns list of [name, elo, wins, losses] at the time of gameID
+ */
 export async function queryGamePlayersData(players, gameID){
     let playerData = players.map(async player => {
         const playerData = Object.values(await firebase_getPlayerData(player, gameID))[0]
@@ -263,9 +374,3 @@ export async function queryGamePlayersData(players, gameID){
     })
     return Promise.all(playerData)
 }
-// queryGamePlayersData(['a','b','c'], 0).then(console.log)
-
-
-
-// getNewGameID().then(a => console.log("game_id: " + a))
-

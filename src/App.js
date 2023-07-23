@@ -1,10 +1,10 @@
 import './App.css';
-import Leaderboard from './leaderboard.js';
-import ReportScore from './reportscore.js';
-import FAQ from './faq.js';
-import GamesLog from './gamesLog.js';
-import GameInfo from './gameInfo.js'
-import PlayerBio from './playerbio.js';
+import Leaderboard from './Leaderboard/leaderboard.js';
+import ReportScore from './ReportScore/reportscore.js';
+import FAQ from './FAQ/faq.js';
+import GamesLog from './Game/gamesLog.js';
+import GameInfo from './Game/gameInfo.js'
+import PlayerBio from './Player/playerbio.js';
 import TabButton from './TabButton.js';
 import { Suspense, useState, useEffect } from 'react';
 import {buildLeaderboard, getGamesLog} from './firebase.js'
