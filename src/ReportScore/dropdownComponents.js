@@ -15,7 +15,7 @@ function DropdownSearch({sendSearchInput, inputRef}){
         <input 
             type="text" 
             placeholder="Search.." 
-            id="searchInput" 
+            id="dropdownSearch" 
             value={search}
             onChange={handleChange}
             onKeyUp={handleKeyUp}

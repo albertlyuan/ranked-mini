@@ -136,8 +136,6 @@ tr #addplayerRow{
   border-bottom: 1px solid #ddd;
 }
 
-#searchInput:focus {outline: 3px solid #ddd;}
-
 /* REPORT SCORE */
 .scoreReport{
   padding-top: 10px;
@@ -164,7 +162,21 @@ tr #addplayerRow{
 }
 
 #dropdownOptions{
+  max-height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 
+#dropdownSearch{
+  padding: 10px 10px;
+  font-size: 1rem;
+  border-width: 0px;
+  border-style: solid;
+  background: transparent;
+  outline: transparent;
+  width: 100%;
+  text-align: left;
+  color: #aaa;
 }
 
 .dropdown-hide {
