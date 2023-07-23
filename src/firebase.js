@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, set, query, ref, orderByChild, orderByKey, limitToLast, get, endAt } from "firebase/database";
+import { getDatabase, set, query, ref, orderByChild, orderByKey, limitToLast, get, endAt, equalTo } from "firebase/database";
 
 // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 
@@ -373,4 +373,9 @@ export async function queryGamePlayersData(players, gameID){
         return asdf
     })
     return Promise.all(playerData)
+}
+
+export async function deleteGame(gameid){
+    const game  = (await get(query(ref(db,"/games/"+gameid)))).val()
+    console.log(game)
 }

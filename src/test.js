@@ -1,7 +1,5 @@
 import * as firebase from './firebase.js'
 
-
-
 function addPlayers(players){
     for (let player of players){
         firebase.firebase_addNewPlayer(player)
@@ -58,10 +56,12 @@ const players = ["Alpha", "Bravo", "Charlie",
                 "Sierra", "Tango", "Uniform", "Victor", "Whiskey", 
                 "X-ray", "Yankee", "Zulu"]
 
-addPlayers(players)
+// addPlayers(players)
 
-for (let i=0; i < 10;i++){
-    await randomgame(players)
-}
+// for (let i=0; i < 10;i++){
+//     await randomgame(players)
+// }
+
+// firebase.deleteGame(9)
 
 
