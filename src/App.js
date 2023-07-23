@@ -25,7 +25,7 @@ function App() {
 
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
-      <h1 class="clickable" onClick={() => setTab('leaderboard')}>Brimstone Ranked Mini</h1>
+      <h1 class="clickable" onClick={() => setTab('leaderboard')}>Ranked Mini</h1>
       <div className="toolbar">
         <TabButton
           isActive={tab === 'leaderboard'}
