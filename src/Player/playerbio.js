@@ -2,6 +2,7 @@ import {firebase_getTotalPlayerData, blankPlayer} from '../firebase.js'
 import { useEffect, useState } from 'react'
 import GamesLog from "../Game/gamesLog.js";
 import {EloChart, blankChartData} from "./eloChart.js"
+import {getRankFromElo} from '../rank-images/rankImages.js';
 
 
 
@@ -126,13 +127,9 @@ export default function PlayerBio({player, games, setTab, setGame}){
 
     return(
         <div class="animatedLoad">
-            <h2>{player} ({currWins}-{currLosses})</h2>
-
-            {/* <p>{ chartData.datasets[0].data.join(",")}</p> */}
-            {/* <p>{ chartData.labels.join(",")}</p> */}
-            <br></br>
+            <h2>{player} ({currWins}-{currLosses})  <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/></h2>
             <div>
-                <h3>Elo: {currElo}</h3>
+                <h3>Elo: {currElo} </h3>
                 <EloChart chartData={chartData}/>
             </div>
             <br></br>
@@ -142,6 +139,7 @@ export default function PlayerBio({player, games, setTab, setGame}){
                     gamesLog={playerGames}
                     setTab={setTab} 
                     setGame={setGame}
+                    eloGain={[chartData["labels"], chartData["datasets"][2].data]}
                 />
             </div>
         </div>

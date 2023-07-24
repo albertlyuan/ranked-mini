@@ -114,12 +114,25 @@ tr #addplayerRow{
     color: #aaa;
   }
 
-  
+  .elogain{
+    background-color: #77DD77;
+  } 
+  .elogain:hover{
+    background-color: #54d454
+  } 
 
-  .gameRow:hover {
-    background-color: #ddd;
+  .eloloss{ 
+    background-color: #ff6961;
   }
 
+  .eloloss:hover{ 
+    background-color: #ff4e45;
+  }
+
+  .gamelog{
+    width: 100%;
+  }
+  
   .playerCell:hover {
     background-color: #ddd;
   }

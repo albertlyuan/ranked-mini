@@ -19,7 +19,7 @@ export default function GameInfo({game, setTab, setPlayer}){
     return(
         <div>
             <div class="date">
-                <h3 id="DayOfWeek">{dayOfWeek(game[1])}</h3>
+                <h3 id="DayOfWeek">Game ID: {game[0]}</h3>
                 <p id="FullDate">{fullDate(game[1])}</p>
             </div> 
             <br></br>
