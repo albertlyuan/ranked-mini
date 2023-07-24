@@ -109,7 +109,8 @@ function CalculatingElo(){
             <h3>Unranked Uncertainty *WIP</h3>
             <p>
                 Since new players may come in with a higher or lower expected outcome, there is uncertainty in how much <InlineEquation text={"outcome_{expected}"}/> actually is.
-                To account for this, <InlineEquation text={"K"}/> can be set higher during the first few games played.
+                To account for this, <InlineEquation text={"K"}/> can be set higher  during the first few games played. 
+                In our system, <InlineEquation text={"K=96"}/> which is 3 times larger than normal.
                 During this 10 game placement period, a player will be the 'Unranked' <img title={ranks[0][0].split("static/media/")[1].split(".")[0]} class="rankImg" src={ranks[0][0]}></img> rank.
             </p>
 

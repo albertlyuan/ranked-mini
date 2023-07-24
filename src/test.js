@@ -56,7 +56,7 @@ const players = ["Alpha", "Bravo", "Charlie",
                 "Sierra", "Tango", "Uniform", "Victor", "Whiskey", 
                 "X-ray", "Yankee", "Zulu"]
 
-// addPlayers(players)
+addPlayers(players)
 
 for (let i=0; i < 100;i++){
     await randomgame(players)

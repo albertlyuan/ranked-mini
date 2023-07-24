@@ -26,7 +26,7 @@ const db = getDatabase(app)
 // const player_history = ref(db, '/player_history')
 const player_now = ref(db, '/player_now')
 const games = ref(db, '/games')
-const STARTING_ELO = 400
+const STARTING_ELO = 0
 const STARTING_GAMEID = -1
 
 /**
@@ -147,9 +147,11 @@ function filterPlayerObjects(playernames, players){
 async function updateNewPlayerElo(playerData, winningTeamElo, losingTeamElo, newGameID, ts, win_status){
     for (const name of playerData.keys()){
         const oldElo = playerData.get(name)['elo']
-        const newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, win_status)
         let wins = playerData.get(name)['wins']
         let losses = playerData.get(name)['losses']
+
+        const newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, win_status, wins+losses)
+        
 
         if (win_status){
             wins+=1
@@ -212,8 +214,7 @@ async function updatePlayerNow(playerName, elo, game_id, wins, losses){
     })
 }
 
-const K = 32
-const D = 400
+
 /**
  * Calculated new player Elo using equation:
  * 
@@ -226,7 +227,11 @@ const D = 400
  * @param {boolean} win_boolean 
  * @returns 
  */
-function calculateNewElo(oldPlayerElo, winningTeamElo, losingTeamElo, win_boolean){
+function calculateNewElo(oldPlayerElo, winningTeamElo, losingTeamElo, win_boolean, totalGames){
+    let K = 32
+    if (totalGames < 10){
+        K = 96
+    }
     if (win_boolean){
         return oldPlayerElo + K*(1-expectedValue(oldPlayerElo,losingTeamElo))
     }else{
@@ -244,12 +249,11 @@ function calculateNewElo(oldPlayerElo, winningTeamElo, losingTeamElo, win_boolea
  * @returns expected win between 1(win) and 0(loss)
  */
 function expectedValue(oldPlayerElo, opponentElo){
+    const D = 400
     return 1/(1+10**((opponentElo-oldPlayerElo)/D))
 }
 
-const L = 200
-const slope = 0.005
-const midpoint = 400
+
 /**
  * calculates team elo. higher ranked players get weighted more heavily using equation: 
  * 
@@ -263,7 +267,9 @@ const midpoint = 400
  * @returns float - team elo 
  */
 function calculateTeamElo(team){
-    
+    const L = 200
+    const slope = 0.005
+    const midpoint = 400
     const weightedRank = (elo) => {
         // return elo
         return L / (1+ Math.E**(-slope*(elo-midpoint)))
