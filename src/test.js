@@ -58,9 +58,9 @@ const players = ["Alpha", "Bravo", "Charlie",
 
 // addPlayers(players)
 
-// for (let i=0; i < 10;i++){
-//     await randomgame(players)
-// }
+for (let i=0; i < 100;i++){
+    await randomgame(players)
+}
 
 // firebase.deleteGame(9)
 

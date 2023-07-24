@@ -236,3 +236,10 @@ tr #addplayerRow{
   overflow: hidden;
   text-align: center;
 }
+
+.rankImg{
+  height: 2em;
+  width: auto;
+  vertical-align:middle;
+
+}

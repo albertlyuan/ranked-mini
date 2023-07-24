@@ -2,7 +2,6 @@ import {useState} from 'react';
 import AddPlayer from './addPlayer.js';
 import PlayerRow from './leaderboardPlayer.js';
 
-
 export default function Leaderboard({roster, setTab, setPlayer}){
     const [statusMsg, setStatusMsg] = useState('');
 
