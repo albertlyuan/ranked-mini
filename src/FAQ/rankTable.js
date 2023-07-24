@@ -9,7 +9,7 @@ function RankTable(){
             <tr>
                 <td><img title={rankImg.split("static/media/")[1].split(".")[0]} class="rankImg" src={rankImg}></img></td>
                 <td>{rankImg.split("static/media/")[1].split(".")[0]}</td>
-                <td>{rankThreshold-50}-{rankThreshold-1}</td>
+                {rankThreshold > 150 ? <td>{rankThreshold-50}-{rankThreshold-1}</td> : <td>{"< "}{rankThreshold}</td>}
             </tr>
         )}
     })
@@ -24,7 +24,7 @@ function RankTable(){
             <tr>
                 <td><img title={ranks[ranks.length-1][0].split("static/media/")[1].split(".")[0]} class="rankImg" src={ranks[ranks.length-1][0]}></img></td>
                 <td>{ranks[ranks.length-1][0].split("static/media/")[1].split(".")[0]}</td>
-                <td>1000+</td>
+                <td>{"> "}1000</td>
             </tr>
             {rankMarkdown}
             <tr>

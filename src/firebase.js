@@ -108,9 +108,7 @@ export async function firebase_logNewGame(winner1, winner2, winner3, loser1, los
     const losers = [loser1,loser2,loser3]
     const ts = new Date().toString()
 
-    // console.log('gameid: ' + (newGameID))
     addToGamesTable(newGameID, winners, losers, ts)
-    // console.log('Added To Games Table')
 
     const players = await firebase_getPlayers()
     
@@ -122,8 +120,6 @@ export async function firebase_logNewGame(winner1, winner2, winner3, loser1, los
     
     await updateNewPlayerElo(winnerData,winningTeamElo,losingTeamElo,newGameID, ts, true)
     await updateNewPlayerElo(loserData,winningTeamElo,losingTeamElo,newGameID, ts, false)
-
-    // console.log("added to playertables")
 }
 
 /** 
@@ -160,9 +156,6 @@ async function updateNewPlayerElo(playerData, winningTeamElo, losingTeamElo, new
         }else{
             losses+=1
         }        
-
-        // const diff = newElo - oldElo
-        // console.log(name,`(${wins}-${losses})`, newElo,newGameID, `diff: ${diff}`)
 
         await updatePlayerHistory(name,newElo,newGameID, wins, losses, ts, win_status)
         await updatePlayerNow(name,newElo,newGameID,wins,losses)
@@ -255,16 +248,16 @@ function expectedValue(oldPlayerElo, opponentElo){
 }
 
 const L = 200
-const slope = 0.0055
-const midpoint = 850
+const slope = 0.005
+const midpoint = 400
 /**
  * calculates team elo. higher ranked players get weighted more heavily using equation: 
  * 
  * L / (1+ Math.E**(-slope*(elo-midpoint)))
  * 
  * L = 200 max weight
-// const slope = 0.0055
-// const midpoint = 850 elo to get 100 weight
+ * const slope = 0.005
+ * const midpoint = 850 elo to get 100 weight
 
  * @param {list} team - list of player objects 
  * @returns float - team elo 
@@ -272,8 +265,8 @@ const midpoint = 850
 function calculateTeamElo(team){
     
     const weightedRank = (elo) => {
-        return elo
-        // return L / (1+ Math.E**(-slope*(elo-midpoint)))
+        // return elo
+        return L / (1+ Math.E**(-slope*(elo-midpoint)))
     }
 
     const p1 = team[0].elo
@@ -281,11 +274,8 @@ function calculateTeamElo(team){
     const p3 = team[2].elo
 
     const teamElo = (weightedRank(p1) + weightedRank(p2) + weightedRank(p3)) / 3
-    // console.log("team: " + teamElo)
-    // console.log("people:"+ p1 + " " + p2 + " " + p3)
     return teamElo
 }
-// console.log(calculateTeamElo(0, 0, 0))
 
 
 /**
