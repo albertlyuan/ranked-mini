@@ -26,7 +26,7 @@ const db = getDatabase(app)
 // const player_history = ref(db, '/player_history')
 const player_now = ref(db, '/player_now')
 const games = ref(db, '/games')
-const STARTING_ELO = 0
+const STARTING_ELO = 400
 const STARTING_GAMEID = -1
 
 /**

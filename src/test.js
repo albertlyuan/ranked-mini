@@ -49,19 +49,27 @@ async function randomgame(players){
     await firebase.firebase_logNewGame(winners[0], winners[1], winners[2], losers[0], losers[1], losers[2])
 }
 
-const players = ["Alpha", "Bravo", "Charlie", 
-                "Delta", "Echo", "Foxtrot", "Golf", "Hotel", 
-                "India", "Juliett", "Kilo", "Lima", "Mike", 
-                "November", "Oscar", "Papa", "Quebec", "Romeo", 
-                "Sierra", "Tango", "Uniform", "Victor", "Whiskey", 
-                "X-ray", "Yankee", "Zulu"]
+// const players = ["Alpha", "Bravo", "Charlie", 
+//                 "Delta", "Echo", "Foxtrot", "Golf", "Hotel", 
+//                 "India", "Juliett", "Kilo", "Lima", "Mike", 
+//                 "November", "Oscar", "Papa", "Quebec", "Romeo", 
+//                 "Sierra", "Tango", "Uniform", "Victor", "Whiskey", 
+//                 "X-ray", "Yankee", "Zulu"]
 
-addPlayers(players)
+// addPlayers(players)
 
-for (let i=0; i < 100;i++){
-    await randomgame(players)
-}
+// for (let i=0; i < 100;i++){
+//     await randomgame(players)
+// }
 
 // firebase.deleteGame(9)
+
+import data from "../7-24-23inputs.json" assert { type: 'json' };
+const games = data["games"]
+console.log(games.length)
+
+for (const game of games){
+    await firebase.firebase_logNewGame(game["winner_1"], game["winner_2"], game["winner_3"], game["loser_1"], game["loser_2"], game["loser_3"])
+}
 
 

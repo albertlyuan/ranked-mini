@@ -237,6 +237,14 @@ tr #addplayerRow{
   background-color: #ddd;
 }
 
+.swapTeamsButton{
+  border: none;
+  border-radius: 25px;
+  width: 10%;
+  padding: 15px;
+  background-color: #ddd;
+}
+
 .scoreReportButton:hover{
   background-color: #ccc;
 }

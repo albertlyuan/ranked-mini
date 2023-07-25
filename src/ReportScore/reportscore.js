@@ -1,7 +1,7 @@
 import {useState } from 'react';
-import {buildLeaderboard, firebase_logNewGame, getNewGameID} from '../firebase.js'
+import {buildLeaderboard, firebase_logNewGame} from '../firebase.js'
 import Dropdown from "./dropdown.js"
-
+import ToggleSwitch from './toggleSwitch.js';
 
 export default function ReportScore({roster, setRoster}){
     const [availablePlayers, setAvailablePlayers] = useState(new Set(roster.map((person) => person[0])));
@@ -11,6 +11,7 @@ export default function ReportScore({roster, setRoster}){
     const [loser1, setLoser1] = useState('');
     const [loser2, setLoser2] = useState('');
     const [loser3, setLoser3] = useState('');
+    const [winnerPulled, setWinnerPulled] = useState(false);
     const [statusMsg, setStatusMsg] = useState('');
 
     // const justPlayerNames = roster.map((person) => person[0])
@@ -30,6 +31,20 @@ export default function ReportScore({roster, setRoster}){
         setLoser3('')
         
     }
+
+    function swapTeams(){
+        const tempWinners = [winner1,winner2,winner3]
+        setWinner1(loser1)
+        setWinner2(loser2)
+        setWinner3(loser3)
+
+        setLoser1(tempWinners[0])
+        setLoser2(tempWinners[1])
+        setLoser3(tempWinners[2])
+
+
+    }
+
     function handleSubmit(event){
         //check for 6 players
         event.preventDefault()
@@ -54,6 +69,8 @@ export default function ReportScore({roster, setRoster}){
     return(
         <div class="scoreReport animatedLoad">
             <table >
+            <ToggleSwitch label="Pulled" puller={winnerPulled} setPuller={setWinnerPulled}/>
+            
                 <tr>
                     <th>Winning Team</th>
                     <th>Losing Team</th>
@@ -113,8 +130,13 @@ export default function ReportScore({roster, setRoster}){
                         />
                     </td>
                 </tr>
+            </table>
+            <div style={{display: "flex", justifyContent:"center", alignContent:"center"}}>
+                <button onClick={swapTeams} class="swapTeamsButton clickable highlights">Swap Teams</button>
+            </div>
+            <table>
                 <tr>
-                    <td>
+                    <td style={{textAlign:"center"}}>
                         <form onSubmit={handleSubmit} id="submitGame" >
                             <input type="submit" class="scoreReportButton clickable highlights"></input>  
                         </form>
