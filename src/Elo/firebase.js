@@ -302,10 +302,8 @@ export async function firebase_getPlayerData(name, gameid){
 export function queryGamePlayersData(players, gameID){
     let playerData = players.map(async player => {
         const beforeAfterData = await firebase_getPlayerData(player, parseInt(gameID))
-        console.log(beforeAfterData)
         const before = Object.values(beforeAfterData[0])[0]
         const after = Object.values(beforeAfterData[1])[0]
-        // alert([gameID, player, before.game_id, after.game_id])
         return [player,[before.elo, after.elo], before.wins, before.losses]
     })
     return Promise.all(playerData)

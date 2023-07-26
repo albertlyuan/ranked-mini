@@ -50,10 +50,10 @@ function calculateNewElo(oldPlayerElo, winningTeamElo, losingTeamElo, win_boolea
     }else{ //lost
         const player_team_elo = Math.min(oldPlayerElo,losingTeamElo)
         if (winner_pulled){ //player lost and received
-            ret = Math.max(0,oldPlayerElo + k*(0-expectedValue(player_team_elo,winningTeamElo, win_boolean, winner_pulled)) * (1-PULL_FACTOR)) 
+            ret = Math.max(0,oldPlayerElo + k*(0-expectedValue(player_team_elo,winningTeamElo, win_boolean, winner_pulled)) / PULL_FACTOR) 
             console.log("lost + received")
         }else{ //player lost and pulled
-            ret = Math.max(0,oldPlayerElo + k*(0-expectedValue(player_team_elo,winningTeamElo, win_boolean, winner_pulled)) * PULL_FACTOR) 
+            ret = Math.max(0,oldPlayerElo + k*(0-expectedValue(player_team_elo,winningTeamElo, win_boolean, winner_pulled)) / (1-PULL_FACTOR)) 
             console.log("lost + pulled")
         }
         console.log(player_team_elo, winningTeamElo)

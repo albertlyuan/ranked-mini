@@ -100,12 +100,19 @@ async function load(){
     console.log("breakpct: ",breaks/games.length)
 }
 
-// load()
-firebase.queryGamePlayersData(["dawn", "jason", "kooski"], 27).then(console.log)
+load()
 
-console.log(
+// console.log(
+// // dawn @199 team 198, lost to 188 received
+// elo.calculateNewElo(199,188,198,false,14,true), 
+// 32*(0-elo.expectedValue(198,188))/.3
+// )
 
-// elo.calculateNewElo(199,82.1,195.077026979762,false,14,false)
-// 32*(0-elo.expectedValue(199.1,82.1))*0.3
-)
+// console.log(
+//     // a li @192 team 188, won 199 pulled
+//     elo.calculateNewElo(192,188,198,true,14,true), 
+//     32*(1-elo.expectedValue(192,198))/.3
+//     )
+
+
 
