@@ -7,7 +7,8 @@
       "timestamp": "Mon Jul 24 2023 19:03:22 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "a li",
       "winner_2": "ders",
-      "winner_3": "suraj"
+      "winner_3": "suraj",
+      "winner_pulled": true
     },
     {
       "loser_1": "ders",
@@ -16,7 +17,9 @@
       "timestamp": "Mon Jul 24 2023 19:06:07 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "jason",
       "winner_2": "jmac ",
-      "winner_3": "x"
+      "winner_3": "x",
+      "winner_pulled": false
+      
     },
     {
       "loser_1": "a li",
@@ -25,7 +28,9 @@
       "timestamp": "Mon Jul 24 2023 19:09:51 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "ders",
       "winner_2": "henry",
-      "winner_3": "suraj"
+      "winner_3": "suraj",
+      "winner_pulled": false
+      
     },
     {
       "loser_1": "rut",
@@ -34,7 +39,8 @@
       "timestamp": "Mon Jul 24 2023 19:15:09 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "dawn ",
       "winner_2": "jmac ",
-      "winner_3": "trev"
+      "winner_3": "trev",
+      "winner_pulled": true
     },
     {
       "loser_1": "a li",
@@ -43,7 +49,8 @@
       "timestamp": "Mon Jul 24 2023 19:17:11 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "ders",
       "winner_2": "trev",
-      "winner_3": "vincent"
+      "winner_3": "vincent",
+      "winner_pulled": false
     },
     {
       "loser_1": "ders",
@@ -52,7 +59,8 @@
       "timestamp": "Mon Jul 24 2023 19:21:04 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "a li",
       "winner_2": "leo",
-      "winner_3": "vincent"
+      "winner_3": "vincent",
+      "winner_pulled": false
     },
     {
       "loser_1": "bodhi",
@@ -61,7 +69,8 @@
       "timestamp": "Mon Jul 24 2023 19:23:50 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "dawn ",
       "winner_2": "jmac ",
-      "winner_3": "suraj"
+      "winner_3": "suraj",
+      "winner_pulled": false
     },
     {
       "loser_1": "a li",
@@ -70,7 +79,8 @@
       "timestamp": "Mon Jul 24 2023 19:26:08 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "kevin",
       "winner_2": "rut",
-      "winner_3": "trev"
+      "winner_3": "trev",
+      "winner_pulled": false
     },
     {
       "loser_1": "dawn ",
@@ -79,7 +89,8 @@
       "timestamp": "Mon Jul 24 2023 19:28:46 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "a li",
       "winner_2": "ders",
-      "winner_3": "x"
+      "winner_3": "x",
+      "winner_pulled": true
     },
     {
       "loser_1": "ders",
@@ -88,7 +99,9 @@
       "timestamp": "Mon Jul 24 2023 19:32:01 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "bodhi",
       "winner_2": "dawn ",
-      "winner_3": "trev"
+      "winner_3": "trev",
+      "winner_pulled": false
+      
     },
     {
       "loser_1": "a li",
@@ -97,7 +110,8 @@
       "timestamp": "Mon Jul 24 2023 19:35:44 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "ders",
       "winner_2": "rut",
-      "winner_3": "suraj"
+      "winner_3": "suraj",
+      "winner_pulled": false
     },
     {
       "loser_1": "a li",
@@ -106,7 +120,8 @@
       "timestamp": "Mon Jul 24 2023 19:38:23 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "dawn ",
       "winner_2": "henry",
-      "winner_3": "rut"
+      "winner_3": "rut",
+      "winner_pulled": false
     },
     {
       "loser_1": "jmac ",
@@ -115,7 +130,8 @@
       "timestamp": "Mon Jul 24 2023 19:41:38 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "bodhi",
       "winner_2": "ders",
-      "winner_3": "x"
+      "winner_3": "x",
+      "winner_pulled": false
     },
     {
       "loser_1": "jason",
@@ -124,7 +140,8 @@
       "timestamp": "Mon Jul 24 2023 19:45:45 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "a li",
       "winner_2": "ders",
-      "winner_3": "henry"
+      "winner_3": "henry",
+      "winner_pulled": true
     },
     {
       "loser_1": "bodhi",
@@ -133,7 +150,8 @@
       "timestamp": "Mon Jul 24 2023 19:49:29 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "dawn ",
       "winner_2": "sarah",
-      "winner_3": "trev"
+      "winner_3": "trev",
+      "winner_pulled": false
     },
     {
       "loser_1": "a li",
@@ -142,7 +160,8 @@
       "timestamp": "Mon Jul 24 2023 19:51:48 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "jmac ",
       "winner_2": "rut",
-      "winner_3": "suraj"
+      "winner_3": "suraj",
+      "winner_pulled": false
     },
     {
       "loser_1": "a li",
@@ -151,7 +170,8 @@
       "timestamp": "Mon Jul 24 2023 19:54:10 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "bodhi",
       "winner_2": "ders",
-      "winner_3": "kooski "
+      "winner_3": "kooski ",
+      "winner_pulled": false
     },
     {
       "loser_1": "henry",
@@ -160,7 +180,8 @@
       "timestamp": "Mon Jul 24 2023 19:58:57 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "dawn ",
       "winner_2": "levi",
-      "winner_3": "suraj"
+      "winner_3": "suraj",
+      "winner_pulled": false
     },
     {
       "loser_1": "a li",
@@ -169,7 +190,8 @@
       "timestamp": "Mon Jul 24 2023 20:01:54 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "bodhi",
       "winner_2": "ders",
-      "winner_3": "jmac "
+      "winner_3": "jmac ",
+      "winner_pulled": false
     },
     {
       "loser_1": "anna",
@@ -178,7 +200,8 @@
       "timestamp": "Mon Jul 24 2023 20:04:04 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "dawn ",
       "winner_2": "levi",
-      "winner_3": "x"
+      "winner_3": "x",
+      "winner_pulled": false
     },
     {
       "loser_1": "henry",
@@ -187,7 +210,8 @@
       "timestamp": "Mon Jul 24 2023 20:06:53 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "jmac ",
       "winner_2": "rut",
-      "winner_3": "sarah"
+      "winner_3": "sarah",
+      "winner_pulled": false
     },
     {
       "loser_1": "a li",
@@ -196,7 +220,8 @@
       "timestamp": "Mon Jul 24 2023 20:10:23 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "bodhi",
       "winner_2": "dawn ",
-      "winner_3": "trev"
+      "winner_3": "trev",
+      "winner_pulled": false
     },
     {
       "loser_1": "henry",
@@ -205,7 +230,8 @@
       "timestamp": "Mon Jul 24 2023 20:14:40 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "jmac ",
       "winner_2": "kooski ",
-      "winner_3": "vincent"
+      "winner_3": "vincent",
+      "winner_pulled": true
     },
     {
       "loser_1": "anna",
@@ -214,7 +240,8 @@
       "timestamp": "Mon Jul 24 2023 20:18:02 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "a li",
       "winner_2": "levi",
-      "winner_3": "x"
+      "winner_3": "x",
+      "winner_pulled": true
     },
     {
       "loser_1": "dawn ",
@@ -223,7 +250,8 @@
       "timestamp": "Mon Jul 24 2023 20:22:24 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "bodhi",
       "winner_2": "jmac ",
-      "winner_3": "sarah"
+      "winner_3": "sarah",
+      "winner_pulled": false
     },
     {
       "loser_1": "a li",
@@ -232,7 +260,8 @@
       "timestamp": "Mon Jul 24 2023 20:25:22 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "anna",
       "winner_2": "henry",
-      "winner_3": "sarah"
+      "winner_3": "sarah",
+      "winner_pulled": false
     },
     {
       "loser_1": "anna",
@@ -241,7 +270,8 @@
       "timestamp": "Mon Jul 24 2023 20:29:22 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "a li",
       "winner_2": "kooski ",
-      "winner_3": "x"
+      "winner_3": "x",
+      "winner_pulled": true
     },
     {
       "loser_1": "sarah",
@@ -250,7 +280,9 @@
       "timestamp": "Mon Jul 24 2023 20:33:49 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "dawn ",
       "winner_2": "jason",
-      "winner_3": "kooski "
+      "winner_3": "kooski ",
+      "winner_pulled": false
+      
     },
     {
       "loser_1": "anna",
@@ -259,7 +291,8 @@
       "timestamp": "Mon Jul 24 2023 20:37:34 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "jmac ",
       "winner_2": "sarah",
-      "winner_3": "x"
+      "winner_3": "x",
+      "winner_pulled": false
     },
     {
       "loser_1": "jason",
@@ -268,7 +301,8 @@
       "timestamp": "Mon Jul 24 2023 20:47:49 GMT-0400 (Eastern Daylight Time)",
       "winner_1": "dawn ",
       "winner_2": "suraj",
-      "winner_3": "x"
+      "winner_3": "x",
+      "winner_pulled": false
     }
   ],
   "player_history": {
