@@ -1,4 +1,4 @@
-import {firebase_addNewPlayer} from '../firebase.js'
+import {firebase_addNewPlayer} from '../Elo/firebase.js'
 import {useState} from 'react';
 
 function AddPlayer({setStatusMsgFunc, roster}){
@@ -15,7 +15,7 @@ function AddPlayer({setStatusMsgFunc, roster}){
             setStatusMsgFunc("name cannot be empty")
         }else{
             for (let i = 0; i < roster.length; i++) {
-                if (inputName === roster[i][0]){
+                if (inputName.trim() === roster[i][0]){
                     validNewName = false
                     setStatusMsgFunc("name already exists")
                 }

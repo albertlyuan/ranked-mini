@@ -1,10 +1,18 @@
-import {firebase_getTotalPlayerData, blankPlayer} from '../firebase.js'
+import {firebase_getTotalPlayerData, blankPlayer} from '../Elo/firebase.js'
 import { useEffect, useState } from 'react'
 import GamesLog from "../Game/gamesLog.js";
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
 
-
+function sortListByGameID(a,b){
+    if (a[0] < b[0]) {
+        return -1;
+    } else if (a[0] > b[0]) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
 
 export default function PlayerBio({player, games, setTab, setGame}){
     const [playerGames, setPlayerGames] = useState([])
@@ -27,38 +35,45 @@ export default function PlayerBio({player, games, setTab, setGame}){
                 setCurrElo(mostRecentGame.elo)
                 setCurrLosses(mostRecentGame.losses)
                 setCurrWins(mostRecentGame.wins)
+
                 const [elos, timestamps, elogain] = eloHistory()
-                const [gameWinners, gameLosers] = getGamePlayers()
+                const [gameWinners, gameLosers, pullers] = getGamePlayers()
 
                 const dataobj = {
                     labels: elos.map(x => x[0]),
-                    datasets: [{
-                        label: "Elo",
-                        data: elos.map(x => x[1]),
-                        backgroundColor: "black",
-                        borderColor:"black",
-                        borderWidth: 2
-                    },
-                    {
-                        label: "timestamps",
-                        data: timestamps.map(x => x[1]),
-                        hidden: true,
-                    },
-                    {
-                        label: "elogain",
-                        data: elogain.map(x => x[1]),
-                        hidden: true,
-                    },
-                    {
-                        label: "winners",
-                        data: gameWinners.map(x => x[1]),
-                        hidden: true,
-                    },
-                    {
-                        label: "losers",
-                        data: gameLosers.map(x => x[1]),
-                        hidden: true,
-                    }
+                    datasets: [
+                        {
+                            label: "Elo",
+                            data: elos.map(x => x[1]),
+                            backgroundColor: "black",
+                            borderColor:"black",
+                            borderWidth: 2
+                        },
+                        {
+                            label: "timestamps",
+                            data: timestamps.map(x => x[1]),
+                            hidden: true,
+                        },
+                        {
+                            label: "elogain",
+                            data: elogain.map(x => x[1]),
+                            hidden: true,
+                        },
+                        {
+                            label: "winners",
+                            data: gameWinners.map(x => x[1]),
+                            hidden: true,
+                        },
+                        {
+                            label: "losers",
+                            data: gameLosers.map(x => x[1]),
+                            hidden: true,
+                        },
+                        {
+                            label: "pulled",
+                            data: pullers.map(x => x[1]),
+                            hidden: true,
+                        }
                     ]
                 }
                 setChartData(dataobj)
@@ -79,21 +94,28 @@ export default function PlayerBio({player, games, setTab, setGame}){
     function getGamePlayers(){
         const gameWinners = [[-1,null]]
         const gameLosers = [[-1,null]]
+        const pullers = [[-1,null]]
         const thisplayerGames = []
         let gameIDs = new Set(Object.keys(playerData))
         
         for (const g of games){
             if (gameIDs.has(g[0])){
-                gameWinners.push([g[0],g[2]])
-                gameLosers.push([g[0],g[3]])
+                const intGameId = parseInt(g[0])
+                gameWinners.push([intGameId,g[2]])
+                gameLosers.push([intGameId,g[3]])
+                pullers.push([intGameId,g[4]])
                 thisplayerGames.push(g)
             }
             if (gameWinners.length === gameIDs.length){
                 break
             }
         }
+        gameLosers.sort(sortListByGameID)
+        gameWinners.sort(sortListByGameID)
+        pullers.sort(sortListByGameID)
+
         setPlayerGames(thisplayerGames)
-        return [gameWinners, gameLosers]
+        return [gameWinners, gameLosers, pullers]
     }
 
     const eloHistory = () => {
@@ -108,15 +130,7 @@ export default function PlayerBio({player, games, setTab, setGame}){
             elos.push([intGameId, game.elo])
             timestamps.push([intGameId, `${ts.getMonth()}/${ts.getDate()}/${ts.getFullYear()}`])
         }
-        elos.sort((a,b) => {
-            if (a[0] < b[0]) {
-                return -1;
-            } else if (a[0] > b[0]) {
-                return 1;
-            } else {
-                return 0;
-            }
-        })
+        elos.sort(sortListByGameID)
 
         for (let i = 1; i < elos.length; i++){
             elogain.push([elos[i][0], elos[i][1] - elos[i-1][1]])

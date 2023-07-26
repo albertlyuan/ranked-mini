@@ -1,9 +1,8 @@
-import * as firebase from './firebase.js'
-
+import * as firebase from './Elo/firebase.js'
+import * as elo from './Elo/elo.js'
 function addPlayers(players){
     for (let player of players){
         firebase.firebase_addNewPlayer(player)
-
     }
 }
 
@@ -63,13 +62,50 @@ async function randomgame(players){
 // }
 
 // firebase.deleteGame(9)
-
 import data from "../7-24-23inputs.json" assert { type: 'json' };
-const games = data["games"]
-console.log(games.length)
 
-for (const game of games){
-    await firebase.firebase_logNewGame(game["winner_1"], game["winner_2"], game["winner_3"], game["loser_1"], game["loser_2"], game["loser_3"])
+
+async function load(){
+    firebase.cleardb()
+    const games = data["games"]
+    const players = [
+        "anna",
+        "a li",
+        "bodhi",
+        "dawn",
+        "ders",
+        "henry",
+        "jason",
+        "jmac",
+        "kevin",
+        "kooski",
+        "leo",
+        "levi",
+        "rut",
+        "sarah",
+        "suraj",
+        "trev",
+        "vincent",
+        "x"
+    ]
+    addPlayers(players)
+    
+    let breaks = 0
+    for (const game of games){
+        if (game["winner_pulled"]){
+            breaks += 1
+        }
+        await firebase.firebase_logNewGame(game["winner_1"], game["winner_2"], game["winner_3"], game["loser_1"], game["loser_2"], game["loser_3"], game["winner_pulled"])
+    }
+    console.log("breakpct: ",breaks/games.length)
 }
 
+// load()
+firebase.queryGamePlayersData(["dawn", "jason", "kooski"], 27).then(console.log)
+
+console.log(
+
+// elo.calculateNewElo(199,82.1,195.077026979762,false,14,false)
+// 32*(0-elo.expectedValue(199.1,82.1))*0.3
+)
 

@@ -7,7 +7,7 @@ import GameInfo from './Game/gameInfo.js'
 import PlayerBio from './Player/playerbio.js';
 import TabButton from './TabButton.js';
 import { Suspense, useState, useEffect } from 'react';
-import {buildLeaderboard, getGamesLog} from './firebase.js'
+import {buildLeaderboard, getGamesLog} from './Elo/firebase.js'
 
 
 function App() {

@@ -19,6 +19,7 @@ export default function GamesLog({gamesLog, setTab, setGame, eloGain}){
                     <th>Winning Team</th>
                     <th>Losing Team</th>
                     {eloGain ? <th>+/- Elo</th> : <></>}
+                    <th>Broke to Win</th>
                 </tr>
                 {gameList}
             </table>

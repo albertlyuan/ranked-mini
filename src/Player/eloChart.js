@@ -12,10 +12,10 @@ var blankChartData = {
         borderWidth: 2
     },
     {data: []}, //const timestamps 1
-    {data: []}, //for showing elogain 2
-    {data: []}, //for showing teammates 3
-    {data: []}, //for showing opponents 4
-
+    {data: []}, //for elogain 2
+    {data: []}, //for teammates 3
+    {data: []}, //for opponents 4
+    {data: []}, //for pulled
     ]
 }
 
@@ -61,7 +61,7 @@ function EloChart({chartData}) {
 
                     },
 
-                    footer: (context) => {
+                    beforeFooter: (context) => {
                         const team = chartData.datasets[3].data[Object.values(context)[0].dataIndex]
                         if (team){
                             return "Winning team: " + team.join(", ")
@@ -69,12 +69,16 @@ function EloChart({chartData}) {
 
                         return "Winning team: " + null
                     },
-                    afterFooter: (context) => {
+                    footer: (context) => {
                         const team = chartData.datasets[4].data[Object.values(context)[0].dataIndex]
                         if (team){
                             return "Losing team: " + team.join(", ")
                         }
                         return "Losing team: " + null
+                    },
+                    afterFooter: (context) => {
+                        const pulled = chartData.datasets[5].data[Object.values(context)[0].dataIndex]
+                        return "Winner Pulled: " + pulled
                     },
                 },
             },

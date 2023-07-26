@@ -1,5 +1,5 @@
 import {useState } from 'react';
-import {buildLeaderboard, firebase_logNewGame} from '../firebase.js'
+import {buildLeaderboard, firebase_logNewGame} from '../Elo/firebase.js'
 import Dropdown from "./dropdown.js"
 import ToggleSwitch from './toggleSwitch.js';
 
@@ -54,7 +54,7 @@ export default function ReportScore({roster, setRoster}){
             return
         }
 
-        firebase_logNewGame(winner1,winner2,winner3,loser1,loser2,loser3)
+        firebase_logNewGame(winner1,winner2,winner3,loser1,loser2,loser3, winnerPulled)
         // const newLeaderboard = await buildLeaderboard()
         // setRoster(newLeaderboard)
         buildLeaderboard().then(newLeaderboard => {
@@ -69,7 +69,7 @@ export default function ReportScore({roster, setRoster}){
     return(
         <div class="scoreReport animatedLoad">
             <table >
-            <ToggleSwitch label="Pulled" puller={winnerPulled} setPuller={setWinnerPulled}/>
+            <ToggleSwitch label="Broke to Win" puller={winnerPulled} setPuller={setWinnerPulled}/>
             
                 <tr>
                     <th>Winning Team</th>

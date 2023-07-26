@@ -4,11 +4,11 @@ var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frida
 var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 export default function GameInfo({game, setTab, setPlayer}){
-    // [gameid, date string, winners, losers]
-    const dayOfWeek = (dateString) => {
-        const date = new Date(dateString)
-        return daysOfWeek[date.getDay()]
-    }
+    // [gameid, date string, winners, losers, broke to win]
+    // const dayOfWeek = (dateString) => {
+    //     const date = new Date(dateString)
+    //     return daysOfWeek[date.getDay()]
+    // }
 
     const fullDate = (dateString) => {
         const date = new Date(dateString)
@@ -23,6 +23,8 @@ export default function GameInfo({game, setTab, setPlayer}){
                 <p id="FullDate">{fullDate(game[1])}</p>
             </div> 
             <br></br>
+            <h3 style={{textAlign:"center"}}>Broke to win: {game[4]  ? "True" : "False"}</h3>
+
             <Teams gameID={game[0]} winners={game[2]} losers={game[3]} setTab={setTab} setPlayer={setPlayer}/>            
         </div>
         

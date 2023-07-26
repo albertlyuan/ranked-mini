@@ -1,5 +1,5 @@
 /**
- * game = list of [gameid, ts, winners (list), losers (list)]
+ * game = list of [gameid, ts, winners (list), losers (list), winnerPulled (bool)]
  * @param {*} param0 game, setTab, setGame
  * @returns <tr> with gameID, timestamp, winning team, losing team
  */
@@ -36,6 +36,7 @@ function GameRow({game, setTab, setGame, eloGain}){
                 <td>{game[2].join(", ")} </td>
                 <td>{game[3].join(", ")} </td>
                 <td>{deltaElo() ? deltaElo().toFixed(2) : deltaElo()}</td>
+                <td>{game[4]  ? "True" : "False"}</td>
             </tr>
             
         )
@@ -46,6 +47,8 @@ function GameRow({game, setTab, setGame, eloGain}){
             <td>{formattedDate()}</td>
             <td>{game[2].join(", ")} </td>
             <td>{game[3].join(", ")} </td>
+            <td>{game[4] ? "True" : "False"}</td>
+
         </tr>
     )
 }
