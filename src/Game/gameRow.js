@@ -1,9 +1,14 @@
+import {useNavigate} from "react-router-dom"
+
 /**
  * game = list of [gameid, ts, winners (list), losers (list), winnerPulled (bool)]
  * @param {*} param0 game, setTab, setGame
  * @returns <tr> with gameID, timestamp, winning team, losing team
  */
-function GameRow({game, setTab, setGame, eloGain}){
+function GameRow({game, eloGain}){
+    //[gameid, ts, winners (list), losers (list), winnerPulled (bool)]
+    const navigate = useNavigate();
+
     const formattedDate = () => {
         const date = game[1].split(/\b\d{2}:\d{2}:\d{2}\b/)
         if (date.length < 2){
@@ -11,10 +16,11 @@ function GameRow({game, setTab, setGame, eloGain}){
         }
         return date[0]
     }
+
     const goToGame = () => {
-        setTab('game')
-        setGame(game)
-    }
+        navigate(`/game/${game[0]}`);
+    };
+
     if (eloGain){
         const deltaElo = () => {
             if (eloGain){
@@ -30,6 +36,7 @@ function GameRow({game, setTab, setGame, eloGain}){
             return 0
         }
         return(
+
             <tr class={(deltaElo() > 0 ? "elogain " : deltaElo() < 0 ? "eloloss " : "")  + "clickable highlights"} onClick={goToGame}>
                 <td>{game[0]} </td>
                 <td>{formattedDate()}</td>
@@ -38,17 +45,16 @@ function GameRow({game, setTab, setGame, eloGain}){
                 <td>{deltaElo() ? deltaElo().toFixed(2) : deltaElo()}</td>
                 <td>{game[4]  ? "True" : "False"}</td>
             </tr>
-            
+
         )
     }
     return (
-        <tr class={"clickable highlights"} onClick={goToGame}>
+        <tr class={"clickable highlights"}  onClick={goToGame}>
             <td>{game[0]}</td>
             <td>{formattedDate()}</td>
             <td>{game[2].join(", ")} </td>
             <td>{game[3].join(", ")} </td>
             <td>{game[4] ? "True" : "False"}</td>
-
         </tr>
     )
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import GamesLog from "../Game/gamesLog.js";
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
+import { useParams } from 'react-router-dom';
 
 function sortListByGameID(a,b){
     if (a[0] < b[0]) {
@@ -14,7 +15,8 @@ function sortListByGameID(a,b){
     }
 }
 
-export default function PlayerBio({player, games, setTab, setGame}){
+export default function PlayerBio({games}){
+    const { playername } = useParams();
     const [playerGames, setPlayerGames] = useState([])
     const [playerData, setPlayerData] = useState({0:blankPlayer("")})
     const [currWins, setCurrWins] = useState(0)
@@ -23,7 +25,7 @@ export default function PlayerBio({player, games, setTab, setGame}){
     const [chartData, setChartData] = useState(blankChartData)
 
     useEffect(() => {     
-        firebase_getTotalPlayerData(player)
+        firebase_getTotalPlayerData(playername)
         .then(data => {
             setPlayerData(data)
         })
@@ -79,7 +81,7 @@ export default function PlayerBio({player, games, setTab, setGame}){
                 setChartData(dataobj)
             }
         })
-    }, [playerData, player])
+    }, [playerData, playername])
     
     function getMostRecentGame(){
         let gameIDs = Object.keys(playerData)
@@ -141,7 +143,7 @@ export default function PlayerBio({player, games, setTab, setGame}){
 
     return(
         <div class="animatedLoad">
-            <h2>{player} ({currWins}-{currLosses})  <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/></h2>
+            <h2>{playername} ({currWins}-{currLosses})  <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/></h2>
             <div>
                 <h3>Elo: {currElo} </h3>
                 <EloChart chartData={chartData}/>
@@ -151,8 +153,6 @@ export default function PlayerBio({player, games, setTab, setGame}){
                 <h3>Game History</h3>
                 <GamesLog
                     gamesLog={playerGames}
-                    setTab={setTab} 
-                    setGame={setGame}
                     eloGain={[chartData["labels"], chartData["datasets"][2].data]}
                 />
             </div>

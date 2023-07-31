@@ -1,6 +1,8 @@
 body { 
   background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; 
   padding: 5%;
+  /* font-family: Georgia, 'Times New Roman', Times, serif; */
+
 }
 
 .date{
@@ -45,43 +47,56 @@ tr #addplayerRow{
 .highlights:hover{
   background-color: #ddd;
 }
-/* Style the tab */
+
+/* toolbar */
 .toolbar {
-      font-family: Georgia, 'Times New Roman', Times, serif;
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    background-color: #f1f1f1;
+    }
+    ul.toolbar li {
+      display: inline;
+      list-style-type: none;
+      margin: 0;
+    }
+    ul.toolbar {
+      padding: 0;
+    }
+    ul.toolbar li a {
+      text-decoration: none;
+      padding: 14px 16px;
+      display: inline-block;
+      transition: 0.3s;
+
+    }
+    ul.toolbar li a:hover {
+        background-color: #ddd;
+    }
+
+    .active {
+      background-color: #ccc;
+    }
+
+    a:visited{
+      color: inherit;
+    }
+  /* Style the buttons that are used to open the tab content */
+  .tab{
+      background-color: inherit;
+      font-family: inherit;
       overflow: hidden;
-      border-bottom: 1px solid #ccc;
-      background-color: #f1f1f1;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
   }
 
-/* Style the buttons that are used to open the tab content */
-.tab {
-    background-color: inherit;
-    font-family: inherit;
-    overflow: hidden;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-}
-
 /* Change background color of buttons on hover */
-.tab:hover {
-    background-color: #ddd;
-}
+
 
 /* Create an active/current tablink class */
-.activetab {
-  background-color: #ccc;
-  font-family: inherit;
-  overflow: hidden;
 
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-}
 
   /* Style the tab content */
   .tabcontent {

@@ -1,11 +1,9 @@
 import GameRow from './gameRow.js'
-export default function GamesLog({gamesLog, setTab, setGame, eloGain}){
+export default function GamesLog({gamesLog, eloGain}){
 
     const gameList = gamesLog.map((game) =>
         <GameRow 
             game={game}
-            setTab={setTab} 
-            setGame={setGame}
             eloGain={eloGain}
         />
     )

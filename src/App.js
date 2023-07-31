@@ -5,15 +5,11 @@ import FAQ from './FAQ/faq.js';
 import GamesLog from './Game/gamesLog.js';
 import GameInfo from './Game/gameInfo.js'
 import PlayerBio from './Player/playerbio.js';
-import TabButton from './TabButton.js';
 import { Suspense, useState, useEffect } from 'react';
 import {buildLeaderboard, getGamesLog} from './Elo/firebase.js'
-
+import { Route, BrowserRouter, Routes, NavLink } from "react-router-dom"
 
 function App() {
-  const [tab, setTab] = useState('leaderboard');
-  const [player, setPlayer] = useState('');
-  const [game, setGame] = useState('');
   const [roster, setRoster] = useState([]);
   const [gameLog, setGameLog] = useState([]);
 
@@ -23,46 +19,30 @@ function App() {
 
   },[])
 
-  return (
-    <Suspense fallback={<h1>Loading...</h1>}>
-      <h1 class="clickable" onClick={() => setTab('leaderboard')}>Ranked Mini</h1>
-      <div className="toolbar">
-        <TabButton
-          isActive={tab === 'leaderboard'}
-          onClick={() => setTab('leaderboard')}
-        >
-          Leaderboard
-        </TabButton>
-        <TabButton
-          isActive={tab === 'reportscore'}
-          onClick={() => setTab('reportscore')}
-        >
-          Report Scores
-        </TabButton>
-        <TabButton
-          isActive={tab === 'games'}
-          onClick={() => setTab('games')}
-        >
-          Games Log
-        </TabButton>
-        <TabButton
-          isActive={tab === 'faq'}
-          onClick={() => setTab('faq')}
-        >
-          FAQ
-        </TabButton>
-      </div>
   
-      
-      {tab === 'leaderboard' && <Leaderboard roster={roster} setTab={setTab} setPlayer={setPlayer}/>}
-      {tab === 'reportscore' && <ReportScore roster={roster} setRoster={setRoster}/>}
-      {tab === 'games' && <GamesLog gamesLog={gameLog} setTab={setTab} setGame={setGame}/>}
-      {tab === 'faq' && <FAQ />}
 
-      {tab === 'game' && <GameInfo game={game} setTab={setTab} setPlayer={setPlayer}/>}
-      {tab === 'playerbio' && <PlayerBio player={player} games={gameLog} setTab={setTab} setGame={setGame}/>}
+  return (
+    <>
+      <h1>Ranked Mini</h1>
+      <BrowserRouter>
+      <ul className="toolbar">
+        <li><NavLink to="/leaderboard">Leaderboard</NavLink></li>
+        <li><NavLink to="/reportscore">Report Score</NavLink></li>
+        <li><NavLink to="/games">Games</NavLink></li>
+        <li><NavLink to="/faq">FAQ</NavLink></li>
+      </ul>
+        <Routes>
+          <Route path="/leaderboard" element={<Leaderboard roster={roster}/> } />
+          <Route path="/reportscore" element={<ReportScore roster={roster} setRoster={setRoster} /> } />
+          <Route path="/games" element={<GamesLog gamesLog={gameLog} /> } />
+          <Route path="/faq" element={<FAQ /> } />
 
-    </Suspense>
+          <Route path="/game/:gameid" element={<GameInfo gamesLog={gameLog}/> } />
+          <Route path="/player/:playername" element={<PlayerBio games={gameLog}/> } />
+        </Routes>
+
+      </BrowserRouter>
+    </>
   );
 }
 

@@ -2,7 +2,7 @@ import {useState} from 'react';
 import AddPlayer from './addPlayer.js';
 import PlayerRow from './leaderboardPlayer.js';
 
-export default function Leaderboard({roster, setTab, setPlayer}){
+export default function Leaderboard({roster}){
     const [statusMsg, setStatusMsg] = useState('');
 
     const listItems = roster.map((person) => 
@@ -11,9 +11,6 @@ export default function Leaderboard({roster, setTab, setPlayer}){
             elo={person[1]}
             wins={person[2]}
             losses={person[3]}
-            setTab={setTab}
-            setPlayer={setPlayer}
-
         />
     ); 
     return (

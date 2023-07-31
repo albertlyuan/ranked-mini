@@ -3,7 +3,7 @@ import {queryGamePlayersData} from "../Elo/firebase.js"
 import { calculateTeamElo } from "../Elo/elo.js";
 import {useState, useEffect} from 'react'
 
-function Teams({gameID, winners, losers, setTab, setPlayer}){
+function Teams({gameID, winners, losers}){
     const [winnerData, setWinnerData] = useState([]);
     const [loserData, setLoserData] = useState([]);
 
@@ -22,11 +22,8 @@ function Teams({gameID, winners, losers, setTab, setPlayer}){
 
     const rows = loserData.map((_,index) => 
         <tr>
-            <PlayerCell player={winnerData[index]} setTab={setTab} setPlayer={setPlayer}/>
-            <PlayerCell 
-                player={loserData[index]} 
-                setTab={setTab} 
-                setPlayer={setPlayer}/>
+            <PlayerCell player={winnerData[index]}/>
+            <PlayerCell player={loserData[index]} />
         </tr>
     ); 
 

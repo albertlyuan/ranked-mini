@@ -1,14 +1,18 @@
 import Teams from "./gameInfoTeams.js"
+import { useParams } from 'react-router-dom';
 
 var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-export default function GameInfo({game, setTab, setPlayer}){
+export default function GameInfo({gamesLog}){
     // [gameid, date string, winners, losers, broke to win]
     // const dayOfWeek = (dateString) => {
     //     const date = new Date(dateString)
     //     return daysOfWeek[date.getDay()]
     // }
+    const { gameid } = useParams();
+    const game = gamesLog.find((game) => game[0] === gameid);
+
 
     const fullDate = (dateString) => {
         const date = new Date(dateString)
@@ -25,7 +29,7 @@ export default function GameInfo({game, setTab, setPlayer}){
             <br></br>
             <h3 style={{textAlign:"center"}}>Broke to win: {game[4]  ? "True" : "False"}</h3>
 
-            <Teams gameID={game[0]} winners={game[2]} losers={game[3]} setTab={setTab} setPlayer={setPlayer}/>            
+            <Teams gameID={game[0]} winners={game[2]} losers={game[3]}/>            
         </div>
         
     );
