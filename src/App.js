@@ -25,7 +25,7 @@ function App() {
     <>
       <h1>Ranked Mini</h1>
       <BrowserRouter>
-      <ul className="toolbar">
+      <ul className="toolbar sticky">
         <li><NavLink to="/leaderboard">Leaderboard</NavLink></li>
         <li><NavLink to="/reportscore">Report Score</NavLink></li>
         <li><NavLink to="/games">Games</NavLink></li>
@@ -40,7 +40,6 @@ function App() {
           <Route path="/game/:gameid" element={<GameInfo gamesLog={gameLog}/> } />
           <Route path="/player/:playername" element={<PlayerBio games={gameLog}/> } />
         </Routes>
-
       </BrowserRouter>
     </>
   );

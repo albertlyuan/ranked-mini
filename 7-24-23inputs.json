@@ -59,7 +59,7 @@
     "winner_1": "a li",
     "winner_2": "leo",
     "winner_3": "vincent",
-    "winner_pulled": false
+    "winner_pulled": true
   },
   {
     "loser_1": "bodhi",

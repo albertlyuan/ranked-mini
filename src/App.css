@@ -50,6 +50,7 @@ tr #addplayerRow{
 
 /* toolbar */
 .toolbar {
+    width: 100%;
     overflow: hidden;
     border-bottom: 1px solid #ccc;
     background-color: #f1f1f1;
@@ -80,31 +81,10 @@ tr #addplayerRow{
     a:visited{
       color: inherit;
     }
-  /* Style the buttons that are used to open the tab content */
-  .tab{
-      background-color: inherit;
-      font-family: inherit;
-      overflow: hidden;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      padding: 14px 16px;
-      transition: 0.3s;
-  }
-
-/* Change background color of buttons on hover */
-
-
-/* Create an active/current tablink class */
-
-
-  /* Style the tab content */
-  .tabcontent {
-      justify-content: center;
-      display: flex;
-      padding: 6px 12px;
-      border: none;
-  }
+    .sticky {
+      position: sticky;
+      top: 0;
+    }
   
   .animatedLoad{
     animation: fadeEffect 1s; /* Fading effect takes 1 second */
