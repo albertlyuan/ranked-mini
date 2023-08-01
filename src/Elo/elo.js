@@ -1,4 +1,4 @@
-export {STARTING_ELO, calculateNewElo, calculateTeamElo, expectedValue}
+export {calculateNewElo, calculateTeamElo, weightedRank, STARTING_ELO, PULL_FACTOR, NormalK, UnrankedK,D,L,slope,midpoint}
 
 //
 const STARTING_ELO = 400
@@ -77,27 +77,33 @@ function expectedValue(oldPlayerElo, opponentElo){
 
 
 /**
- * calculates team elo. higher ranked players get weighted more heavily using equation: 
- * 
- * L / (1+ Math.E**(-slope*(elo-midpoint)))
- * 
- * L = max weight
- * const slope 
- * const midpoint = elo to get 100 weight
+ * calculates team elo. higher ranked players get weighted more 
 
  * @param {list} team - list of player objects 
  * @returns float - team elo 
  */
 function calculateTeamElo(team){
-    const weightedRank = (elo) => {
-        // return elo
-        return elo + L / (1+ Math.E**(-slope*(elo-midpoint)))
-    }
-
     const p1 = team[0].elo
     const p2 = team[1].elo
     const p3 = team[2].elo
 
     const teamElo = (weightedRank(p1) + weightedRank(p2) + weightedRank(p3)) / 3
     return teamElo
+}
+
+/**
+ * Logistically weighted elo 
+ * 
+ * L / (1+ Math.E**(-slope*(elo-midpoint)))
+ * 
+ * L = max weight
+ * const slope 
+ * const midpoint = elo to get L/2 weight
+ * 
+ * @param {float} elo 
+ * @returns float
+ */
+function weightedRank(elo){
+    // return elo
+    return elo + L / (1+ Math.E**(-slope*(elo-midpoint)))
 }

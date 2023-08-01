@@ -1,44 +1,82 @@
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import React from "react";
 import {ranks} from "../rank-images/rankImages.js"
+import {STARTING_ELO, PULL_FACTOR, NormalK, UnrankedK,D,L,slope,midpoint, weightedRank} from "../Elo/elo.js"
 
 
-
-function CalculatingElo(){
+export default function CalculatingElo(){
 
     return (
-        <div>
-            <p>Elo is calculated with the following equation:</p>
+        <div class="animatedLoad">
+            <h2>Calculating Elo</h2>
+
+            <p>The basic elo formula is the following equation:</p>
             <BlockEquation text={"elo_{new} = elo_{old} + K(outcome_{actual} - outcome_{expected})"}/>
+            <p>However, we use a slightly altered equation:</p>
+            <BlockEquation text={"elo_{new} = elo_{old} + \\frac{K(outcome_{actual} - outcome_{expected})}{loserPulled? - PullFactor}"}/>
+
+            <h4>Elo</h4>
             <p>
-                <InlineEquation text={"elo"}/> for new players starts at 0 and will never go below 0. 
-                Average elo gain/loss per game will be around 16. 
+                <InlineEquation text={"elo"}/> for new players starts at {STARTING_ELO} and will never go below 0. 
+                Average elo gain/loss per game will be around {NormalK/2}. 
             </p>
+
+            <h4>Actual Outcome</h4>
             <p>
                 <InlineEquation text={"outcome_{actual}"}/> is a binary variable that is 1 if a player wins and 0 if a player loses.
             </p>
+
+            <h4>Expected Outcome</h4>
             <p>
                 <InlineEquation text={"outcome_{expected}"}/> is the expected probability a player will win based on their elo relative to their opponent.
                 For example, if a player's elo is much higher than the opponent, the expected outcome will be 0.9 or some decimal close to 1. 
                 If a player's elo is very similar to the opponent, the expected outcome will be close to 0.5.
             </p>
-            <ul>
-                Expected outcome is calculated using the following formula:
-            </ul>
-            <BlockEquation text={"outcome_{expected} = \\frac{1}{1 + 10^{\\frac{elo_{opponent}-elo_{old}}{D}}}"}/>
-            <ul>
-                This equation is designed so that a player with <InlineEquation text={"D"}/> more elo points is 10 times as likely to win the game. 
-                In our equation, <InlineEquation text={"D=400"}/> which is used in popular games like Chess, and League of Legends.
-            </ul>
             <p>
-                <InlineEquation text={"K"}/> is the K-factor (set at 32). 
-                This determines the amount of elo an unweighted player will gain or lose. 
-                Given two evenly matched teams, players will gain/lose 16 elo because
-                <InlineEquation text={"K(outcome_{actual} - outcome_{expected}) = K(\\pm 0.5)"}/> 
-                which is 16 in our case.
+                The expected outcome formula is the following:
+            </p>
+            <BlockEquation text={"outcome_{expected} = \\frac{1}{1 + 10^{\\frac{elo_{opponent}-elo_{old}}{D}}}"}/>
+            <p>
+                This equation is designed so that a player with <InlineEquation text={"D"}/> more elo points is 10 times as likely to win the game. 
+                We use <InlineEquation text={"D="+D}/> which is used in popular games like Chess and League of Legends.
             </p>
 
-            <h3>Which Elo is Used in the Calculation?</h3>
+            <h4>Pull Factor</h4>
+            <p>
+                Since mini is make-it-take-it, the team that pulls must get a D and score 3 times which is much harder than receiving a pull and scoring 3 times.
+                From a session of mini, it was found that teams who pulled won {PULL_FACTOR.toFixed(4)*100}% of games. Thus we currently have set <InlineEquation text={"PullFactor="+PULL_FACTOR}/>.
+                The rationale behind this is that since breaking to win is much harder, we want to reward players who do so by giving them more elo gain.
+            </p>
+            <ul>
+                <h5>Ex) 2 even teams play (base expected outcome is 0.5) and the pulling team won (<InlineEquation text={"loserPulled?=0"}/>) </h5>
+                <p>The winning team gains <InlineEquation text={NormalK+"*(1-0.5)/(0-"+PULL_FACTOR.toFixed(2)+")="+(NormalK*0.5/PULL_FACTOR).toFixed(2)}/>.</p>
+                <p>The losing team loses <InlineEquation text={NormalK+"*(0-0.5)/(0-"+PULL_FACTOR.toFixed(2)+")="+(NormalK*-0.5/PULL_FACTOR).toFixed(2)}/>.</p>
+            </ul>
+            <ul>
+                <h5>Ex) 2 even teams play (base expected outcome is 0.5) and the pulling team lost (<InlineEquation text={"loserPulled?=1"}/>)</h5>
+                <p>The winning team gains <InlineEquation text={NormalK+"*(1-0.5)/(1-"+PULL_FACTOR.toFixed(2)+")="+(NormalK*0.5/(1-PULL_FACTOR)).toFixed(2)}/>.</p>
+                <p>The losing team loses <InlineEquation text={NormalK+"*(0-0.5)/(1-"+PULL_FACTOR.toFixed(2)+")="+(NormalK*-0.5/(1-PULL_FACTOR)).toFixed(2)}/>.</p>
+            </ul>
+            <p>
+                As seen from the examples shown, a game where the winner pulls results in much more elo being gained/lost. 
+                Thus, we reward players that break to win and penalize players that get broken to win.
+            </p>
+
+            <h4>K and Unranked Uncertainty</h4>
+            <p>
+                <InlineEquation text={"K"}/> (set at {NormalK}) determines the amount of elo an unweighted player will gain or lose. 
+                Given two evenly matched teams, players will gain/lose {NormalK/2} elo because
+                <InlineEquation text={"K(outcome_{actual} - outcome_{expected}) = K([1,0] - 0.5) = "+NormalK + "*(\\pm 0.5) = \\pm" + NormalK/2}/>
+            </p>
+            <p>
+                Since new players may come in with a higher or lower expected outcome, there is uncertainty in how much <InlineEquation text={"outcome_{expected}"}/> actually is.
+                To account for this, <InlineEquation text={"K"}/> can be set higher during the first few games played, which allows for players can get to an elo that is more representative of their skill in less time.
+                We use <InlineEquation text={"K="+UnrankedK}/> during this period which is {UnrankedK/NormalK} times larger than normal.
+                During this 10 game placement period, a player will be the 'Unranked' <img title={ranks[0][0].split("static/media/")[1].split(".")[0]} class="rankImg" src={ranks[0][0]}></img> rank.
+            </p>
+   
+
+            <h2>Using Player Elo and Team Elo</h2>
             <p>
                 Mini is played with 3 people on each team, each with their own elo scores. 
                 Since this is a team game, a team elo is calculated from a weighted average of each player's elo, 
@@ -88,7 +126,7 @@ function CalculatingElo(){
                 </p>
             </ul>
 
-            <h4>Weighted Team Elo *WIP</h4>
+            <h4>Weighted Team Elo</h4>
             <p>
                 We believe if a team has 1 exceptionally strong player and 2 weak players, 
                 while their average elo may be low, their expected outcome is likely a bit higher than what that average represents. 
@@ -99,21 +137,18 @@ function CalculatingElo(){
                 This equation is designed so that players with low elos will be altered very little and players with high elos will have significant alterations.
                 Our equations have the following values:
             </p>
-            <p><InlineEquation text={"L = 200"}/> signifies that 200 is the highest amount that can be added to a player's elo</p>
-            <p><InlineEquation text={"s = 0.005"}/> signifies the slope of the logicstic curve.</p>
-            <p><InlineEquation text={"m = 400"}/> signifies the midpoint of the logicstic curve. Players with 400 elo will have 100 elo added</p>
-            <p>This means if a team has a player with 500 elo and 2 players with 50 elo, the team elo would be <InlineEquation text={"\\frac{(500+124.492)+(50+29.609)+(50+29.609)}{3}=261.23"}/> rather than <InlineEquation text={"\\frac{500+50+50}{3}=200"}/> </p>
+            <p><InlineEquation text={"L = "+L}/> signifies that {L} is the highest amount that can be added to a player's elo</p>
+            <p><InlineEquation text={"s = "+slope}/> signifies the slope of the logicstic curve.</p>
+            <p><InlineEquation text={"m = "+midpoint}/> signifies the midpoint of the logicstic curve. Players with {midpoint} elo will have {L/2} elo added</p>
+            <p>
+                This means if a team has a player with 900 elo and 2 players with 100 elo, the team elo would be 
+                <InlineEquation text={"\\frac{(900+"+(weightedRank(900)-900).toFixed(2)+")+(100+"+(weightedRank(100)-100).toFixed(2)+")+(100+"+(weightedRank(100)-100).toFixed(2)+")}{3}="+((weightedRank(100)*2+weightedRank(900))/3).toFixed(2)}/> 
+                rather than <InlineEquation text={"\\frac{900+100+100}{3}=366.67"}/> 
+            </p>
             <p>* these values are actively being tuned</p>
 
 
-            <h3>Unranked Uncertainty *WIP</h3>
-            <p>
-                Since new players may come in with a higher or lower expected outcome, there is uncertainty in how much <InlineEquation text={"outcome_{expected}"}/> actually is.
-                To account for this, <InlineEquation text={"K"}/> can be set higher  during the first few games played. 
-                In our system, <InlineEquation text={"K=96"}/> which is 3 times larger than normal.
-                During this 10 game placement period, a player will be the 'Unranked' <img title={ranks[0][0].split("static/media/")[1].split(".")[0]} class="rankImg" src={ranks[0][0]}></img> rank.
-            </p>
-
+      
         </div>
     )
 }
@@ -133,6 +168,4 @@ function BlockEquation({text}){
         </MathJaxContext>
     )
 }
-
-export {CalculatingElo}
 
