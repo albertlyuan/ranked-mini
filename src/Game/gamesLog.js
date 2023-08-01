@@ -1,4 +1,5 @@
 import GameRow from './gameRow.js'
+
 export default function GamesLog({gamesLog, eloGain}){
 
     const gameList = gamesLog.map((game) =>

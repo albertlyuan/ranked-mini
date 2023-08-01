@@ -5,7 +5,6 @@ export default function FAQ(){
     
     return(
         <div class="animatedLoad">
-            <br></br>
 
             <h2>Calculating Elo</h2>
             <CalculatingElo/>

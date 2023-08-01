@@ -1,9 +1,10 @@
 import {firebase_getTotalPlayerData, blankPlayer} from '../Elo/firebase.js'
-import { useEffect, useState } from 'react'
-import GamesLog from "../Game/gamesLog.js";
+import { useEffect, useState, lazy } from 'react'
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
 import { useParams } from 'react-router-dom';
+
+const GamesLog = lazy(() => import('../Game/gamesLog.js'));
 
 function sortListByGameID(a,b){
     if (a[0] < b[0]) {
@@ -17,8 +18,8 @@ function sortListByGameID(a,b){
 
 export default function PlayerBio({games}){
     const { playername } = useParams();
-    const [playerGames, setPlayerGames] = useState([])
-    const [playerData, setPlayerData] = useState({0:blankPlayer("")})
+    const [playerGames, setPlayerGames] = useState()
+    const [playerData, setPlayerData] = useState()
     const [currWins, setCurrWins] = useState(0)
     const [currLosses, setCurrLosses] = useState(0)
     const [currElo, setCurrElo] = useState(0)
@@ -31,7 +32,7 @@ export default function PlayerBio({games}){
         })
         .then(() => {
             const mostRecentGame = getMostRecentGame()
-            if (mostRecentGame.timestamp === -1){
+            if (!mostRecentGame || mostRecentGame.timestamp === -1){
                 return
             }else{
                 setCurrElo(mostRecentGame.elo)
@@ -84,6 +85,9 @@ export default function PlayerBio({games}){
     }, [playerData, playername])
     
     function getMostRecentGame(){
+        if (!playerData){
+            return
+        }
         let gameIDs = Object.keys(playerData)
         if (gameIDs.length < 1){
             return blankPlayer("")
@@ -146,15 +150,15 @@ export default function PlayerBio({games}){
             <h2>{playername} ({currWins}-{currLosses})  <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/></h2>
             <div>
                 <h3>Elo: {currElo} </h3>
-                <EloChart chartData={chartData}/>
+                {chartData ? <EloChart chartData={chartData}/> : null}
             </div>
             <br></br>
             <div>
                 <h3>Game History</h3>
-                <GamesLog
+                {playerGames ? <GamesLog
                     gamesLog={playerGames}
                     eloGain={[chartData["labels"], chartData["datasets"][2].data]}
-                />
+                /> : null}
             </div>
         </div>
 
