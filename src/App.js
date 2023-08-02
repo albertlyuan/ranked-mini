@@ -7,8 +7,8 @@ import { AuthProvider } from 'react-auth-kit'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './Firebase/auth.js';
 import Logout from "./Login/logout.js"
+import Login from "./Login/login.js"
 
-const Login = lazy(() => import('./Login/login.js'));
 const Leaderboard = lazy(() => import('./Leaderboard/leaderboard.js'));
 const ReportScore = lazy(() => import('./ReportScore/reportscore.js'));
 const CalculatingElo = lazy(() => import('./About/calculatingElo.js'));
@@ -46,12 +46,12 @@ function App() {
                   cookieSecure={false}
     >
       <BrowserRouter>
-        <div style={{textAlign:"right"}}>{loggedin ? <Logout /> : <NavLink to="/login">Login</NavLink>}</div>
+        <div style={{textAlign:"right"}}>{loggedin ? <Logout /> : <Login />}</div>
         <h1>Ranked Mini</h1>
         <ul className="toolbar sticky">
           <li><NavLink to="/">Leaderboard</NavLink></li>
           {loggedin ? <li><NavLink to="/reportscore">Report Score</NavLink></li> : null}
-          
+          {/* <li><NavLink to="/reportscore">Report Score</NavLink></li> */}
           <li><NavLink to="/games">Games</NavLink></li>
           <li><NavLink to="/elo">Elo</NavLink></li>
           <li><NavLink to="/ranks">Ranks</NavLink></li>

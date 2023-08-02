@@ -1,7 +1,9 @@
-import {useState } from 'react';
+import {useState, useEffect } from 'react';
 import {buildLeaderboard, firebase_logNewGame} from '../Firebase/database.js'
 import Dropdown from "./dropdown.js"
 import ToggleSwitch from './toggleSwitch.js';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../Firebase/auth.js';
 
 export default function ReportScore({roster, setRoster}){
     const [availablePlayers, setAvailablePlayers] = useState(new Set(roster.map((person) => person[0])));
@@ -13,7 +15,17 @@ export default function ReportScore({roster, setRoster}){
     const [loser3, setLoser3] = useState('');
     const [winnerPulled, setWinnerPulled] = useState(false);
     const [statusMsg, setStatusMsg] = useState('');
+    const [loggedin, setLoggedin] = useState(false);
 
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setLoggedin(true)
+        }else{
+          setLoggedin(false)
+        }
+      })
+    })
     // const justPlayerNames = roster.map((person) => person[0])
     function clearSelection(){
         const newItems = [winner1,winner2,winner3,loser1,loser2,loser3]
@@ -66,90 +78,96 @@ export default function ReportScore({roster, setRoster}){
         
     }
 
-    return(
-        <div class="scoreReport animatedLoad">
-            <table >
-            <ToggleSwitch label="Broke to Win" puller={winnerPulled} setPuller={setWinnerPulled}/>
-            
-                <tr>
-                    <th>Winning Team</th>
-                    <th>Losing Team</th>
-                </tr>
+    if (loggedin){
+        return(
+            <div class="scoreReport animatedLoad">
+                <table >
+                <ToggleSwitch label="Broke to Win" puller={winnerPulled} setPuller={setWinnerPulled}/>
                 
-                <tr>
-                    <td>
-                        <Dropdown
-                            availablePlayers={availablePlayers}
-                            setAvailablePlayers={setAvailablePlayers}
-                            selection={winner1}
-                            setSelection={setWinner1}
-                        />   
-                    </td>
-                    <td>
-                        <Dropdown 
-                            availablePlayers={availablePlayers}
-                            setAvailablePlayers={setAvailablePlayers}
-                            selection={loser1}
-                            setSelection={setLoser1}
-                        />
-                    </td>
-                </tr>
-                <tr>             
-                    <td>
-                        <Dropdown 
-                            availablePlayers={availablePlayers}
-                            setAvailablePlayers={setAvailablePlayers}
-                            selection={winner2}
-                            setSelection={setWinner2}
-                        />
-                    </td>
-                    <td>
-                        <Dropdown 
-                            availablePlayers={availablePlayers}
-                            setAvailablePlayers={setAvailablePlayers}
-                            selection={loser2}
-                            setSelection={setLoser2}
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <Dropdown 
-                            availablePlayers={availablePlayers}
-                            setAvailablePlayers={setAvailablePlayers}
-                            selection={winner3}
-                            setSelection={setWinner3}
-                        />
-                    </td>
-                    <td>
-                        <Dropdown 
-                            availablePlayers={availablePlayers}
-                            setAvailablePlayers={setAvailablePlayers}
-                            selection={loser3}
-                            setSelection={setLoser3}
-                        />
-                    </td>
-                </tr>
-            </table>
-            <div style={{display: "flex", justifyContent:"center", alignContent:"center"}}>
-                <button onClick={swapTeams} class="swapTeamsButton clickable highlights">Swap Teams</button>
-            </div>
-            <table>
-                <tr>
-                    <td style={{textAlign:"center"}}>
-                        <form onSubmit={handleSubmit} id="submitGame" >
-                            <input type="submit" class="scoreReportButton clickable highlights"></input>  
-                        </form>
-                    </td>
-                    <td>
-                        <button onClick={clearSelection} class="scoreReportButton clickable highlights">Clear</button>
-                    </td>
-                </tr>
-            </table>
-            <p class="statusmsg">{statusMsg}</p>
+                    <tr>
+                        <th>Winning Team</th>
+                        <th>Losing Team</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <Dropdown
+                                availablePlayers={availablePlayers}
+                                setAvailablePlayers={setAvailablePlayers}
+                                selection={winner1}
+                                setSelection={setWinner1}
+                            />   
+                        </td>
+                        <td>
+                            <Dropdown 
+                                availablePlayers={availablePlayers}
+                                setAvailablePlayers={setAvailablePlayers}
+                                selection={loser1}
+                                setSelection={setLoser1}
+                            />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>
+                            <Dropdown 
+                                availablePlayers={availablePlayers}
+                                setAvailablePlayers={setAvailablePlayers}
+                                selection={winner2}
+                                setSelection={setWinner2}
+                            />
+                        </td>
+                        <td>
+                            <Dropdown 
+                                availablePlayers={availablePlayers}
+                                setAvailablePlayers={setAvailablePlayers}
+                                selection={loser2}
+                                setSelection={setLoser2}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <Dropdown 
+                                availablePlayers={availablePlayers}
+                                setAvailablePlayers={setAvailablePlayers}
+                                selection={winner3}
+                                setSelection={setWinner3}
+                            />
+                        </td>
+                        <td>
+                            <Dropdown 
+                                availablePlayers={availablePlayers}
+                                setAvailablePlayers={setAvailablePlayers}
+                                selection={loser3}
+                                setSelection={setLoser3}
+                            />
+                        </td>
+                    </tr>
+                </table>
+                <div style={{display: "flex", justifyContent:"center", alignContent:"center"}}>
+                    <button onClick={swapTeams} class="swapTeamsButton clickable highlights">Swap Teams</button>
+                </div>
+                <table>
+                    <tr>
+                        <td style={{textAlign:"center"}}>
+                            <form onSubmit={handleSubmit} id="submitGame" >
+                                <input type="submit" class="scoreReportButton clickable highlights"></input>  
+                            </form>
+                        </td>
+                        <td>
+                            <button onClick={clearSelection} class="scoreReportButton clickable highlights">Clear</button>
+                        </td>
+                    </tr>
+                </table>
+                <p class="statusmsg">{statusMsg}</p>
 
-        </div>
-        
-        
-    )
+            </div>
+        )
+    }else{
+        return(
+            <>
+                <h2>Login To Report Score</h2>
+            </>
+        )
+    }
 }

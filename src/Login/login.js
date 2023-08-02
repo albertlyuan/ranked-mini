@@ -9,12 +9,7 @@ export default function Login(){
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (login(formData.email,formData.password)){
-            navigate("/")
-        }
-        
-        
-        
+        login(formData.email,formData.password)              
     }
 
     return (
