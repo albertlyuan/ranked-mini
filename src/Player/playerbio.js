@@ -1,8 +1,8 @@
-import {firebase_getTotalPlayerData, blankPlayer} from '../Firebase/database.js'
+import {firebase_getTotalPlayerData, blankPlayer, firebase_changeName, getNameFromUID} from '../Firebase/database.js'
 import { useEffect, useState, lazy } from 'react'
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
-import { useParams } from 'react-router-dom';
+import { useParams, useRoutes } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 
@@ -19,7 +19,9 @@ function sortListByGameID(a,b){
 }
 
 export default function PlayerBio({games}){
-    const { playername } = useParams();
+    const { uid } = useParams();
+
+    const [playerName, setPlayerName] = useState()
     const [playerGames, setPlayerGames] = useState()
     const [playerData, setPlayerData] = useState()
     const [currWins, setCurrWins] = useState(0)
@@ -36,8 +38,10 @@ export default function PlayerBio({games}){
           setLoggedin(false)
         }
       })
-
-        firebase_getTotalPlayerData(playername)
+        getNameFromUID(uid).then((name) =>{
+            setPlayerName(name)
+        })
+        firebase_getTotalPlayerData(uid)
         .then(data => {
             setPlayerData(data)
         })
@@ -93,7 +97,7 @@ export default function PlayerBio({games}){
                 setChartData(dataobj)
             }
         })
-    }, [playerData, playername])
+    }, [playerData, uid])
     
     function getMostRecentGame(){
         if (!playerData){
@@ -198,7 +202,11 @@ export default function PlayerBio({games}){
 
     return(
         <div class="animatedLoad">
-            <h2>{playername} ({currWins}-{currLosses})  <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/></h2>
+            <h2>
+                {playerName} ({currWins}-{currLosses})  
+                <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/>
+                
+            </h2>
             <div>
                 <h3>Elo: {currWins + currLosses >= 10 ? currElo : loggedin ? currElo : "Unranked"} </h3>
                 {chartData ? <EloChart rawChartData={chartData} noPlacementGames={makeCroppedChartData()}/> : null}

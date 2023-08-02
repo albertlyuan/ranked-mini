@@ -12,7 +12,7 @@ export default function GameInfo({gamesLog}){
     // }
     const { gameid } = useParams();
     const game = gamesLog.find((game) => game[0] === gameid);
-
+    
 
     const fullDate = (dateString) => {
         const date = new Date(dateString)

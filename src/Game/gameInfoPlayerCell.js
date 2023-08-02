@@ -3,9 +3,11 @@ import {useNavigate  } from "react-router-dom"
 import { useEffect, useState } from 'react'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
+import { getUIDFromName } from "../Firebase/database.js";
 
 function PlayerCell({player}){
     const [loggedin, setLoggedin] = useState(false);
+    const [uid, setUid] = useState();
 
     useEffect(() => {
       onAuthStateChanged(auth, (user) => {
@@ -15,14 +17,15 @@ function PlayerCell({player}){
           setLoggedin(false)
         }
       })
+      getUIDFromName(player[0]).then((id)=>{
+        setUid(id)
+      })
     })
     //player = [name,[before.elo, after.elo], before.wins, before.losses]
     const navigate = useNavigate();
     const goToPlayer = () => {
-        navigate(`/player/${player[0]}`);
+        navigate(`/player/${uid}`);
     };
-
-    
 
     return(
         <td class="clickable highlights" onClick={goToPlayer}>

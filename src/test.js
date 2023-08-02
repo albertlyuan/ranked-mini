@@ -1,14 +1,12 @@
 import * as firebase from './Firebase/database.js'
 import * as elo from './Elo/elo.js'
+
+
 function addPlayers(players){
     for (let player of players){
         firebase.firebase_addNewPlayer(player)
     }
 }
-
-
-  
-
   
 async function randomgame(players){
     const min = 0;
@@ -67,6 +65,7 @@ import data from "../7-24-23inputs.json" assert { type: 'json' };
 
 async function load(){
     firebase.cleardb()
+    console.log('deleted')
     const games = data["games"]
     const players = [
         "anna",
@@ -89,7 +88,6 @@ async function load(){
         "x"
     ]
     addPlayers(players)
-    
     let breaks = 0
     for (const game of games){
         if (game["winner_pulled"]){
@@ -100,8 +98,10 @@ async function load(){
     console.log("breakpct: ",breaks/games.length)
 }
 
-load()
-
+// load()
+// firebase.firebase_changeName("andrew li", "ders")
+// firebase.getNameFromUID("-Nas6jgxwAcPPbJDdEV1").then(console.log)
+console.log(firebase.getUIDFromName("andrew li"))
 // console.log(
 // // dawn @199 team 198, lost to 188 received
 // elo.calculateNewElo(199,188,198,false,14,true), 

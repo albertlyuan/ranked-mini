@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import { useEffect, useState } from 'react'
+import { getUIDFromName } from "../Firebase/database.js";
 
 
 function PlayerRow({name, elo, wins, losses}){
   const [loggedin, setLoggedin] = useState(false);
+  const [uid, setUid] = useState();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -16,11 +18,16 @@ function PlayerRow({name, elo, wins, losses}){
         setLoggedin(false)
       }
     })
+    getUIDFromName(name).then((id)=>{
+      setUid(id)
+    })
+   
+
   })
     const navigate = useNavigate();
 
     const goToPlayer = () => {
-      navigate(`/player/${name}`);
+      navigate(`/player/${uid}`);
     };
 
     return(
