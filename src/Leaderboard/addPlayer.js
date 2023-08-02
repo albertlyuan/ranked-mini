@@ -1,4 +1,4 @@
-import {firebase_addNewPlayer} from '../Elo/firebase.js'
+import {firebase_addNewPlayer} from '../Firebase/database.js'
 import {useState} from 'react';
 
 function AddPlayer({setStatusMsgFunc, roster}){

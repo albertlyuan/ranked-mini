@@ -1,7 +1,22 @@
 import {getRankFromElo}  from "../rank-images/rankImages.js" 
 import { useNavigate } from "react-router-dom"
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../Firebase/auth.js';
+import { useEffect, useState } from 'react'
+
 
 function PlayerRow({name, elo, wins, losses}){
+  const [loggedin, setLoggedin] = useState(false);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoggedin(true)
+      }else{
+        setLoggedin(false)
+      }
+    })
+  })
     const navigate = useNavigate();
 
     const goToPlayer = () => {
@@ -11,9 +26,14 @@ function PlayerRow({name, elo, wins, losses}){
     return(
         <tr class="clickable highlights" onClick={goToPlayer}>
             <td style={{paddingRight: "50px"}}>
-            <p>{name} ({wins}-{losses})</p>
+              <p>{name} ({wins}-{losses})</p>
             </td>
-            <td style={{textAlign: "right"}}><p> <img title={getRankFromElo(elo, wins,losses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(elo, wins,losses)}/>{elo}</p></td>
+            <td style={{textAlign: "right"}}>
+              <p> 
+                {loggedin || (wins+losses >= 10)? elo.toFixed(2) : ""}
+                <img title={getRankFromElo(elo, wins,losses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(elo, wins,losses)}/>
+              </p>
+            </td>
         </tr>
    );
 }

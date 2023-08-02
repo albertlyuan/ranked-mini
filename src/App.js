@@ -1,9 +1,14 @@
 import './App.css';
 import { AppLoader } from "./loader.js";
 import { Suspense, useState, useEffect, lazy } from 'react';
-import {buildLeaderboard, getGamesLog} from './Elo/firebase.js'
+import {buildLeaderboard, getGamesLog} from './Firebase/database.js'
 import { Route, BrowserRouter, Routes, NavLink } from "react-router-dom"
+import { AuthProvider } from 'react-auth-kit'
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from './Firebase/auth.js';
+import Logout from "./Login/logout.js"
 
+const Login = lazy(() => import('./Login/login.js'));
 const Leaderboard = lazy(() => import('./Leaderboard/leaderboard.js'));
 const ReportScore = lazy(() => import('./ReportScore/reportscore.js'));
 const CalculatingElo = lazy(() => import('./About/calculatingElo.js'));
@@ -16,8 +21,16 @@ const PlayerBio = lazy(() => import('./Player/playerbio.js'));
 function App() {
   const [roster, setRoster] = useState([]);
   const [gameLog, setGameLog] = useState([]);
+  const [loggedin, setLoggedin] = useState(false);
 
   useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoggedin(true)
+      }else{
+        setLoggedin(false)
+      }
+    })
     buildLeaderboard().then(leaderboard => setRoster(leaderboard))
     getGamesLog().then(gameLog => setGameLog(gameLog))
 
@@ -26,12 +39,19 @@ function App() {
   
 
   return (
-    <>
-      <h1>Ranked Mini</h1>
+    <AuthProvider authType = {'cookie'}
+                  authName={'_auth'}
+                  cookieDomain={window.location.hostname}
+                  // cookieSecure={window.location.protocol === "https:"}
+                  cookieSecure={false}
+    >
       <BrowserRouter>
+        <div style={{textAlign:"right"}}>{loggedin ? <Logout /> : <NavLink to="/login">Login</NavLink>}</div>
+        <h1>Ranked Mini</h1>
         <ul className="toolbar sticky">
           <li><NavLink to="/">Leaderboard</NavLink></li>
-          <li><NavLink to="/reportscore">Report Score</NavLink></li>
+          {loggedin ? <li><NavLink to="/reportscore">Report Score</NavLink></li> : null}
+          
           <li><NavLink to="/games">Games</NavLink></li>
           <li><NavLink to="/elo">Elo</NavLink></li>
           <li><NavLink to="/ranks">Ranks</NavLink></li>
@@ -45,12 +65,14 @@ function App() {
             <Route path="/elo" element={<CalculatingElo /> } />
             <Route path="/ranks" element={<RankTable /> } />
 
+            <Route path="/login" element={<Login /> } />
+
             <Route path="/game/:gameid" element={<GameInfo gamesLog={gameLog}/> } />
             <Route path="/player/:playername" element={<PlayerBio games={gameLog}/> } />
           </Routes>
         </Suspense>
       </BrowserRouter>
-    </>
+    </AuthProvider>
   );
 }
 

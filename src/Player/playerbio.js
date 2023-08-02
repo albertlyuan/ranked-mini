@@ -1,8 +1,10 @@
-import {firebase_getTotalPlayerData, blankPlayer} from '../Elo/firebase.js'
+import {firebase_getTotalPlayerData, blankPlayer} from '../Firebase/database.js'
 import { useEffect, useState, lazy } from 'react'
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
 import { useParams } from 'react-router-dom';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../Firebase/auth.js';
 
 const GamesLog = lazy(() => import('../Game/gamesLog.js'));
 
@@ -24,8 +26,17 @@ export default function PlayerBio({games}){
     const [currLosses, setCurrLosses] = useState(0)
     const [currElo, setCurrElo] = useState(0)
     const [chartData, setChartData] = useState(blankChartData)
+    const [loggedin, setLoggedin] = useState(false);
 
-    useEffect(() => {     
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setLoggedin(true)
+        }else{
+          setLoggedin(false)
+        }
+      })
+
         firebase_getTotalPlayerData(playername)
         .then(data => {
             setPlayerData(data)
@@ -124,6 +135,46 @@ export default function PlayerBio({games}){
         return [gameWinners, gameLosers, pullers]
     }
 
+    function makeCroppedChartData(){
+        return {
+            labels: chartData.labels.slice(10),
+            datasets: [
+            {
+                label: "Elo",
+                data: chartData.datasets[0].data.slice(10),
+                backgroundColor: "black",
+                borderColor:"black",
+                borderWidth: 2
+            },
+            {
+                label: "timestamps",
+                data: chartData.datasets[1].data.slice(10),
+                hidden: true
+            },
+            {
+                label: "elogain",
+                data: chartData.datasets[2].data.slice(10),
+                hidden: true
+            },
+            {
+                label: "winners",
+                data: chartData.datasets[3].data.slice(10),
+                hidden: true
+            },
+            {
+                label: "losers",
+                data: chartData.datasets[4].data.slice(10),
+                hidden: true
+            },
+            {
+                label: "pulled",
+                data: chartData.datasets[5].data.slice(10),
+                hidden: true
+            }, 
+            ]
+        }
+    }
+
     const eloHistory = () => {
         const elos = []
         const timestamps = []
@@ -149,15 +200,17 @@ export default function PlayerBio({games}){
         <div class="animatedLoad">
             <h2>{playername} ({currWins}-{currLosses})  <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/></h2>
             <div>
-                <h3>Elo: {currElo} </h3>
-                {chartData ? <EloChart chartData={chartData}/> : null}
+                <h3>Elo: {currWins + currLosses >= 10 ? currElo : loggedin ? currElo : "Unranked"} </h3>
+                {chartData ? <EloChart rawChartData={chartData} noPlacementGames={makeCroppedChartData()}/> : null}
             </div>
             <br></br>
             <div>
                 <h3>Game History</h3>
                 {playerGames ? <GamesLog
                     gamesLog={playerGames}
-                    eloGain={[chartData["labels"], chartData["datasets"][2].data]}
+                    eloGain={loggedin ? 
+                        [chartData["labels"], chartData["datasets"][2].data]  //show all elo gain if logged in
+                        : [chartData["labels"].slice(10), chartData["datasets"][2].data.slice(10)]} //hide elo gain of placement games
                 /> : null}
             </div>
         </div>

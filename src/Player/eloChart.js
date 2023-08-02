@@ -1,4 +1,7 @@
+import { useState, useEffect } from "react";
 import { Line  } from "react-chartjs-2"
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../Firebase/auth.js';
 import {Chart, LinearScale, CategoryScale, PointElement, LineElement, Tooltip} from "chart.js";
 Chart.register(CategoryScale,LinearScale, PointElement, LineElement, Tooltip);
 
@@ -19,7 +22,19 @@ var blankChartData = {
     ]
 }
 
-function EloChart({chartData}) {    
+function EloChart({rawChartData, noPlacementGames}) {    
+    const [chartData, setChartData] = useState(rawChartData);
+    
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setChartData(rawChartData)
+        }else{
+          setChartData(noPlacementGames)
+        }
+      })
+    })
+
     const options = {
         scales: {
             x: {

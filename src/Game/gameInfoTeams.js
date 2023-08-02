@@ -1,13 +1,13 @@
 import PlayerCell from "./gameInfoPlayerCell.js"
-import {queryGamePlayersData} from "../Elo/firebase.js"
+import {queryGamePlayersData} from "../Firebase/database.js"
 import { calculateTeamElo } from "../Elo/elo.js";
 import {useState, useEffect} from 'react'
-
 function Teams({gameID, winners, losers}){
     const [winnerData, setWinnerData] = useState([]);
     const [loserData, setLoserData] = useState([]);
 
-    useEffect(() => {     
+    useEffect(() => {
+       
         //data = [player,[before.elo, after.elo], before.wins, before.losses]
 
         queryGamePlayersData(winners, gameID).then(data => {
@@ -30,8 +30,8 @@ function Teams({gameID, winners, losers}){
     return (
         <table class="animatedLoad">
             <tr>
-                <th>Winning Team ({winnerData.length > 0 ? calculateTeamElo(winnerData.map(i => ({elo: i[1][0]}))) : ""})</th>
-                <th>Losing Team ({loserData.length > 0 ? calculateTeamElo(loserData.map(i => ({elo: i[1][0]}))) : ""})</th>
+                <th>Winning Team {winnerData.length > 0  ? "("+calculateTeamElo(winnerData.map(i => ({elo: i[1][0]}))).toFixed(2)+")" : ""}</th>
+                <th>Losing Team {loserData.length > 0  ? "("+calculateTeamElo(loserData.map(i => ({elo: i[1][0]}))).toFixed(2)+")" : ""} </th>
             </tr>
             {rows}
         </table>

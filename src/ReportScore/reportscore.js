@@ -1,5 +1,5 @@
 import {useState } from 'react';
-import {buildLeaderboard, firebase_logNewGame} from '../Elo/firebase.js'
+import {buildLeaderboard, firebase_logNewGame} from '../Firebase/database.js'
 import Dropdown from "./dropdown.js"
 import ToggleSwitch from './toggleSwitch.js';
 

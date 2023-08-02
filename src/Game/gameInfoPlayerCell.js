@@ -1,19 +1,35 @@
 import {getRankFromElo} from "../rank-images/rankImages.js";
 import {useNavigate  } from "react-router-dom"
+import { useEffect, useState } from 'react'
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../Firebase/auth.js';
 
 function PlayerCell({player}){
-        //player = [name,[before.elo, after.elo], before.wins, before.losses]
-        const navigate = useNavigate();
-        const goToPlayer = () => {
-            navigate(`/player/${player[0]}`);
-        };
+    const [loggedin, setLoggedin] = useState(false);
 
-        return(
-            <td class="clickable highlights" onClick={goToPlayer}>
-                <h3>{player[0]} ({player[2]}-{player[3]}) <img title={getRankFromElo(player[1][0], player[2], player[3]).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(player[1][0], player[2], player[3])}/></h3>
-                <p>elo: {player[1][0]} {player[1][1]-player[1][0] > 0 ? "+" : ""}{player[1][1]-player[1][0]}</p>
-            </td>
-        );
-    }
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setLoggedin(true)
+        }else{
+          setLoggedin(false)
+        }
+      })
+    })
+    //player = [name,[before.elo, after.elo], before.wins, before.losses]
+    const navigate = useNavigate();
+    const goToPlayer = () => {
+        navigate(`/player/${player[0]}`);
+    };
+
+    
+
+    return(
+        <td class="clickable highlights" onClick={goToPlayer}>
+            <h3>{player[0]} ({player[2]}-{player[3]}) <img title={getRankFromElo(player[1][0], player[2], player[3]).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(player[1][0], player[2], player[3])}/></h3>
+            {player[2] + player[3] >= 10 || loggedin ? <p>elo: {player[1][0].toFixed(2)} ({player[1][1]-player[1][0] > 0 ? "+" : ""}{(player[1][1]-player[1][0]).toFixed(2)})</p> : null}
+        </td>
+    );
+}
 
 export default PlayerCell

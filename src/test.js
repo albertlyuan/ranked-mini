@@ -1,4 +1,4 @@
-import * as firebase from './Elo/firebase.js'
+import * as firebase from './Firebase/database.js'
 import * as elo from './Elo/elo.js'
 function addPlayers(players){
     for (let player of players){
