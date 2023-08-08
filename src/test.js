@@ -99,6 +99,7 @@ async function load(){
 }
 
 load()
+// firebase.firebase_addNewPlayer("test1")
 // firebase.firebase_changeName("andrew li", "ders")
 // firebase.getNameFromUID("-Nas6jgxwAcPPbJDdEV1").then(console.log)
 // console.log(firebase.getUIDFromName("andrew li"))

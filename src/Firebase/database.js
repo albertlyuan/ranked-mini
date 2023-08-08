@@ -11,7 +11,8 @@ import {
     endAt, 
     push,
     remove,
-    orderByValue} from "firebase/database";
+    orderByValue,
+    update } from "firebase/database";
 import {STARTING_ELO, calculateNewElo, calculateTeamElo} from "../Elo/elo.js"
 
 const db = getDatabase(app)
@@ -114,8 +115,12 @@ export function firebase_addNewPlayer(playerName){
     const newKey = push(player_uid).key
 
     firebase_mapNameToUid(playerName, newKey)
-    updatePlayerHistory(newKey,STARTING_ELO,STARTING_GAMEID,0,0, ts, null, null)
-    updatePlayerNow(newKey,STARTING_ELO,STARTING_GAMEID,0,0)
+
+    const updates = {};
+    updatePlayerHistory(updates, newKey,STARTING_ELO,STARTING_GAMEID,0,0, ts, null, null)
+    updatePlayerNow(updates, newKey,STARTING_ELO,STARTING_GAMEID,0,0)
+    
+    return update(ref(db), updates);
 }
 
 async function getUIDsFromNames(people){
@@ -146,7 +151,10 @@ export async function firebase_logNewGame(winner1, winner2, winner3, loser1, los
     const winners = await getUIDsFromNames([winner1,winner2,winner3])
     const losers = await getUIDsFromNames([loser1,loser2,loser3])
     const ts = new Date().toString()
-    addToGamesTable(newGameID, winners, losers, ts, winner_pulled)
+
+    const updates = {}
+
+    addToGamesTable(updates, newGameID, winners, losers, ts, winner_pulled)
 
     const [_, players] = await firebase_getPlayers()
     
@@ -159,8 +167,12 @@ export async function firebase_logNewGame(winner1, winner2, winner3, loser1, los
     console.log("winning team: ", winners, winningTeamElo )
     console.log("losing team: ", losers, losingTeamElo )
 
-    await updateNewPlayerElo(winnerData,winningTeamElo,losingTeamElo,newGameID, ts, true, winner_pulled)
-    await updateNewPlayerElo(loserData,winningTeamElo,losingTeamElo,newGameID, ts, false, winner_pulled)
+    updateNewPlayerElo(updates, winnerData,winningTeamElo,losingTeamElo,newGameID, ts, true, winner_pulled)
+    updateNewPlayerElo(updates, loserData,winningTeamElo,losingTeamElo,newGameID, ts, false, winner_pulled)
+
+    console.log(updates)
+
+    update(ref(db), updates);
 }
 
 /** 
@@ -185,7 +197,7 @@ function filterPlayerObjects(playernames, players){
  * @param {str} ts - timestamp
  * @param {boolean} win_status - true if team won
  */
-async function updateNewPlayerElo(playerData, winningTeamElo, losingTeamElo, newGameID, ts, win_status, winner_pulled){
+function updateNewPlayerElo(updates, playerData, winningTeamElo, losingTeamElo, newGameID, ts, win_status, winner_pulled){
     for (const name of playerData.keys()){
         const oldElo = playerData.get(name)['elo']
         let wins = playerData.get(name)['wins']
@@ -202,9 +214,8 @@ async function updateNewPlayerElo(playerData, winningTeamElo, losingTeamElo, new
             losses+=1
         }        
 
-        await updatePlayerHistory(name,newElo,newGameID, wins, losses, ts, win_status, winner_pulled)
-        await updatePlayerNow(name,newElo,newGameID,wins,losses)
-
+        updatePlayerHistory(updates, name,newElo,newGameID, wins, losses, ts, win_status, winner_pulled)
+        updatePlayerNow(updates, name,newElo,newGameID,wins,losses)
     }
 }
 
@@ -228,8 +239,9 @@ async function firebase_getPlayers(){
  * @param {str} ts 
  * @param {boolean} win_status 
  */
-async function updatePlayerHistory(uid,elo,game_id, wins, losses, ts, win_status, winner_pulled){
-    set(ref(db, '/player_history/'+uid+"/"+game_id), {
+function updatePlayerHistory(updates, uid,elo,game_id, wins, losses, ts, win_status, winner_pulled){
+    const postDestination = '/player_history/'+uid+"/"+game_id
+    const postData = {
         name: uid,
         elo: elo,
         game_id: game_id,
@@ -238,7 +250,8 @@ async function updatePlayerHistory(uid,elo,game_id, wins, losses, ts, win_status
         win_status: win_status,
         timestamp: ts,
         winner_pulled: winner_pulled
-    })
+    };
+    updates[postDestination] = postData
 }
 
 /**
@@ -249,13 +262,15 @@ async function updatePlayerHistory(uid,elo,game_id, wins, losses, ts, win_status
  * @param {int} wins 
  * @param {int} losses 
  */
-async function updatePlayerNow(uid, elo, game_id, wins, losses){
-    await set(ref(db, '/player_now/'+uid), {
+function updatePlayerNow(updates, uid, elo, game_id, wins, losses){
+    const postDestination = '/player_now/'+uid
+    const postData = {
         most_recent_game: game_id,
         elo: elo,
         wins: wins,
         losses: losses
-    })
+    }
+    updates[postDestination] = postData
 }
 
 async function firebase_mapNameToUid(playerName, uid){
@@ -269,11 +284,9 @@ async function firebase_mapNameToUid(playerName, uid){
  * @param {list} losers 
  * @param {str} ts 
  */
-function addToGamesTable(newGameID, winners, losers, ts, winner_pulled){
-    // winners.sort((a, b) => a.localeCompare(b))
-    // losers.sort((a, b) => a.localeCompare(b))
-    
-    set(ref(db, '/games/'+ newGameID), {
+function addToGamesTable(updates, newGameID, winners, losers, ts, winner_pulled){
+    const postDestination = '/games/'+ newGameID
+    const postData = {
         winner_1: winners[0],
         winner_2: winners[1],
         winner_3: winners[2],
@@ -282,7 +295,9 @@ function addToGamesTable(newGameID, winners, losers, ts, winner_pulled){
         loser_3: losers[2],
         timestamp: ts,
         winner_pulled: winner_pulled
-    })
+    }
+    updates[postDestination] = postData
+
 }
 
 /**
@@ -366,9 +381,10 @@ export async function firebase_changeName(oldname, newname){
     }
 
     try{
-        await remove(ref(db, "/player_uid/"+lowercaseOldName))
-        await set(ref(db, "/player_uid/"+lowercaseNewName), uid)
-        return true
+        const updates = {}
+        updates["/player_uid/"+lowercaseOldName] = null
+        updates["/player_uid/"+lowercaseNewName] = uid
+        return update(ref(db), updates);
     }catch{
         return false
     }
