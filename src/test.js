@@ -98,10 +98,10 @@ async function load(){
     console.log("breakpct: ",breaks/games.length)
 }
 
-// load()
+load()
 // firebase.firebase_changeName("andrew li", "ders")
 // firebase.getNameFromUID("-Nas6jgxwAcPPbJDdEV1").then(console.log)
-console.log(firebase.getUIDFromName("andrew li"))
+// console.log(firebase.getUIDFromName("andrew li"))
 // console.log(
 // // dawn @199 team 198, lost to 188 received
 // elo.calculateNewElo(199,188,198,false,14,true), 

@@ -46,7 +46,7 @@ function App() {
                   cookieSecure={false}
     >
       <BrowserRouter>
-        <div style={{textAlign:"right"}}>{loggedin ? <Logout /> : <Login />}</div>
+        <div className="verticalAlign">{loggedin ? <Logout /> : <Login />}</div>
         <h1>Ranked Mini</h1>
         <ul className="toolbar sticky">
           <li><NavLink to="/">Leaderboard</NavLink></li>

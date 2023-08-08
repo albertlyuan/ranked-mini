@@ -1,11 +1,11 @@
-import {firebase_getTotalPlayerData, blankPlayer, firebase_changeName, getNameFromUID} from '../Firebase/database.js'
+import {firebase_getTotalPlayerData, blankPlayer, getNameFromUID} from '../Firebase/database.js'
 import { useEffect, useState, lazy } from 'react'
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
-import { useParams, useRoutes } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
-
+import TextInputAlert from './textInputAlert.js';
 const GamesLog = lazy(() => import('../Game/gamesLog.js'));
 
 function sortListByGameID(a,b){
@@ -205,8 +205,8 @@ export default function PlayerBio({games}){
             <h2>
                 {playerName} ({currWins}-{currLosses})  
                 <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/>
-                
             </h2>
+            {loggedin && playerName ? <TextInputAlert oldname={playerName} /> : null}
             <div>
                 <h3>Elo: {currWins + currLosses >= 10 ? currElo : loggedin ? currElo : "Unranked"} </h3>
                 {chartData ? <EloChart rawChartData={chartData} noPlacementGames={makeCroppedChartData()}/> : null}

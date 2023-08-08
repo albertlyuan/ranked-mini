@@ -110,6 +110,7 @@ export async function getNameFromUID(uid){
 export function firebase_addNewPlayer(playerName){
     const ts = new Date().toString()
     playerName = playerName.trim()
+    playerName = playerName.toLowerCase()
     const newKey = push(player_uid).key
 
     firebase_mapNameToUid(playerName, newKey)
@@ -356,14 +357,17 @@ export function cleardb(){
 }
 
 export async function firebase_changeName(oldname, newname){
-    const uid = (await get(query(ref(db, "/player_uid/"+oldname)))).val()
-    if ((await get(query(ref(db, "/player_uid/"+newname)))).val()){
+    const lowercaseOldName = oldname.toLowerCase()
+    const lowercaseNewName = newname.toLowerCase()
+
+    const uid = (await get(query(ref(db, "/player_uid/"+lowercaseOldName)))).val()
+    if ((await get(query(ref(db, "/player_uid/"+lowercaseNewName)))).val()){
         return false
     }
 
     try{
-        remove(ref(db, "/player_uid/"+oldname))
-        set(ref(db, "/player_uid/"+newname), uid)
+        await remove(ref(db, "/player_uid/"+lowercaseOldName))
+        await set(ref(db, "/player_uid/"+lowercaseNewName), uid)
         return true
     }catch{
         return false

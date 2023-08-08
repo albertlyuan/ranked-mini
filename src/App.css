@@ -2,8 +2,8 @@ body {
   background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; 
   padding: 5%;
   /* font-family: Georgia, 'Times New Roman', Times, serif; */
-
 }
+
 /* loader */
 .app-loader {
   position: fixed;
@@ -57,6 +57,14 @@ body {
       font-weight: bold;
   }
 }
+
+.verticalAlign{
+  text-align: right;
+  float: right;
+} 
+  .verticalAlign input{
+    display: block;
+  }
 
 table {
   border-collapse: collapse;

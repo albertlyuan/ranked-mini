@@ -9,6 +9,6 @@ export default function Logout(){
     }
     
     return (
-        <a onClick={handleLogout}>Log out</a> 
+        <a className="clickable" onClick={handleLogout}>Log out</a> 
     )
 }
