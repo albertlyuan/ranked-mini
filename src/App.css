@@ -160,6 +160,7 @@ tr #addplayerRow{
     width: 100%;
     text-align: left;
     color: #aaa;
+    display: table-row;
   }
 
   .elogain{

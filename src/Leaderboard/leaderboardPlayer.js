@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { getUIDFromName } from "../Firebase/database.js";
 
 
-function PlayerRow({name, elo, wins, losses}){
+function PlayerRow({name, elo, wins, losses, filter}){
   const [loggedin, setLoggedin] = useState(false);
   const [uid, setUid] = useState();
 
@@ -31,7 +31,7 @@ function PlayerRow({name, elo, wins, losses}){
     };
 
     return(
-        <tr class="clickable highlights" onClick={goToPlayer}>
+        <tr class="clickable highlights" onClick={goToPlayer} style={{display: name.toLowerCase().indexOf(filter) > -1 ? "table-row" : "none"}}>
             <td style={{paddingRight: "50px"}}>
               <p>{name} ({wins}-{losses})</p>
             </td>
