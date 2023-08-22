@@ -17,7 +17,7 @@ function sortListByGameID(a,b){
         return 0;
     }
 }
-
+const NUM_PLACEMENTS = 10  
 export default function PlayerBio({games}){
     const { uid } = useParams();
 
@@ -140,43 +140,45 @@ export default function PlayerBio({games}){
     }
 
     function makeCroppedChartData(){
-        return {
-            labels: chartData.labels.slice(10),
+        const data = {
+            labels: chartData.labels.slice(NUM_PLACEMENTS),
             datasets: [
             {
                 label: "Elo",
-                data: chartData.datasets[0].data.slice(10),
+                data: chartData.datasets[0].data.slice(NUM_PLACEMENTS),
                 backgroundColor: "black",
                 borderColor:"black",
                 borderWidth: 2
             },
             {
                 label: "timestamps",
-                data: chartData.datasets[1].data.slice(10),
+                data: chartData.datasets[1].data.slice(NUM_PLACEMENTS),
                 hidden: true
             },
             {
                 label: "elogain",
-                data: chartData.datasets[2].data.slice(10),
+                data: chartData.datasets[2].data.slice(NUM_PLACEMENTS),
                 hidden: true
             },
             {
                 label: "winners",
-                data: chartData.datasets[3].data.slice(10),
+                data: chartData.datasets[3].data.slice(NUM_PLACEMENTS),
                 hidden: true
             },
             {
                 label: "losers",
-                data: chartData.datasets[4].data.slice(10),
+                data: chartData.datasets[4].data.slice(NUM_PLACEMENTS),
                 hidden: true
             },
             {
                 label: "pulled",
-                data: chartData.datasets[5].data.slice(10),
+                data: chartData.datasets[5].data.slice(NUM_PLACEMENTS),
                 hidden: true
             }, 
             ]
         }
+        data.datasets[2].data[0] = 0
+        return data
     }
 
     const eloHistory = () => {
@@ -218,7 +220,7 @@ export default function PlayerBio({games}){
                     gamesLog={playerGames}
                     eloGain={loggedin ? 
                         [chartData["labels"], chartData["datasets"][2].data]  //show all elo gain if logged in
-                        : [chartData["labels"].slice(10), chartData["datasets"][2].data.slice(10)]} //hide elo gain of placement games
+                        : [chartData["labels"].slice(NUM_PLACEMENTS+1), chartData["datasets"][2].data.slice(NUM_PLACEMENTS+1)]} //hide elo gain of placement games
                 /> : null}
             </div>
         </div>
