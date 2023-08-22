@@ -311,5 +311,11 @@ tr #addplayerRow{
   height: 2em;
   width: auto;
   vertical-align:middle;
+}
 
+#password{
+  border-radius: 6px;
+  outline: transparent;
+  background-color: transparent;
+  padding: 12px 20px;
 }

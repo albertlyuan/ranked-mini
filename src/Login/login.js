@@ -2,7 +2,7 @@ import {React, useState} from "react"
 import { login } from "../Firebase/auth.js"
 
 export default function Login(){
-    const [formData, setFormData] = useState({email: '', password: ''})
+    const [formData, setFormData] = useState({email: "albert@a.com", password: ''})
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -11,10 +11,17 @@ export default function Login(){
 
     return (
         <form onSubmit={handleSubmit}>
-            <input type={"email"} onChange={(e)=>setFormData({...formData, email: e.target.value})}/>
-            <input type={"password"} onChange={(e)=>setFormData({...formData, password: e.target.value})}/>
-
-            <button>Submit</button>
+            {/* <input 
+                type={"email"} 
+                onChange={(e)=>setFormData({...formData, email: e.target.value})}/> */}
+            <input 
+                id="password"
+                type={"password"}
+                placeholder="Login for Admin Access"  
+                onChange={(e)=>setFormData({...formData, password: e.target.value})}/>
+            <input 
+                type={"submit"} 
+                style={{display:"none"}}/>
         </form>    
     )
 }
