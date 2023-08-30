@@ -2,11 +2,7 @@ import * as firebase from './Firebase/database.js'
 import * as elo from './Elo/elo.js'
 
 
-function addPlayers(players){
-    for (let player of players){
-        firebase.firebase_addNewPlayer(player)
-    }
-}
+
   
 async function randomgame(players){
     const min = 0;
@@ -60,40 +56,34 @@ async function randomgame(players){
 // }
 
 // firebase.deleteGame(9)
-import data from "../7-24-23inputs.json" assert { type: 'json' };
-
+import data from "../8-29-23 inputs.json" assert { type: 'json' };
+//edit file to just have "games" and "player_uid" lists
+function addPlayers(players){
+    for (let player of players){
+        firebase.firebase_addNewPlayer(player)
+    }
+}
 
 async function load(){
     firebase.cleardb()
     console.log('deleted')
     const games = data["games"]
-    const players = [
-        "anna",
-        "a li",
-        "bodhi",
-        "dawn",
-        "ders",
-        "henry",
-        "jason",
-        "jmac",
-        "kevin",
-        "kooski",
-        "leo",
-        "levi",
-        "rut",
-        "sarah",
-        "suraj",
-        "trev",
-        "vincent",
-        "x"
-    ]
-    addPlayers(players)
+    const players = data["player_uid"]
+
+    const uid2name = new Map()
+    for (const [playername, uid] of Object.entries(players)){
+        uid2name.set(uid,playername)
+    }
+
+    const playernames = Array.from(Object.keys(players))
+
+    addPlayers(playernames)
     let breaks = 0
     for (const game of games){
         if (game["winner_pulled"]){
             breaks += 1
         }
-        await firebase.firebase_logNewGame(game["winner_1"], game["winner_2"], game["winner_3"], game["loser_1"], game["loser_2"], game["loser_3"], game["winner_pulled"])
+        await firebase.firebase_logNewGame(uid2name.get(game["winner_1"]), uid2name.get(game["winner_2"]), uid2name.get(game["winner_3"]), uid2name.get(game["loser_1"]), uid2name.get(game["loser_2"]), uid2name.get(game["loser_3"]), game["winner_pulled"])
     }
     console.log("breakpct: ",breaks/games.length)
 }
