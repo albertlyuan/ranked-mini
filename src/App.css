@@ -49,9 +49,8 @@ body {
 
 .date{
   padding: 0;
-  
   text-align: center;
-  margin: 0 auto;
+  margin: 0 5%;
   line-height: 5px;
   .date h1{
       font-weight: bold;
@@ -88,6 +87,21 @@ tr #addplayerRow{
   border-bottom: none;
   text-align: center;
   width: 100%;
+}
+
+.arrowbutton{
+  text-align: center;
+  height: inherit;
+  width: 2%;
+  font-size: larger;
+  font-weight: bold;
+}
+
+.horizontal{
+  display:flex; 
+  flex-direction: row; 
+  justify-content: center; 
+  align-items: center;
 }
 
 .clickable{

@@ -18,7 +18,7 @@ function Teams({gameID, winners, losers}){
             data.sort((a,b) => b[1][0]-a[1][0])
             setLoserData(data)
         })
-    }, [])
+    }, [gameID])
 
     const rows = loserData.map((_,index) => 
         <tr>

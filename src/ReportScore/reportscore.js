@@ -1,7 +1,6 @@
 import {useState, useEffect } from 'react';
 import {buildLeaderboard, firebase_logNewGame} from '../Firebase/database.js'
 import Dropdown from "./dropdown.js"
-import ToggleSwitch from './toggleSwitch.js';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import PullSelector from './pullSelector.js';

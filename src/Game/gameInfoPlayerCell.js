@@ -17,6 +17,7 @@ function PlayerCell({player}){
           setLoggedin(false)
         }
       })
+      
       getUIDFromName(player[0]).then((id)=>{
         setUid(id)
       })

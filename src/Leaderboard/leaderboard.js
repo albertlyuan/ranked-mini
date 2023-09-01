@@ -28,6 +28,13 @@ export default function Leaderboard({roster}){
                     <th style={{"text-align": "left"}}>Player (record)</th>
                     <th style={{"text-align": "right"}}>Elo</th>
                 </thead>
+                <tr id="searchplayerRow">
+                    <td>
+                        <SearchPlayer
+                            setFilter={setFilter}
+                        />
+                    </td>
+                </tr>
                 <tr id="addplayerRow">
                     <td>
                         <AddPlayer
@@ -41,13 +48,7 @@ export default function Leaderboard({roster}){
                         <p class="statusmsg">{statusMsg}</p>
                     </td>
                 </tr>
-                <tr id="searchplayerRow">
-                    <td>
-                        <SearchPlayer
-                            setFilter={setFilter}
-                        />
-                    </td>
-                </tr>
+                
                 {listItems}
                 
             </table>
