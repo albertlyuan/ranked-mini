@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import AddPlayer from './addPlayer.js';
 import PlayerRow from './leaderboardPlayer.js';
 import SearchPlayer from './searchPlayer.js';
@@ -6,16 +6,21 @@ import SearchPlayer from './searchPlayer.js';
 export default function Leaderboard({roster}){
     const [statusMsg, setStatusMsg] = useState('');
     const [filter, setFilter] = useState('');
+    const [listItems, setListItems] = useState([]);
 
-    const listItems = roster.map((person) => 
-        <PlayerRow
-            name={person[0]}
-            elo={person[1]}
-            wins={person[2]}
-            losses={person[3]}
-            filter={filter}
-        />
-    ); 
+    useEffect(() => {
+        const playerrows = roster.map((person) => 
+            <PlayerRow
+                name={person[0]}
+                elo={person[1]}
+                wins={person[2]}
+                losses={person[3]}
+                filter={filter}
+            />
+        ); 
+        setListItems(playerrows)
+      },[roster])
+    
     return (
         <div id="leaderboard" class="tabcontent animatedLoad">
             <table>

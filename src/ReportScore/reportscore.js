@@ -4,17 +4,24 @@ import Dropdown from "./dropdown.js"
 import ToggleSwitch from './toggleSwitch.js';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
+import PullSelector from './pullSelector.js';
 
 export default function ReportScore({roster, setRoster}){
     const [availablePlayers, setAvailablePlayers] = useState(new Set(roster.map((person) => person[0])));
+    
     const [winner1, setWinner1] = useState('');
     const [winner2, setWinner2] = useState('');
     const [winner3, setWinner3] = useState('');
     const [loser1, setLoser1] = useState('');
     const [loser2, setLoser2] = useState('');
     const [loser3, setLoser3] = useState('');
-    const [winnerPulled, setWinnerPulled] = useState(false);
-    const [statusMsg, setStatusMsg] = useState('');
+
+    const [winnerPulled, setWinnerPulled] = useState(null);
+
+    const [didSelectPlayers, setDidSelectPlayers] = useState(false);
+
+    const [didSetPuller, setDidSetPuller] = useState(false);
+
     const [loggedin, setLoggedin] = useState(false);
 
     useEffect(() => {
@@ -26,10 +33,18 @@ export default function ReportScore({roster, setRoster}){
         }
       })
     })
+
+    useEffect(() => {
+        if (checkForSixPlayers()){
+            setDidSelectPlayers(true)
+        }else{
+            setDidSelectPlayers(false)
+        }
+      }, [winner1,winner2,winner3,loser1,loser2,loser3]);
+
     // const justPlayerNames = roster.map((person) => person[0])
     function clearSelection(){
         const newItems = [winner1,winner2,winner3,loser1,loser2,loser3]
-        setStatusMsg('')
         for (let val of newItems){
             if (val !== ""){
                 setAvailablePlayers(prevSet => new Set(prevSet.add(val)));
@@ -41,6 +56,9 @@ export default function ReportScore({roster, setRoster}){
         setLoser1('')
         setLoser2('')
         setLoser3('')
+        setDidSelectPlayers(false)
+        setDidSetPuller(false)
+        setWinnerPulled(null)
         
     }
 
@@ -56,23 +74,26 @@ export default function ReportScore({roster, setRoster}){
 
 
     }
+    
+    function checkForSixPlayers(){
+        if (winner1 ==="" || winner2 ==="" || winner3 ==="" || loser1 ==="" || loser2 ==="" || loser3 ===""){
+            return false
+        }   
+        return true
+    }
 
     function handleSubmit(event){
         //check for 6 players
         event.preventDefault()
-
-        if (winner1 ==="" || winner2 ==="" || winner3 ==="" || loser1 ==="" || loser2 ==="" || loser3 ===""){
-            setStatusMsg('Must Have 6 Players Selected')
+        if (!checkForSixPlayers()){
             return
         }
+        
 
         firebase_logNewGame(winner1,winner2,winner3,loser1,loser2,loser3, winnerPulled)
-        // const newLeaderboard = await buildLeaderboard()
-        // setRoster(newLeaderboard)
         buildLeaderboard().then(newLeaderboard => {
             setRoster(newLeaderboard)
             clearSelection()
-            setStatusMsg("Game Submitted")
         })
         
         
@@ -81,14 +102,15 @@ export default function ReportScore({roster, setRoster}){
     if (loggedin){
         return(
             <div class="scoreReport animatedLoad">
+                <div style={{display: "flex", justifyContent:"center", alignContent:"center", textAlign: "center"}}>
+                    <button onClick={swapTeams} class="swapTeamsButton clickable highlights">Swap Teams</button>
+                </div>
                 <table >
-                <ToggleSwitch label="Broke to Win" puller={winnerPulled} setPuller={setWinnerPulled}/>
-                
+                {/* <ToggleSwitch label="Broke to Win" puller={winnerPulled} setPuller={setWinnerPulled}/> */}
                     <tr>
                         <th>Winning Team</th>
                         <th>Losing Team</th>
                     </tr>
-                    
                     <tr>
                         <td>
                             <Dropdown
@@ -144,23 +166,27 @@ export default function ReportScore({roster, setRoster}){
                         </td>
                     </tr>
                 </table>
-                <div style={{display: "flex", justifyContent:"center", alignContent:"center"}}>
-                    <button onClick={swapTeams} class="swapTeamsButton clickable highlights">Swap Teams</button>
-                </div>
-                <table>
-                    <tr>
-                        <td style={{textAlign:"center"}}>
-                            <form onSubmit={handleSubmit} id="submitGame" >
-                                <input type="submit" class="scoreReportButton clickable highlights"></input>  
-                            </form>
-                        </td>
-                        <td>
-                            <button onClick={clearSelection} class="scoreReportButton clickable highlights">Clear</button>
-                        </td>
-                    </tr>
-                </table>
-                <p class="statusmsg">{statusMsg}</p>
+                <br></br>
 
+                {didSelectPlayers ? 
+                    <PullSelector setDidSetPuller={setDidSetPuller} winnerPulled={winnerPulled} setWinnerPulled={setWinnerPulled}/>
+                : null}
+
+                {didSetPuller ? 
+                    <table>
+                        <tr>
+                            <td style={{textAlign:"center"}}>
+                                <form onSubmit={handleSubmit} id="submitGame" >
+                                    <input type="submit" class="scoreReportButton clickable highlights"></input>  
+                                </form>
+                            </td>
+                            <td>
+                                <button onClick={clearSelection} class="scoreReportButton clickable highlights">Clear</button>
+                            </td>
+                        </tr>
+                    </table>
+                    : null
+                }
             </div>
         )
     }else{
