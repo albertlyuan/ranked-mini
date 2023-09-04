@@ -48,10 +48,11 @@ export default function Leaderboard({roster}){
             }))
         })
 
-      },[roster, teamfilter])
+      },[roster, teamfilter, filter])
     
     return (
         <div id="leaderboard" class="tabcontent animatedLoad horizontal_left">
+            {filter}
             <table>
                 <thead>
                     <th style={{"text-align": "left"}}>Player (record)</th>

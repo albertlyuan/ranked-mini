@@ -11,7 +11,7 @@ export function SelectTeam({teamname, teamfilter, setTeamFilter}){
     }
 
     return (
-        <button onClick={toggleFilter}>
+        <button onClick={toggleFilter} style={{backgroundColor: teamfilter === teamname ? "#bbb" : "inherit"}}>
             <p>{teamname}</p>
         </button>
     )

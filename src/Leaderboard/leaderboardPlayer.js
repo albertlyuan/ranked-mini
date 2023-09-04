@@ -29,7 +29,6 @@ function PlayerRow({name, elo, wins, losses, filter}){
     const goToPlayer = () => {
       navigate(`/player/${uid}`);
     };
-
     return(
         <tr class="clickable highlights" onClick={goToPlayer} style={{display: name.toLowerCase().indexOf(filter) > -1 ? "table-row" : "none"}}>
             <td style={{paddingRight: "50px"}}>

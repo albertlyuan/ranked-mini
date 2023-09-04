@@ -226,7 +226,7 @@ export default function PlayerBio({games}){
             {loggedin && playerName ? <TextInputAlert oldname={playerName} /> : null}
             <div class="horizontal_left">
                 {teams}
-                <AddPlayerTeam uid={uid} getTeams={getTeams}/>
+                <AddPlayerTeam uid={uid} getTeams={getTeams}/> 
             </div>
             <div>
                 <h3>Elo: {currWins + currLosses >= 10 ? currElo : loggedin ? currElo : "Unranked"} </h3>

@@ -10,7 +10,7 @@ function SearchPlayer({setFilter}){
     const handleKeyUp = () => {
         setFilter(search.toLowerCase());
     }
-
+    
     return(
         <input 
             type="text" 
