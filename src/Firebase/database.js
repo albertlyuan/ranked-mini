@@ -10,11 +10,9 @@ import {
     get, 
     endAt, 
     push,
-    remove,
     orderByValue,
     update } from "firebase/database";
 import {STARTING_ELO, calculateNewElo, calculateTeamElo} from "../Elo/elo.js"
-import { all } from "axios";
 
 const db = getDatabase(app)
 
