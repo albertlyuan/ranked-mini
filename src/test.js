@@ -90,7 +90,8 @@ async function load(){
 
 // load()
 // firebase.addTeam("-NdGxDFd-TzgdxlEz4px","testteam2").then(console.log)
-firebase.removeTeam("-NdGxDFd-TzgdxlEz4px","testteam")
+// firebase.removeTeam("-NdGxDFd-TzgdxlEz4px","testteam")
+firebase.firebase_getPlayerTeams("-NdGxDFd-TzgdxlEz4px").then(console.log)
 
 // firebase.firebase_addNewPlayer("test1")
 // firebase.firebase_changeName("andrew li", "ders")

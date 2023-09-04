@@ -422,3 +422,12 @@ export async function removeTeam(uid, team){
         return false
     }
 }
+
+export async function firebase_getPlayerTeams(uid){
+    const dest = "/player_now/" + uid +"/teams/"
+    const playerTeams = (await get(query(ref(db, dest)))).val()
+    if (playerTeams==null){
+        return []
+    }
+    return Object.keys(playerTeams)
+}

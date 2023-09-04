@@ -1,4 +1,4 @@
-import {firebase_getTotalPlayerData, blankPlayer, getNameFromUID} from '../Firebase/database.js'
+import {firebase_getTotalPlayerData, blankPlayer, getNameFromUID, firebase_getPlayerTeams} from '../Firebase/database.js'
 import { useEffect, useState, lazy } from 'react'
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import TextInputAlert from './textInputAlert.js';
+import { PlayerTeam, AddPlayerTeam } from './playerteam.js';
+import { type } from '@testing-library/user-event/dist/type/index.js';
 const GamesLog = lazy(() => import('../Game/gamesLog.js'));
 
 function sortListByGameID(a,b){
@@ -29,15 +31,16 @@ export default function PlayerBio({games}){
     const [currElo, setCurrElo] = useState(0)
     const [chartData, setChartData] = useState(blankChartData)
     const [loggedin, setLoggedin] = useState(false);
+    const [teams, setTeams] = useState([]);
 
     useEffect(() => {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setLoggedin(true)
-        }else{
-          setLoggedin(false)
-        }
-      })
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+            setLoggedin(true)
+            }else{
+            setLoggedin(false)
+            }
+        })
         getNameFromUID(uid).then((name) =>{
             setPlayerName(name)
         })
@@ -97,8 +100,19 @@ export default function PlayerBio({games}){
                 setChartData(dataobj)
             }
         })
+        getTeams()
+        
     }, [playerData, uid])
-    
+
+    function getTeams(){
+        firebase_getPlayerTeams(uid)
+        .then(teamnames => {
+            const namecomponents = teamnames.map(name => {
+                return (<PlayerTeam teamname={name}/>)
+            })
+            setTeams(namecomponents)
+        })
+    }
     function getMostRecentGame(){
         if (!playerData){
             return
@@ -202,6 +216,7 @@ export default function PlayerBio({games}){
         return [elos, timestamps, elogain]
     }
 
+
     return(
         <div class="animatedLoad">
             <h2>
@@ -209,6 +224,10 @@ export default function PlayerBio({games}){
                 <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/>
             </h2>
             {loggedin && playerName ? <TextInputAlert oldname={playerName} /> : null}
+            <div class="horizontal_left">
+                {teams}
+                <AddPlayerTeam uid={uid} getTeams={getTeams}/>
+            </div>
             <div>
                 <h3>Elo: {currWins + currLosses >= 10 ? currElo : loggedin ? currElo : "Unranked"} </h3>
                 {chartData ? <EloChart rawChartData={chartData} noPlacementGames={makeCroppedChartData()}/> : null}

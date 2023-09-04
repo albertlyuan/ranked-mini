@@ -33,22 +33,19 @@ function TextInputAlert({oldname}){
 
   return (
     <div>
-        {!showAlert ? <button onClick={handleAlertClick}>Change Name</button> : null }
-        {showAlert && (
-            <div className="overlay">
-            <div className="alert">
-                <input
-                type="text"
-                value={newName}
-                onChange={handleInputChange}
-                />
-                <div>
-                <button onClick={handleConfirmClick}>Confirm</button>
-                <button onClick={handleCancelClick}>Cancel</button>
-                </div>
-            </div>
-            </div>
-        )}
+        <button onClick={handleAlertClick} style={{display: showAlert? "none" : "block"}}>Change Name</button>
+            
+        <div style={{display: showAlert? "block" : "none"}}>
+          <input
+            type="text"
+            value={newName}
+            onChange={handleInputChange}
+          />
+          <div>
+            <button onClick={handleConfirmClick}>Confirm</button>
+            <button onClick={handleCancelClick}>Cancel</button>
+          </div>
+        </div>
     </div>
   );
 };
