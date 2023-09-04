@@ -14,6 +14,7 @@ import {
     orderByValue,
     update } from "firebase/database";
 import {STARTING_ELO, calculateNewElo, calculateTeamElo} from "../Elo/elo.js"
+import { all } from "axios";
 
 const db = getDatabase(app)
 
@@ -42,7 +43,7 @@ const STARTING_GAMEID = -1
 
 /**
  * Async function
- * @returns list of [name, elo, num wins, num losses]
+ * @returns list of [name, elo, num wins, num losses, teams(list)]
  */
 export async function buildLeaderboard(){
 
@@ -52,10 +53,15 @@ export async function buildLeaderboard(){
     console.log(nameToUids)
     for (const [name, uid] of nameToUids){
         console.log(uid)
+        let teams = []
+        if (players[uid].teams != null){
+            teams = Object.keys(players[uid].teams)
+        }
+        
         if (players[uid].wins + players[uid].losses >= 10){
-            ranked.push([name, players[uid].elo, players[uid].wins,players[uid].losses])
+            ranked.push([name, players[uid].elo, players[uid].wins,players[uid].losses, teams])
         }else{
-            unranked.push([name, players[uid].elo, players[uid].wins,players[uid].losses])
+            unranked.push([name, players[uid].elo, players[uid].wins,players[uid].losses, teams])
         }
     }
     ranked.sort((a,b) => b[1]-a[1])
@@ -391,16 +397,27 @@ export async function firebase_changeName(oldname, newname){
 }
 
 export async function addTeam(uid, team){
-    const dest = "/player_now/" + uid +"/teams"
-    let playerTeams = (await get(query(ref(db, dest)))).val()
+    const playerdest = "/player_now/" + uid +"/teams"
+    const teamnamedest = "/teams/"
+    let playerTeams = (await get(query(ref(db, playerdest)))).val()
     if (playerTeams==null){
         playerTeams = {}
     }
     playerTeams[team] = ''
     
+    let allteams = (await get(query(ref(db, teamnamedest)))).val()
+    if (!allteams){
+        allteams = {}
+    }
+
+    if (allteams[team]==null){
+        allteams[team] = 0
+    }
+    allteams[team] += 1
     try{
         const updates = {}
-        updates[dest] = playerTeams
+        updates[playerdest] = playerTeams
+        updates[teamnamedest] = allteams
         return update(ref(db), updates);
     }catch{
         return false
@@ -409,14 +426,31 @@ export async function addTeam(uid, team){
 
 export async function removeTeam(uid, team){
     const dest = "/player_now/" + uid +"/teams/"
+    const teamnamedest = "/teams/"
     let playerTeams = (await get(query(ref(db, dest)))).val()
     if (playerTeams==null){
         return
     }
     delete playerTeams[team]
+
+    let allteams = (await get(query(ref(db, teamnamedest)))).val()
+    if (!allteams){
+        allteams = {}
+    }
+
+    if (allteams[team]==null){
+        allteams[team] = 0
+    }
+    allteams[team] -= 1
+
+    if (allteams[team]==0){
+        delete allteams[team]
+    }
+    
     try{
         const updates = {}
         updates[dest] = playerTeams
+        updates[teamnamedest] = allteams
         return update(ref(db), updates);
     }catch{
         return false
@@ -430,4 +464,12 @@ export async function firebase_getPlayerTeams(uid){
         return []
     }
     return Object.keys(playerTeams)
+}
+
+export async function firebase_getAllTeams(){
+    const allteams = (await get(query(ref(db, "/teams/")))).val()
+    if (allteams==null){
+        return []
+    }
+    return Object.keys(allteams)
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {addTeam, firebase_changeName} from '../Firebase/database.js'
+import {addTeam} from '../Firebase/database.js'
 
 export function PlayerTeam({teamname}){
     return (

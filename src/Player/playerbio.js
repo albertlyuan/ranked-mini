@@ -7,7 +7,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import TextInputAlert from './textInputAlert.js';
 import { PlayerTeam, AddPlayerTeam } from './playerteam.js';
-import { type } from '@testing-library/user-event/dist/type/index.js';
 const GamesLog = lazy(() => import('../Game/gamesLog.js'));
 
 function sortListByGameID(a,b){
@@ -113,6 +112,7 @@ export default function PlayerBio({games}){
             setTeams(namecomponents)
         })
     }
+
     function getMostRecentGame(){
         if (!playerData){
             return
