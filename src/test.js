@@ -88,7 +88,10 @@ async function load(){
     console.log("breakpct: ",breaks/games.length)
 }
 
-load()
+// load()
+// firebase.addTeam("-NdGxDFd-TzgdxlEz4px","testteam2").then(console.log)
+firebase.removeTeam("-NdGxDFd-TzgdxlEz4px","testteam")
+
 // firebase.firebase_addNewPlayer("test1")
 // firebase.firebase_changeName("andrew li", "ders")
 // firebase.getNameFromUID("-Nas6jgxwAcPPbJDdEV1").then(console.log)

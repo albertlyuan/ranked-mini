@@ -388,7 +388,37 @@ export async function firebase_changeName(oldname, newname){
     }catch{
         return false
     }
+}
+
+export async function addTeam(uid, team){
+    const dest = "/player_now/" + uid +"/teams"
+    let playerTeams = (await get(query(ref(db, dest)))).val()
+    if (playerTeams==null){
+        playerTeams = {}
+    }
+    playerTeams[team] = ''
     
+    try{
+        const updates = {}
+        updates[dest] = playerTeams
+        return update(ref(db), updates);
+    }catch{
+        return false
+    }
+}
 
-
+export async function removeTeam(uid, team){
+    const dest = "/player_now/" + uid +"/teams/"
+    let playerTeams = (await get(query(ref(db, dest)))).val()
+    if (playerTeams==null){
+        return
+    }
+    delete playerTeams[team]
+    try{
+        const updates = {}
+        updates[dest] = playerTeams
+        return update(ref(db), updates);
+    }catch{
+        return false
+    }
 }
