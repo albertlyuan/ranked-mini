@@ -23,7 +23,7 @@ export function AddPlayerTeam({uid, getTeams}){
 
     const handleConfirmClick = () => {
         // Do something with the input value, e.g. save it or use it
-        addTeam(uid, teamname)
+        addTeam(uid, teamname.trim().toLowerCase())
         getTeams()
         setTeamname('');
         setShowAlert(false);
