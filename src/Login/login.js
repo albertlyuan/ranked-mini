@@ -15,7 +15,7 @@ export default function Login(){
                 type={"email"} 
                 onChange={(e)=>setFormData({...formData, email: e.target.value})}/> */}
             <input 
-                id="password"
+                id="textInput"
                 type={"password"}
                 placeholder="Login for Admin Access"  
                 onChange={(e)=>setFormData({...formData, password: e.target.value})}/>

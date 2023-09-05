@@ -61,9 +61,10 @@ body {
   text-align: right;
   float: right;
 } 
-  .verticalAlign input{
-    display: block;
-  }
+
+.verticalAlign input{
+  display: block;
+}
 
 table {
   border-collapse: collapse;
@@ -214,18 +215,6 @@ tr #addplayerRow{
     background-color: #ddd;
   }
 
-
-#myInput {
-  box-sizing: border-box;
-  /* background-image: url('searchicon.png'); */
-  background-position: 14px 12px;
-  background-repeat: no-repeat;
-  font-size: 16px;
-  padding: 14px 20px 12px 45px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-}
-
 /* REPORT SCORE */
 .scoreReport{
   padding-top: 10px;
@@ -340,10 +329,80 @@ tr #addplayerRow{
   width: auto;
   vertical-align:middle;
 }
+ 
+#teambutton{
+  margin-bottom: 5%;
+  outline: none;
+  cursor: pointer;
 
-#password{
+}
+
+.teambutton_selected{
+  background-color: #bbb;
+}
+
+.teambutton_unselected{
+  background-color: inherit;
+}
+
+.teambutton_unselected:hover{
+  background-color: #ccc;
+}
+
+#teambutton{
+  outline: none;
+  cursor: pointer;
+  border-radius: 10%;
+  font-size: medium;
+  font-weight: bold;
+}
+
+#teambutton::first-letter{
+  text-transform: capitalize;
+}
+
+#textInput{
   border-radius: 6px;
   outline: transparent;
   background-color: transparent;
   padding: 12px 20px;
+}
+
+.optionButton{
+  padding: 10px 10px;
+  margin: 2px;
+  border-radius: 6px;
+  width: 45%;
+  font-size: medium;
+  text-align: left;
+}
+
+.optionButton:hover{
+  background-color: #fff;
+}
+
+#addTeamButton{
+  padding: 10px 10px;
+  border-radius: 6px;
+  font-size: medium;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+#addTeamButton:hover{
+  background-color: #ccc;
+}
+#addTeam{
+  padding: 10px 10px;
+  background-color: inherit;
+  border-radius: 10px;
+  margin: 5px;
+  width: 20%;
+}
+
+#deleteTeam{
+  padding: 10px 10px;
+  background-color: #ccc;
+  border-radius: 10px;
+  margin: 5px;
 }

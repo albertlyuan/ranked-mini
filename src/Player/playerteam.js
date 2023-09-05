@@ -1,11 +1,39 @@
 import React, { useState } from 'react';
-import {addTeam} from '../Firebase/database.js'
+import {addTeam, removeTeam} from '../Firebase/database.js'
 
-export function PlayerTeam({teamname}){
+export function PlayerTeam({uid, teamname, triggerReload, observer}){
+    const [showAlert, setShowAlert] = useState(false);
+
+    function toggleAlert(){
+        setShowAlert(true)
+    }
+
+    function handleDeleteClick(){
+        removeTeam(uid, teamname)
+        triggerReload(!observer)
+    }
+
+    function handleCancelClick(){
+        setShowAlert(false)
+    }
+
     return (
-        <button>
+        <>
+        <button 
+            id="teambutton" 
+            onClick={toggleAlert} 
+            class="teambutton_unselected"
+            style={{display: showAlert? "none" : "block"}}
+        > 
             <p>{teamname}</p>
         </button>
+
+        <div id="deleteTeam" style={{display: showAlert? "block" : "none"}}>
+            <p>Remove {teamname}?</p>
+            <button onClick={handleDeleteClick} class="eloloss optionButton">Delete</button>
+            <button onClick={handleCancelClick} class="optionButton">Cancel</button>
+        </div>
+    </>
     )
 }
 
@@ -36,17 +64,19 @@ export function AddPlayerTeam({uid, getTeams}){
     };
 
     return (
-        <div >
-            <button onClick={handleAlertClick} style={{display: showAlert? "none" : "block"}}>+</button>
+        <div id="addTeam">
+            <button id="addTeamButton" onClick={handleAlertClick} style={{display: showAlert? "none" : "block"}}>Add Team</button>
                 
-            <div class="horizontal_left" style={{display: showAlert? "block" : "none"}}>
-            <input
-                type="text"
-                value={teamname}
-                onChange={handleInputChange}
-            />
-            <button onClick={handleConfirmClick}>Confirm</button>
-            <button onClick={handleCancelClick}>Cancel</button>
+            <div style={{display: showAlert? "block" : "none"}}>
+                <input
+                    id="textInput"
+                    type="text"
+                    placeholder='Enter team name'
+                    value={teamname}
+                    onChange={handleInputChange}
+                />
+                <button onClick={handleConfirmClick} class="optionButton elogain">Confirm</button>
+                <button onClick={handleCancelClick} class="optionButton">Cancel</button>
             </div>
         </div>
     )

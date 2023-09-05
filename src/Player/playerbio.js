@@ -31,6 +31,7 @@ export default function PlayerBio({games}){
     const [chartData, setChartData] = useState(blankChartData)
     const [loggedin, setLoggedin] = useState(false);
     const [teams, setTeams] = useState([]);
+    const [observer, triggerReload] = useState(false);
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -99,15 +100,16 @@ export default function PlayerBio({games}){
                 setChartData(dataobj)
             }
         })
+        
         getTeams()
         
-    }, [playerData, uid])
+    }, [playerData, uid, observer])
 
     function getTeams(){
         firebase_getPlayerTeams(uid)
         .then(teamnames => {
             const namecomponents = teamnames.map(name => {
-                return (<PlayerTeam teamname={name}/>)
+                return (<PlayerTeam uid={uid} teamname={name} triggerReload={triggerReload} observer={observer}/>)
             })
             setTeams(namecomponents)
         })

@@ -10,7 +10,7 @@ export function SelectTeam({teamname, teamfilter, setTeamFilter}){
     }
 
     return (
-        <button class="clickable highlights" onClick={toggleFilter} style={{backgroundColor: teamfilter === teamname ? "#bbb" : "inherit"}}>
+        <button id="teambutton" onClick={toggleFilter} class={ teamfilter === teamname ? "teambutton_selected" : "teambutton_unselected"}>
             <p>{teamname}</p>
         </button>
     )
