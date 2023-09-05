@@ -355,6 +355,7 @@ tr #addplayerRow{
   border-radius: 10%;
   font-size: medium;
   font-weight: bold;
+  margin: 2px;
 }
 
 #teambutton::first-letter{
