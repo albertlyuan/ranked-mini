@@ -51,6 +51,10 @@ export async function buildLeaderboard(){
     console.log(nameToUids)
     for (const [name, uid] of nameToUids){
         console.log(uid)
+        if (players[uid] == null){
+            // alert(uid)
+            continue
+        }
         let teams = []
         if (players[uid].teams != null){
             teams = Object.keys(players[uid].teams)
