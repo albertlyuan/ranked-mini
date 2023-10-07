@@ -207,7 +207,7 @@ export default function PlayerBio({games}){
             const intGameId = parseInt(gameid)
             const ts = new Date(game.timestamp)
             elos.push([intGameId, game.elo])
-            timestamps.push([intGameId, `${ts.getMonth()}/${ts.getDate()}/${ts.getFullYear()}`])
+            timestamps.push([intGameId, `${ts.getMonth()+1}/${ts.getDate()}/${ts.getFullYear()}`])
         }
         elos.sort(sortListByGameID)
 
