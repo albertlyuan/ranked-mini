@@ -1,37 +1,39 @@
 import PlayerCell from "./gameInfoPlayerCell.js"
-import {queryGamePlayersData} from "../Firebase/database.js"
 import { calculateTeamElo } from "../Elo/elo.js";
 import {useState, useEffect} from 'react'
-function Teams({gameID, winners, losers}){
-    const [winnerData, setWinnerData] = useState([]);
-    const [loserData, setLoserData] = useState([]);
+function Teams({gameID, winnerData, loserData, alternateResult, breakToWin}){
+    const [winnerTeamElo, setWinnerTeamElo] = useState(0);
+    const [loserTeamElo, setLoserTeamElo] = useState(0);
+    const [rows, setRows] = useState();
 
     useEffect(() => {
-       
+        if (loserData==null || winnerData==null){
+            return
+        }
         //data = [player,[before.elo, after.elo], before.wins, before.losses]
+        if(loserData.length > 0){
+            setLoserTeamElo(calculateTeamElo(loserData.map(i => ({elo: i[1][0]}))).toFixed(2))
+        }
+        if(winnerData.length > 0){
+            setWinnerTeamElo(calculateTeamElo(winnerData.map(i => ({elo: i[1][0]}))).toFixed(2))
+        }
 
-        queryGamePlayersData(winners, gameID).then(data => {
-            data.sort((a,b) => b[1][0]-a[1][0])
-            setWinnerData(data)
-        })
-        queryGamePlayersData(losers, gameID).then(data => {
-            data.sort((a,b) => b[1][0]-a[1][0])
-            setLoserData(data)
-        })
-    }, [gameID])
+        const players = loserData.map((_,index) => 
+            <tr>
+                <PlayerCell player={winnerData[index]} alternateResult={alternateResult} winningTeamElo={winnerTeamElo} losingTeamElo={loserTeamElo} win={true} breakToWin={breakToWin}/>
+                <PlayerCell player={loserData[index]} alternateResult={alternateResult} winningTeamElo={winnerTeamElo} losingTeamElo={loserTeamElo} win={false} breakToWin={breakToWin}/>
+            </tr>
+        ); 
+        setRows(players)
+    }, [gameID, winnerData, loserData, alternateResult])
 
-    const rows = loserData.map((_,index) => 
-        <tr>
-            <PlayerCell player={winnerData[index]}/>
-            <PlayerCell player={loserData[index]} />
-        </tr>
-    ); 
+    
 
     return (
         <table class="animatedLoad">
             <tr>
-                <th>Winning Team {winnerData.length > 0  ? "("+calculateTeamElo(winnerData.map(i => ({elo: i[1][0]}))).toFixed(2)+")" : ""}</th>
-                <th>Losing Team {loserData.length > 0  ? "("+calculateTeamElo(loserData.map(i => ({elo: i[1][0]}))).toFixed(2)+")" : ""} </th>
+                <th>{!alternateResult ? "Winning Team" : "Losing Team"} {"("+winnerTeamElo+")"}</th>
+                <th>{!alternateResult ? "Losing Team" : "Winning Team"} { "("+loserTeamElo+")"} </th>
             </tr>
             {rows}
         </table>

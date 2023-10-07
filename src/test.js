@@ -89,10 +89,8 @@ async function load(){
 }
 
 // load()
-const uid = "-NdGxDFrv7IlQqL_S_lO"
-firebase.addTeam(uid,"brimstone").then(console.log)
-// firebase.removeTeam(uid,"testteam")
-// firebase.firebase_getPlayerTeams(uid).then(console.log)
+// const uid = "-NdGxDFrv7IlQqL_S_lO"
+// firebase.addTeam(uid,"brimstone").then(console.log)
 
 // firebase.firebase_addNewPlayer("test1")
 // firebase.firebase_changeName("andrew li", "ders")
@@ -109,6 +107,17 @@ firebase.addTeam(uid,"brimstone").then(console.log)
 //     elo.calculateNewElo(192,188,198,true,14,true), 
 //     32*(1-elo.expectedValue(192,198))/.3
 //     )
+// console.log(elo.calculateNewElo(152.05,446.77,505.38,true,7,false))
+// console.log(elo.calculateNewElo(152.05,446.77,505.38,true,7,false)-152.05)
 
+
+
+// console.log('chris')
+// console.log(elo.calculateNewElo(152.05,505.38,446.77,false,7,true))
+// console.log(elo.calculateNewElo(152.05,505.38,446.77,false,7,true)-152.05)
+
+// console.log('bert')
+// console.log(elo.calculateNewElo(683.49,505.38,446.77,true,25,true))
+// console.log(elo.calculateNewElo(683.49,505.38,446.77,true,25,true)-683.49)
 
 

@@ -4,10 +4,18 @@ import { useEffect, useState } from 'react'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import { getUIDFromName } from "../Firebase/database.js";
+import { calculateNewElo } from "../Elo/elo.js";
 
-function PlayerCell({player}){
+function PlayerCell({player, alternateResult, winningTeamElo, losingTeamElo, win, breakToWin}){
     const [loggedin, setLoggedin] = useState(false);
     const [uid, setUid] = useState();
+
+    //player = [name,[before.elo, after.elo], before.wins, before.losses]
+    const [name, set_name] = useState("");
+    const [before_elo, set_before_elo] = useState(0);
+    const [after_elo, set_after_elo] = useState(0);
+    const [wins, set_wins] = useState(0);
+    const [losses, set_losses] = useState(0);
 
     useEffect(() => {
       onAuthStateChanged(auth, (user) => {
@@ -21,8 +29,23 @@ function PlayerCell({player}){
       getUIDFromName(player[0]).then((id)=>{
         setUid(id)
       })
-    })
-    //player = [name,[before.elo, after.elo], before.wins, before.losses]
+      if (alternateResult){
+        set_name(player[0])
+        set_before_elo(player[1][0])
+        
+        set_wins(player[2])
+        set_losses(player[3])
+        const hypotheticalNewElo = calculateNewElo(before_elo, winningTeamElo, losingTeamElo, !win, wins+losses, !breakToWin)
+        set_after_elo(hypotheticalNewElo)
+      }else{
+        set_name(player[0])
+        set_before_elo(player[1][0])
+        set_after_elo(player[1][1])
+        set_wins(player[2])
+        set_losses(player[3])
+      }
+      
+    }, [player, alternateResult])
     const navigate = useNavigate();
     const goToPlayer = () => {
         navigate(`/player/${uid}`);
@@ -30,8 +53,8 @@ function PlayerCell({player}){
 
     return(
         <td class="clickable highlights" onClick={goToPlayer}>
-            <h3>{player[0]} ({player[2]}-{player[3]}) <img title={getRankFromElo(player[1][0], player[2], player[3]).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(player[1][0], player[2], player[3])}/></h3>
-            {player[2] + player[3] >= 10 || loggedin ? <p>elo: {player[1][0].toFixed(2)} ({player[1][1]-player[1][0] > 0 ? "+" : ""}{(player[1][1]-player[1][0]).toFixed(2)})</p> : null}
+            <h3>{name} ({wins}-{losses}) <img title={getRankFromElo(before_elo, wins, losses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(before_elo, wins, losses)}/></h3>
+            {wins + losses >= 10 || loggedin ? <p>elo: {before_elo.toFixed(2)} ({after_elo-before_elo > 0 ? "+" : ""}{(after_elo-before_elo).toFixed(2)})</p> : null}
         </td>
     );
 }

@@ -56,7 +56,7 @@ function calculateNewElo(oldPlayerElo, winningTeamElo, losingTeamElo, win_boolea
             ret = Math.max(0,oldPlayerElo + k*(0-expectedValue(player_team_elo,winningTeamElo, win_boolean, winner_pulled)) / (1-PULL_FACTOR)) 
             // console.log("lost + pulled")
         }
-        console.log(player_team_elo, winningTeamElo)
+        // console.log(player_team_elo, winningTeamElo)
 
     }
     return ret
