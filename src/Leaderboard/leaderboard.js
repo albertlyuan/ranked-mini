@@ -10,7 +10,7 @@ export default function Leaderboard({roster}){
     const [filter, setFilter] = useState('');
     const [listItems, setListItems] = useState([]);
     const [teamList, setTeamList] = useState([]);
-    const [teamfilter, setTeamFilter] = useState('brimstone');
+    const [teamfilter, setTeamFilter] = useState('');
 
     useEffect(() => {
         let playerrows = []

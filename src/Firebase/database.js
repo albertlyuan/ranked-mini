@@ -121,12 +121,11 @@ export function firebase_addNewPlayer(playerName){
     playerName = playerName.trim()
     playerName = playerName.toLowerCase()
     const newKey = push(player_uid).key
-
-    firebase_mapNameToUid(playerName, newKey)
-
     const updates = {};
+
+    firebase_mapNameToUid(updates, playerName, newKey)
     updatePlayerHistory(updates, newKey,STARTING_ELO,STARTING_GAMEID,0,0, ts, null, null)
-    updatePlayerNow(updates, newKey,STARTING_ELO,STARTING_GAMEID,0,0)
+    updatePlayerNow(updates, newKey,STARTING_ELO,STARTING_GAMEID,0,0,{})
     
     return update(ref(db), updates);
 }
@@ -210,6 +209,8 @@ function updateNewPlayerElo(updates, playerData, winningTeamElo, losingTeamElo, 
         const oldElo = playerData.get(name)['elo']
         let wins = playerData.get(name)['wins']
         let losses = playerData.get(name)['losses']
+        let teams = 'teams' in playerData.get(name) ? playerData.get(name)['teams'] : []
+
         console.log(name)
         const newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, win_status, wins+losses, winner_pulled)
         
@@ -223,7 +224,7 @@ function updateNewPlayerElo(updates, playerData, winningTeamElo, losingTeamElo, 
         }        
 
         updatePlayerHistory(updates, name,newElo,newGameID, wins, losses, ts, win_status, winner_pulled)
-        updatePlayerNow(updates, name,newElo,newGameID,wins,losses)
+        updatePlayerNow(updates, name,newElo,newGameID,wins,losses, teams)
     }
 }
 
@@ -270,19 +271,25 @@ function updatePlayerHistory(updates, uid,elo,game_id, wins, losses, ts, win_sta
  * @param {int} wins 
  * @param {int} losses 
  */
-function updatePlayerNow(updates, uid, elo, game_id, wins, losses){
+function updatePlayerNow(updates, uid, elo, game_id, wins, losses, teams){
     const postDestination = '/player_now/'+uid
     const postData = {
         most_recent_game: game_id,
         elo: elo,
         wins: wins,
-        losses: losses
+        losses: losses,
+        teams: teams
     }
     updates[postDestination] = postData
 }
 
-async function firebase_mapNameToUid(playerName, uid){
-    await set(ref(db,'/player_uid/'+playerName), uid)
+async function firebase_mapNameToUid(updates, playerName, uid){
+    const postDestination = '/player_uid/'+playerName
+    const postData = {
+        uid
+    };
+    updates[postDestination] = postData
+
 }
 
 /**
@@ -407,6 +414,7 @@ export async function addTeam(uid, team){
     }
     playerTeams[team] = ''
     
+    //add new team to teamlist
     let allteams = (await get(query(ref(db, teamnamedest)))).val()
     if (!allteams){
         allteams = {}
@@ -416,6 +424,7 @@ export async function addTeam(uid, team){
         allteams[team] = 0
     }
     allteams[team] += 1
+    
     try{
         const updates = {}
         updates[playerdest] = playerTeams
