@@ -22,6 +22,12 @@ const player_uid = ref(db, '/player_uid/')
 const games = ref(db, '/games')
 const STARTING_GAMEID = -1
 
+
+export async function queryDB(location){
+    const response = await fetch(location);
+    const myJson = await response.json();
+    return myJson;
+}   
 /**
  * 
  * @returns placeholder player object
@@ -124,6 +130,7 @@ export function firebase_addNewPlayer(playerName){
     const updates = {};
 
     firebase_mapNameToUid(updates, playerName, newKey)
+    console.log(updates)
     updatePlayerHistory(updates, newKey,STARTING_ELO,STARTING_GAMEID,0,0, ts, null, null)
     updatePlayerNow(updates, newKey,STARTING_ELO,STARTING_GAMEID,0,0,{})
     
@@ -285,11 +292,8 @@ function updatePlayerNow(updates, uid, elo, game_id, wins, losses, teams){
 
 async function firebase_mapNameToUid(updates, playerName, uid){
     const postDestination = '/player_uid/'+playerName
-    const postData = {
-        uid
-    };
+    const postData = uid
     updates[postDestination] = postData
-
 }
 
 /**
@@ -454,7 +458,7 @@ export async function removeTeam(uid, team){
     }
     allteams[team] -= 1
 
-    if (allteams[team]==0){
+    if (allteams[team]<=0){
         delete allteams[team]
     }
     

@@ -65,6 +65,8 @@ function addPlayers(players){
 }
 
 async function load(){
+    console.log("change to include timestamps")
+    return
     firebase.cleardb()
     console.log('deleted')
     const games = data["games"]
@@ -121,3 +123,4 @@ async function load(){
 // console.log(elo.calculateNewElo(683.49,505.38,446.77,true,25,true)-683.49)
 
 
+// firebase.firebase_addNewPlayer("test1")
