@@ -124,3 +124,43 @@ async function load(){
 
 
 // firebase.firebase_addNewPlayer("test1")
+
+
+// export async function changeDatesToISO(){
+// used to change dates from Date.ToString to Date.ToISOString()
+
+//     const updates = {}
+
+//     const allgames = (await get(query(ref(db, "/games/")))).val()
+//     for (let game of Object.keys(allgames)){
+//         const dest = "/games/"+game+"/timestamp"
+//         const oldDate = allgames[game]["timestamp"]
+//         const newDate = new Date(oldDate).toISOString()
+//         console.log(dest)
+//         console.log(oldDate)
+//         console.log(newDate)
+//         updates[dest] = newDate
+//     }
+    
+//     const allphistory = (await get(query(ref(db, "/player_history/")))).val()
+
+//     for (let uid of Object.keys(allphistory)){
+//         for (let game of Object.keys(allphistory[uid])){
+//             console.log(uid + " " + game)
+//             const dest = "/player_history/"+uid+"/"+game+"/timestamp"
+//             const oldDate = allphistory[uid][game]["timestamp"]
+//             const newDate = new Date(oldDate).toISOString()
+//             console.log(dest)
+//             console.log(oldDate)
+//             console.log(newDate)
+//             updates[dest] = newDate
+//         }
+//     }
+//     try{
+//         return update(ref(db), updates)
+//     }catch{
+//         return false
+//     }
+    
+// }
+// firebase.changeDatesToISO().then(console.log)

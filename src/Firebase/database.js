@@ -11,7 +11,8 @@ import {
     endAt, 
     push,
     orderByValue,
-    update } from "firebase/database";
+    update, 
+    startAt} from "firebase/database";
 import {STARTING_ELO, calculateNewElo, calculateTeamElo} from "../Elo/elo.js"
 
 const db = getDatabase(app)
@@ -23,10 +24,14 @@ const games = ref(db, '/games')
 const STARTING_GAMEID = -1
 
 
-export async function queryDB(location){
-    const response = await fetch(location);
-    const myJson = await response.json();
-    return myJson;
+export async function queryGamesSinceDate(date){
+    const resp = (await get(
+        query(ref(db,"games"), 
+        orderByChild('timestamp'), 
+        startAt(date)))
+    ).val()
+    return resp
+
 }   
 /**
  * 
@@ -103,7 +108,7 @@ export async function getGamesLog(){
     return gameLogObjects
 }
 
-async function getNamesFromUIDs(){
+export async function getNamesFromUIDs(){
     const uids = (await get(player_uid)).val()
     const ret = new Map()
     for (let [name,uid] of Object.entries(uids)){
@@ -123,7 +128,7 @@ export async function getNameFromUID(uid){
  * @param {str} playerName 
  */
 export function firebase_addNewPlayer(playerName){
-    const ts = new Date().toString()
+    const ts = new Date().toISOString()
     playerName = playerName.trim()
     playerName = playerName.toLowerCase()
     const newKey = push(player_uid).key
@@ -164,7 +169,7 @@ export async function firebase_logNewGame(winner1, winner2, winner3, loser1, los
     const newGameID = await getNewGameID()
     const winners = await getUIDsFromNames([winner1,winner2,winner3])
     const losers = await getUIDsFromNames([loser1,loser2,loser3])
-    const ts = new Date().toString()
+    const ts = new Date().toISOString()
 
     const updates = {}
 
@@ -358,7 +363,7 @@ export async function firebase_getTotalPlayerData(uid){
  * @returns player object of gameid and gameid - 1 (used to see elo of player at time of gameid)
  */
 export async function firebase_getPlayerData(uid, gameid){
-
+    
     const beforeStats = (await get(query(ref(db,"player_history/"+uid), orderByChild('game_id'), endAt(gameid - 1), limitToLast(1)))).val()
     const afterStats = (await get(query(ref(db,"player_history/"+uid), orderByChild('game_id'), endAt(gameid), limitToLast(1)))).val()
     return [beforeStats, afterStats]
@@ -488,3 +493,4 @@ export async function firebase_getAllTeams(){
     }
     return Object.keys(allteams)
 }
+
