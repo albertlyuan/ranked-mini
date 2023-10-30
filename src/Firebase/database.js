@@ -170,7 +170,7 @@ export async function firebase_logNewGame(winner1, winner2, winner3, loser1, los
     const winners = await getUIDsFromNames([winner1,winner2,winner3])
     const losers = await getUIDsFromNames([loser1,loser2,loser3])
     const ts = new Date().toISOString()
-
+    
     const updates = {}
 
     addToGamesTable(updates, newGameID, winners, losers, ts, winner_pulled)
@@ -494,3 +494,40 @@ export async function firebase_getAllTeams(){
     return Object.keys(allteams)
 }
 
+export async function changeDatesToISO(){
+    // used to change dates from Date.ToString to Date.ToISOString()
+
+    const updates = {}
+
+    const allgames = (await get(query(ref(db, "/games/")))).val()
+    for (let game of Object.keys(allgames)){
+        const dest = "/games/"+game+"/timestamp"
+        const oldDate = allgames[game]["timestamp"]
+        const newDate = new Date(oldDate).toISOString()
+        console.log(dest)
+        console.log(oldDate)
+        console.log(newDate)
+        updates[dest] = newDate
+    }
+    
+    const allphistory = (await get(query(ref(db, "/player_history/")))).val()
+
+    for (let uid of Object.keys(allphistory)){
+        for (let game of Object.keys(allphistory[uid])){
+            console.log(uid + " " + game)
+            const dest = "/player_history/"+uid+"/"+game+"/timestamp"
+            const oldDate = allphistory[uid][game]["timestamp"]
+            const newDate = new Date(oldDate).toISOString()
+            console.log(dest)
+            console.log(oldDate)
+            console.log(newDate)
+            updates[dest] = newDate
+        }
+    }
+    try{
+        return update(ref(db), updates)
+    }catch{
+        return false
+    }
+    
+}

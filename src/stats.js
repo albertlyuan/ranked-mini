@@ -2,10 +2,10 @@ import * as firebase from './Firebase/database.js'
 import * as elo from './Elo/elo.js'
 
 
-async function Summary(){
+async function Summary(days){
     const players = ["loser_1","loser_2","loser_3","winner_1","winner_2","winner_3"]
     let queryDate = new Date()
-    queryDate.setDate(queryDate.getDate()-7)
+    queryDate.setDate(queryDate.getDate()-days)
     queryDate = queryDate.toISOString()
     const uidToName = await firebase.getNamesFromUIDs()
     const startelo = new Map() //uid: elo
@@ -13,7 +13,7 @@ async function Summary(){
     const endelo = new Map() //uid: elo
     
     const games = await firebase.queryGamesSinceDate(queryDate)
-        
+    console.log("games played:", Object.entries(games).length)
     for (let [gameid, game] of Object.entries(games)){
         for (let p of players){
             let player = game[p]
@@ -34,15 +34,17 @@ async function Summary(){
     const diffs = []
     const diffs_INCLplacements = []
     for (const [player, v] of endelo.entries()){
-        if (startelo.has(player)){
+        if (startelo_incPlacements.has(player)){
             const playername = uidToName.get(player)
             const [finalElo, endNumGames] = v
-            const [startingElo, startNumGames] = startelo.get(player)
-            const [startingElo_incPlacement, startNumGames_incPlacement] = startelo_incPlacements.get(player)
+            if (startelo.has(player)){
+                const [startingElo, startNumGames] = startelo.get(player)
+                diffs.push([playername, finalElo - startingElo, endNumGames-startNumGames])
 
-            diffs_INCLplacements.push([playername,finalElo-startingElo_incPlacement,endNumGames-startNumGames_incPlacement])
-            diffs.push([playername, finalElo - startingElo, endNumGames-startNumGames])
-            console.log(playername,startelo_incPlacements.get(player), ":start:",startelo.get(player),"end:",v)
+            }
+            const [startingElo_incPlacement, startNumGames_incPlacement] = startelo_incPlacements.get(player)
+            diffs_INCLplacements.push([playername,(finalElo-startingElo_incPlacement).toFixed(2),endNumGames-startNumGames_incPlacement, finalElo.toFixed(2)])
+            console.log(playername,":start:",startelo_incPlacements.get(player),"end:",v)
         }
     }
     diffs.sort((a,b) => b[1]-a[1])
@@ -51,4 +53,4 @@ async function Summary(){
     console.log(diffs)
     console.log(diffs_INCLplacements)
 }
-Summary()
+Summary(1)

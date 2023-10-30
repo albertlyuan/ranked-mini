@@ -1,4 +1,3 @@
-export {calculateNewElo, calculateTeamElo, weightedRank, STARTING_ELO, PULL_FACTOR, NormalK, UnrankedK,D,L,slope,midpoint}
 
 //
 const STARTING_ELO = 400
@@ -100,3 +99,5 @@ function weightedRank(elo){
     // return elo
     return elo + L / (1+ Math.E**(-slope*(elo-midpoint)))
 }
+
+export {calculateNewElo, calculateTeamElo, weightedRank, STARTING_ELO, PULL_FACTOR, NormalK, UnrankedK,D,L,slope,midpoint}
