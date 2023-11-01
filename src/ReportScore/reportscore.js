@@ -7,7 +7,7 @@ import PullSelector from './pullSelector.js';
 import PullFactorSetter from './pullFactorSetter.js';
 
 export default function ReportScore({roster, setRoster, updater}){
-    const [availablePlayers, setAvailablePlayers] = useState(new Set(roster.map((person) => person[0])));
+    const [availablePlayers, setAvailablePlayers] = useState(new Set());
     
     const [winner1, setWinner1] = useState('');
     const [winner2, setWinner2] = useState('');
@@ -32,7 +32,8 @@ export default function ReportScore({roster, setRoster, updater}){
         }else{
           setLoggedin(false)
         }
-      })
+      })      
+      setAvailablePlayers(new Set(roster.map((person) => person[0])))
     })
 
     useEffect(() => {
@@ -41,7 +42,7 @@ export default function ReportScore({roster, setRoster, updater}){
         }else{
             setDidSelectPlayers(false)
         }
-      }, [winner1,winner2,winner3,loser1,loser2,loser3]);
+    }, [winner1,winner2,winner3,loser1,loser2,loser3]);
 
     // const justPlayerNames = roster.map((person) => person[0])
     function clearSelection(){
