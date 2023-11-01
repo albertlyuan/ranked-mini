@@ -134,3 +134,4 @@ async function load(){
 
 //     )
 
+firebase.getCurrPullFactor(100).then(console.log)

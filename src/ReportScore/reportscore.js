@@ -33,7 +33,9 @@ export default function ReportScore({roster, setRoster, updater}){
           setLoggedin(false)
         }
       })      
-      setAvailablePlayers(new Set(roster.map((person) => person[0])))
+      if (availablePlayers.size == 0){
+        setAvailablePlayers(new Set(roster.map((person) => person[0])))
+      }
     })
 
     useEffect(() => {
