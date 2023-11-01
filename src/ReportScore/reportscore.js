@@ -4,8 +4,9 @@ import Dropdown from "./dropdown.js"
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import PullSelector from './pullSelector.js';
+import PullFactorSetter from './pullFactorSetter.js';
 
-export default function ReportScore({roster, setRoster}){
+export default function ReportScore({roster, setRoster, updater}){
     const [availablePlayers, setAvailablePlayers] = useState(new Set(roster.map((person) => person[0])));
     
     const [winner1, setWinner1] = useState('');
@@ -15,11 +16,12 @@ export default function ReportScore({roster, setRoster}){
     const [loser2, setLoser2] = useState('');
     const [loser3, setLoser3] = useState('');
 
-    const [winnerPulled, setWinnerPulled] = useState(null);
-
     const [didSelectPlayers, setDidSelectPlayers] = useState(false);
 
+    const [winnerPulled, setWinnerPulled] = useState(null);
     const [didSetPuller, setDidSetPuller] = useState(false);
+
+    const [dynamicPullFactor, toggleDynamicPullFactor] = useState(true);
 
     const [loggedin, setLoggedin] = useState(false);
 
@@ -89,12 +91,10 @@ export default function ReportScore({roster, setRoster}){
         }
         
 
-        firebase_logNewGame(winner1,winner2,winner3,loser1,loser2,loser3, winnerPulled)
-        buildLeaderboard().then(newLeaderboard => {
-            setRoster(newLeaderboard)
+        firebase_logNewGame(winner1,winner2,winner3,loser1,loser2,loser3, winnerPulled,dynamicPullFactor).then(()=>{
+            updater()
             clearSelection()
         })
-        
         
     }
 
@@ -168,7 +168,10 @@ export default function ReportScore({roster, setRoster}){
                 <br></br>
 
                 {didSelectPlayers ? 
-                    <PullSelector setDidSetPuller={setDidSetPuller} winnerPulled={winnerPulled} setWinnerPulled={setWinnerPulled}/>
+                    <>
+                        <PullFactorSetter dynamicPullFactor={dynamicPullFactor} toggleDynamicPullFactor={toggleDynamicPullFactor}/>
+                        <PullSelector setDidSetPuller={setDidSetPuller} winnerPulled={winnerPulled} setWinnerPulled={setWinnerPulled}/>
+                    </>
                 : null}
 
                 {didSetPuller ? 

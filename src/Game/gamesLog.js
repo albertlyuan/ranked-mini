@@ -1,13 +1,19 @@
+import { useEffect, useState } from 'react';
 import GameRow from './gameRow.js'
 
 export default function GamesLog({gamesLog, eloGain}){
+    const [gameList, setGameList] =  useState([]);
 
-    const gameList = gamesLog.map((game) =>
-        <GameRow 
-            game={game}
-            eloGain={eloGain}
-        />
-    )
+    useEffect(() => {
+        const temp = gamesLog.map((game) =>
+            <GameRow 
+                game={game}
+                eloGain={eloGain}
+            />
+        )
+        setGameList(temp)
+    },[gamesLog])
+    
 
     return(
         <div class="animatedLoad">

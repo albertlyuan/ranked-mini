@@ -165,7 +165,7 @@ export async function getUIDFromName(name){
  * @param {str} loser2 
  * @param {str} loser3 
  */
-export async function firebase_logNewGame(winner1, winner2, winner3, loser1, loser2,loser3, winner_pulled){
+export async function firebase_logNewGame(winner1, winner2, winner3, loser1, loser2,loser3, winner_pulled, dynamic_pull_factor=false){
     const newGameID = await getNewGameID()
     const winners = await getUIDsFromNames([winner1,winner2,winner3])
     const losers = await getUIDsFromNames([loser1,loser2,loser3])
@@ -186,8 +186,8 @@ export async function firebase_logNewGame(winner1, winner2, winner3, loser1, los
     console.log("winning team: ", winners, winningTeamElo )
     console.log("losing team: ", losers, losingTeamElo )
 
-    updateNewPlayerElo(updates, winnerData,winningTeamElo,losingTeamElo,newGameID, ts, true, winner_pulled)
-    updateNewPlayerElo(updates, loserData,winningTeamElo,losingTeamElo,newGameID, ts, false, winner_pulled)
+    await updateNewPlayerElo(updates, winnerData,winningTeamElo,losingTeamElo,newGameID, ts, true, winner_pulled, dynamic_pull_factor)
+    await updateNewPlayerElo(updates, loserData,winningTeamElo,losingTeamElo,newGameID, ts, false, winner_pulled, dynamic_pull_factor)
 
     console.log(updates)
 
@@ -208,6 +208,25 @@ function filterPlayerObjects(playernames, players){
 }
 
 /**
+ * Calculate pull factor based on the last `numGames` games 
+ * @param {int} numGames - number of games to draw from to calc new pull factor
+ * @returns 
+ */
+export async function getCurrPullFactor(numGames){
+    const mostRecentGames = Object.values((await get(query(games, orderByKey(), limitToLast(numGames)))).val())
+    let break2win = 0
+    for (const game of mostRecentGames){
+        if (game["winner_pulled"]){
+            break2win += 1
+        }
+
+    }
+    const newPullFactor = (break2win/numGames) / (1-(break2win/numGames))
+    return newPullFactor
+
+}
+
+/**
  * update player_history and player_now tables
  * @param {map} playerData - map of {name: player object}
  * @param {float} winningTeamElo - team elo of winning team
@@ -216,16 +235,21 @@ function filterPlayerObjects(playernames, players){
  * @param {str} ts - timestamp
  * @param {boolean} win_status - true if team won
  */
-function updateNewPlayerElo(updates, playerData, winningTeamElo, losingTeamElo, newGameID, ts, win_status, winner_pulled){
+async function updateNewPlayerElo(updates, playerData, winningTeamElo, losingTeamElo, newGameID, ts, win_status, winner_pulled, dynamic_pull_factor){
+    const currPullFactor = await getCurrPullFactor(100)
+
     for (const name of playerData.keys()){
         const oldElo = playerData.get(name)['elo']
         let wins = playerData.get(name)['wins']
         let losses = playerData.get(name)['losses']
         let teams = 'teams' in playerData.get(name) ? playerData.get(name)['teams'] : []
 
-        console.log(name)
-        const newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, win_status, wins+losses, winner_pulled)
-        
+        let newElo = 0
+        if (dynamic_pull_factor){
+            newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, win_status, wins+losses, winner_pulled, currPullFactor)
+        }else{
+            newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, win_status, wins+losses, winner_pulled)
+        }
         const diff = newElo - oldElo
         console.log(`(${wins}-${losses})`, oldElo, newElo,newGameID, `diff: ${diff}`)
 
@@ -234,7 +258,7 @@ function updateNewPlayerElo(updates, playerData, winningTeamElo, losingTeamElo, 
         }else{
             losses+=1
         }        
-
+        
         updatePlayerHistory(updates, name,newElo,newGameID, wins, losses, ts, win_status, winner_pulled)
         updatePlayerNow(updates, name,newElo,newGameID,wins,losses, teams)
     }
@@ -531,3 +555,5 @@ export async function changeDatesToISO(){
     }
     
 }
+
+

@@ -19,9 +19,14 @@ const PlayerBio = lazy(() => import('./Player/playerbio.js'));
 
 
 function App() {
+  const [update, triggerUpdate] = useState(false);
   const [roster, setRoster] = useState([]);
   const [gameLog, setGameLog] = useState([]);
   const [loggedin, setLoggedin] = useState(false);
+
+  function updater(){
+      triggerUpdate(!update)
+  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -34,7 +39,7 @@ function App() {
     buildLeaderboard().then(leaderboard => setRoster(leaderboard))
     getGamesLog().then(gameLog => setGameLog(gameLog))
 
-  },[])
+  },[update])
 
   
 
@@ -60,8 +65,8 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Leaderboard roster={roster}/> } />
-            <Route path="/reportscore" element={<ReportScore roster={roster} setRoster={setRoster} /> } />
-            <Route path="/games" element={<GamesLog gamesLog={gameLog} /> } />
+            <Route path="/reportscore" element={<ReportScore roster={roster} setRoster={setRoster} updater={updater}/> } />
+            <Route path="/games" element={<GamesLog gamesLog={gameLog} update={update}/> } />
             <Route path="/elo" element={<CalculatingElo /> } />
             <Route path="/ranks" element={<RankTable /> } />
 

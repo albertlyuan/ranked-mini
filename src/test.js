@@ -100,13 +100,13 @@ async function load(){
 // console.log(firebase.getUIDFromName("andrew li"))
 // console.log(
 // // dawn @199 team 198, lost to 188 received
-// elo.calculateNewElo(199,188,198,false,14,true), 
+// elo.calculateNewElo(199,188,198,false,14,true)
 // 32*(0-elo.expectedValue(198,188))/.3
 // )
 
 // console.log(
-//     // a li @192 team 188, won 199 pulled
-//     elo.calculateNewElo(192,188,198,true,14,true), 
+//    // a li @192 team 188, won 199 pulled
+//     elo.calculateNewElo(192,188,198,true,14,true) 
 //     32*(1-elo.expectedValue(192,198))/.3
 //     )
 // console.log(elo.calculateNewElo(152.05,446.77,505.38,true,7,false))
@@ -126,4 +126,11 @@ async function load(){
 // firebase.firebase_addNewPlayer("test1")
 
 
-firebase.changeDatesToISO().then(console.log)
+// firebase.changeDatesToISO().then(console.log)
+
+// console.log(
+//     elo.calculateNewElo(192,188,198,true,14,true,await firebase.getCurrPullFactor(100)),
+//     elo.calculateNewElo(192,188,198,true,14,true) 
+
+//     )
+

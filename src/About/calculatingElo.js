@@ -44,7 +44,9 @@ export default function CalculatingElo(){
             <h4>Pull Factor</h4>
             <p>
                 Since mini is make-it-take-it, the team that pulls must get a D and score 3 times which is much harder than receiving a pull and scoring 3 times.
-                From a session of mini, it was found that teams who pulled won {PULL_FACTOR.toFixed(4)*100}% of games. Thus we currently have set <InlineEquation text={"PullFactor="+PULL_FACTOR}/>.
+                From a test session of mini, it was found that teams who pulled won 23% of games and lost 77%. This means that receiving the pull makes it so winning
+                is about 3 times more likely (23% vs 77%). Thus we currently have set <InlineEquation text={"PullFactor="+PULL_FACTOR}/> which is calculated from 
+                <InlineEquation text={"\\frac{P(PullAndWin)}{P(PullAndLose)}"}/>.
                 The rationale behind this is that since breaking to win is much harder, we want to reward players who do so by giving them more elo gain.
             </p>
             <ul>
