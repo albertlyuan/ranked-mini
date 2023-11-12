@@ -3,6 +3,7 @@ import * as elo from './Elo/elo.js'
 
 
 async function Summary(days){
+    console.log("days:",days)
     const players = ["loser_1","loser_2","loser_3","winner_1","winner_2","winner_3"]
     let queryDate = new Date()
     queryDate.setDate(queryDate.getDate()-days)
@@ -54,3 +55,6 @@ async function Summary(days){
     console.log(diffs_INCLplacements)
 }
 Summary(1)
+firebase.getCurrPullFactor(100).then((res) => {
+    console.log("pull factor:",res)
+})

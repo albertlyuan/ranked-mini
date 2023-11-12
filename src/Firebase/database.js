@@ -16,23 +16,13 @@ import {
 import {STARTING_ELO, calculateNewElo, calculateTeamElo} from "../Elo/elo.js"
 
 const db = getDatabase(app)
-
+const albertuser = "/7zDTQ16f3Sah2sOSncu3zLf6PeG3"
 // const player_history = ref(db, '/player_history')
-const player_now = ref(db, '/player_now')
-const player_uid = ref(db, '/player_uid/')
-const games = ref(db, '/games')
+const player_now = ref(db, `/${albertuser}/player_now`)
+const player_uid = ref(db, `/${albertuser}/player_uid/`)
+const games = ref(db, `/${albertuser}/games`)
 const STARTING_GAMEID = -1
 
-
-export async function queryGamesSinceDate(date){
-    const resp = (await get(
-        query(ref(db,"games"), 
-        orderByChild('timestamp'), 
-        startAt(date)))
-    ).val()
-    return resp
-
-}   
 /**
  * 
  * @returns placeholder player object
@@ -51,7 +41,7 @@ export async function queryGamesSinceDate(date){
 }
 
 /**
- * Async function
+ * Async function. 
  * @returns list of [name, elo, num wins, num losses, teams(list)]
  */
 export async function buildLeaderboard(){
@@ -81,6 +71,20 @@ export async function buildLeaderboard(){
     unranked.sort((a,b) => (b[2]+b[3])-(a[2]+a[3]))
     return ranked.concat(unranked)
 }
+
+/**
+ * returns all game objects since `date`
+ * @param {*} date - timestamp as iso string
+ * @returns object of game objects
+ */
+export async function queryGamesSinceDate(date){
+    const resp = (await get(
+        query(ref(db,`${albertuser}/games`), 
+        orderByChild('timestamp'), 
+        startAt(date)))
+    ).val()
+    return resp
+}   
 
 /**
  * 
@@ -124,7 +128,7 @@ export async function getNameFromUID(uid){
 
 
 /**
- * adds new player to the database
+ * WRITES: adds new player to the database. 
  * @param {str} playerName 
  */
 export function firebase_addNewPlayer(playerName){
@@ -151,7 +155,7 @@ async function getUIDsFromNames(people){
 }   
 
 export async function getUIDFromName(name){
-    const rawquery = await get(query(ref(db,"/player_uid/"+name)))
+    const rawquery = await get(query(ref(db,`${albertuser}/player_uid/`+name)))
     return rawquery.val()
 }
 
@@ -221,6 +225,7 @@ export async function getCurrPullFactor(numGames){
         }
 
     }
+    console.log("percent break", (break2win/numGames));
     const newPullFactor = (break2win/numGames) / (1-(break2win/numGames))
     return newPullFactor
 
@@ -275,7 +280,7 @@ async function firebase_getPlayers(){
 }
 
 /**
- * add new row to player_history
+ * WRITES: add new row to player_history
  * @param {str} playerName 
  * @param {float} elo 
  * @param {int} game_id 
@@ -285,7 +290,7 @@ async function firebase_getPlayers(){
  * @param {boolean} win_status 
  */
 function updatePlayerHistory(updates, uid,elo,game_id, wins, losses, ts, win_status, winner_pulled){
-    const postDestination = '/player_history/'+uid+"/"+game_id
+    const postDestination = `/${albertuser}/player_history/`+uid+"/"+game_id
     const postData = {
         name: uid,
         elo: elo,
@@ -300,7 +305,7 @@ function updatePlayerHistory(updates, uid,elo,game_id, wins, losses, ts, win_sta
 }
 
 /**
- * update player_now
+ * WRITES: update player_now
  * @param {str} playerName 
  * @param {float} elo 
  * @param {int} game_id 
@@ -308,7 +313,7 @@ function updatePlayerHistory(updates, uid,elo,game_id, wins, losses, ts, win_sta
  * @param {int} losses 
  */
 function updatePlayerNow(updates, uid, elo, game_id, wins, losses, teams){
-    const postDestination = '/player_now/'+uid
+    const postDestination = `/${albertuser}/player_now/`+uid
     const postData = {
         most_recent_game: game_id,
         elo: elo,
@@ -319,21 +324,27 @@ function updatePlayerNow(updates, uid, elo, game_id, wins, losses, teams){
     updates[postDestination] = postData
 }
 
+/**
+ * WRITES: creates a new item in player_uid mapping name: uid
+ * @param {*} updates - list of updates in the transaction
+ * @param {*} playerName - name as string 
+ * @param {*} uid - player uid
+ */
 async function firebase_mapNameToUid(updates, playerName, uid){
-    const postDestination = '/player_uid/'+playerName
+    const postDestination = `/${albertuser}/player_uid/`+playerName
     const postData = uid
     updates[postDestination] = postData
 }
 
 /**
- * add new row to games table. also sorts winners and losers alphabetically
+ * WRITES: add new row to games table. also sorts winners and losers alphabetically
  * @param {int} newGameID 
  * @param {list} winners 
  * @param {list} losers 
  * @param {str} ts 
  */
 function addToGamesTable(updates, newGameID, winners, losers, ts, winner_pulled){
-    const postDestination = '/games/'+ newGameID
+    const postDestination = `${albertuser}/games/`+ newGameID
     const postData = {
         winner_1: winners[0],
         winner_2: winners[1],
@@ -369,7 +380,7 @@ export async function getNewGameID(){
  */
 export async function firebase_getTotalPlayerData(uid){
     return new Promise((resolve, reject) => {
-        get(query(ref(db,"player_history/"+uid), orderByChild('game_id')))
+        get(query(ref(db,`${albertuser}/player_history/`+uid), orderByChild('game_id')))
         .then(result =>{
             resolve(result.val())
         })
@@ -388,8 +399,8 @@ export async function firebase_getTotalPlayerData(uid){
  */
 export async function firebase_getPlayerData(uid, gameid){
     
-    const beforeStats = (await get(query(ref(db,"player_history/"+uid), orderByChild('game_id'), endAt(gameid - 1), limitToLast(1)))).val()
-    const afterStats = (await get(query(ref(db,"player_history/"+uid), orderByChild('game_id'), endAt(gameid), limitToLast(1)))).val()
+    const beforeStats = (await get(query(ref(db,`${albertuser}/player_history/`+uid), orderByChild('game_id'), endAt(gameid - 1), limitToLast(1)))).val()
+    const afterStats = (await get(query(ref(db,`${albertuser}/player_history/`+uid), orderByChild('game_id'), endAt(gameid), limitToLast(1)))).val()
     return [beforeStats, afterStats]
 }
 
@@ -401,7 +412,7 @@ export async function firebase_getPlayerData(uid, gameid){
  */
 export function queryGamePlayersData(players, gameID){
     let playerData = players.map(async player => {
-        const uid = (await get(query(ref(db, "/player_uid/"+player)))).val()
+        const uid = (await get(query(ref(db, `${albertuser}/player_uid/`+player)))).val()
         const beforeAfterData = await firebase_getPlayerData(uid, parseInt(gameID))
         const before = Object.values(beforeAfterData[0])[0]
         const after = Object.values(beforeAfterData[1])[0]
@@ -410,21 +421,34 @@ export function queryGamePlayersData(players, gameID){
     return Promise.all(playerData)
 }
 
+/**
+ * **probably not used**
+ * @param {*} gameid 
+ */
 export async function deleteGame(gameid){
-    const game  = (await get(query(ref(db,"/games/"+gameid)))).val()
+    const game  = (await get(query(ref(db,`${albertuser}/games/`+gameid)))).val()
     console.log(game)
 }
 
+/**
+ * **probably not used**
+ */
 export function cleardb(){ 
     set(ref(db,"/"), null)
 }
 
+/**
+ * WRITES: change display name of a give uid
+ * @param {*} oldname 
+ * @param {*} newname 
+ * @returns 
+ */
 export async function firebase_changeName(oldname, newname){
     const lowercaseOldName = oldname.toLowerCase()
     const lowercaseNewName = newname.toLowerCase()
 
-    const uid = (await get(query(ref(db, "/player_uid/"+lowercaseOldName)))).val()
-    if ((await get(query(ref(db, "/player_uid/"+lowercaseNewName)))).val()){
+    const uid = (await get(query(ref(db, `${albertuser}/player_uid/`+lowercaseOldName)))).val()
+    if ((await get(query(ref(db, `${albertuser}/player_uid/`+lowercaseNewName)))).val()){
         return false
     }
 
@@ -438,9 +462,15 @@ export async function firebase_changeName(oldname, newname){
     }
 }
 
+/**
+ * WRITES: adds new team to team list
+ * @param {*} uid 
+ * @param {*} team 
+ * @returns 
+ */
 export async function addTeam(uid, team){
-    const playerdest = "/player_now/" + uid +"/teams"
-    const teamnamedest = "/teams/"
+    const playerdest = `${albertuser}/player_now/` + uid +"/teams"
+    const teamnamedest = `${albertuser}/teams/`
     let playerTeams = (await get(query(ref(db, playerdest)))).val()
     if (playerTeams==null){
         playerTeams = {}
@@ -468,9 +498,15 @@ export async function addTeam(uid, team){
     }
 }
 
+/**
+ * WRITES: removes team from team list
+ * @param {*} uid 
+ * @param {*} team 
+ * @returns 
+ */
 export async function removeTeam(uid, team){
-    const dest = "/player_now/" + uid +"/teams/"
-    const teamnamedest = "/teams/"
+    const dest = `${albertuser}/player_now/` + uid +"/teams/"
+    const teamnamedest = `${albertuser}/teams/`
     let playerTeams = (await get(query(ref(db, dest)))).val()
     if (playerTeams==null){
         return
@@ -502,7 +538,7 @@ export async function removeTeam(uid, team){
 }
 
 export async function firebase_getPlayerTeams(uid){
-    const dest = "/player_now/" + uid +"/teams/"
+    const dest = `${albertuser}/player_now/` + uid +"/teams/"
     const playerTeams = (await get(query(ref(db, dest)))).val()
     if (playerTeams==null){
         return []
@@ -511,21 +547,26 @@ export async function firebase_getPlayerTeams(uid){
 }
 
 export async function firebase_getAllTeams(){
-    const allteams = (await get(query(ref(db, "/teams/")))).val()
+    const allteams = (await get(query(ref(db, `${albertuser}/teams/`)))).val()
     if (allteams==null){
         return []
     }
     return Object.keys(allteams)
 }
 
+/**
+ * **test use only**
+ * WRITES: changes date.toString() to date.toISOString()
+ * @returns 
+ */
 export async function changeDatesToISO(){
     // used to change dates from Date.ToString to Date.ToISOString()
 
     const updates = {}
 
-    const allgames = (await get(query(ref(db, "/games/")))).val()
+    const allgames = (await get(query(ref(db, `${albertuser}/games/`)))).val()
     for (let game of Object.keys(allgames)){
-        const dest = "/games/"+game+"/timestamp"
+        const dest = `${albertuser}/games/`+game+"/timestamp"
         const oldDate = allgames[game]["timestamp"]
         const newDate = new Date(oldDate).toISOString()
         console.log(dest)
@@ -534,12 +575,12 @@ export async function changeDatesToISO(){
         updates[dest] = newDate
     }
     
-    const allphistory = (await get(query(ref(db, "/player_history/")))).val()
+    const allphistory = (await get(query(ref(db, `${albertuser}/player_history/`)))).val()
 
     for (let uid of Object.keys(allphistory)){
         for (let game of Object.keys(allphistory[uid])){
             console.log(uid + " " + game)
-            const dest = "/player_history/"+uid+"/"+game+"/timestamp"
+            const dest = `${albertuser}/player_history/`+uid+"/"+game+"/timestamp"
             const oldDate = allphistory[uid][game]["timestamp"]
             const newDate = new Date(oldDate).toISOString()
             console.log(dest)
