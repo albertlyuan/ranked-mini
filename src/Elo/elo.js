@@ -4,6 +4,11 @@ const STARTING_ELO = 400
 const PULL_FACTOR = 0.298701299
 //data shows 7/30 = 0.23 games break
 //.23/.77 = 0.298701299 times less likely to win if pull
+//1/.29 = 3.34782608 times more elo gain/loss
+
+//if data shoes .47 games break
+//.47/.53 = 0.886792453 times less likely to win if pull
+//1/0.886792453 = 1.12765957 times more elo gain/loss
 
 //amount of elo to gain/lose per game
 const NormalK = 32
@@ -31,7 +36,7 @@ const midpoint = 850
  * @returns 
  */
 function calculateNewElo(oldPlayerElo, winningTeamElo, losingTeamElo, win_boolean, totalGames, winner_pulled, pull_factor = PULL_FACTOR){
-    console.log(pull_factor)
+    console.log("pull_factor",pull_factor)
     let k = NormalK
     if (totalGames < 10){
         k = UnrankedK
@@ -39,17 +44,24 @@ function calculateNewElo(oldPlayerElo, winningTeamElo, losingTeamElo, win_boolea
     let ret = 0
     if (win_boolean){ //win
         if (winner_pulled){ //player won and pulled
+            // console.log("brake",k*(1-expectedValue(oldPlayerElo,losingTeamElo, win_boolean, winner_pulled)))
+            // console.log("multiplier",1/pull_factor)
             ret = oldPlayerElo + k*(1-expectedValue(oldPlayerElo,losingTeamElo, win_boolean, winner_pulled)) / pull_factor
         }else{ //player won and received
-            ret = oldPlayerElo + k*(1-expectedValue(oldPlayerElo,losingTeamElo, win_boolean, winner_pulled)) / (1-pull_factor)
+            // console.log("held",k*(1-expectedValue(oldPlayerElo,losingTeamElo, win_boolean, winner_pulled)))
+            ret = oldPlayerElo + k*(1-expectedValue(oldPlayerElo,losingTeamElo, win_boolean, winner_pulled))
         }
 
     }else{ //lost
         const player_team_elo = Math.min(oldPlayerElo,losingTeamElo)
+
         if (winner_pulled){ //player lost and received
+            // console.log("broken",k*(0-expectedValue(player_team_elo,winningTeamElo, win_boolean, winner_pulled)))
+            // console.log("multiplier",1/(pull_factor))
             ret = Math.max(0,oldPlayerElo + k*(0-expectedValue(player_team_elo,winningTeamElo, win_boolean, winner_pulled)) / pull_factor) 
         }else{ //player lost and pulled
-            ret = Math.max(0,oldPlayerElo + k*(0-expectedValue(player_team_elo,winningTeamElo, win_boolean, winner_pulled)) / (1-pull_factor)) 
+            // console.log("other team held",k*(0-expectedValue(player_team_elo,winningTeamElo, win_boolean, winner_pulled)))
+            ret = Math.max(0,oldPlayerElo + k*(0-expectedValue(player_team_elo,winningTeamElo, win_boolean, winner_pulled))) 
         }
     }
     return ret

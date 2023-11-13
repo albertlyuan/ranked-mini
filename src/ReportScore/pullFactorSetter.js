@@ -11,7 +11,7 @@ export default function PullFactorSetter({dynamicPullFactor, toggleDynamicPullFa
                 {/* elogain just to get green color */}
                 <td class={(dynamicPullFactor===true ? "elogain" : "") + " clickable highlights"} onClick={toggle} >
                     <a >
-                        Use Dynamic Pull Factor
+                        Use Dynamic Pull Factor 
                     </a>
                 </td>
                 <td class={(dynamicPullFactor===false ? "elogain" : "") + " clickable highlights"} onClick={toggle}>
