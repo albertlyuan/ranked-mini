@@ -2,7 +2,7 @@ import { MathJax, MathJaxContext } from "better-react-mathjax";
 import React from "react";
 import {ranks} from "../rank-images/rankImages.js"
 import {STARTING_ELO, PULL_FACTOR, NormalK, UnrankedK,D,L,slope,midpoint, weightedRank} from "../Elo/elo.js"
-
+import { getCurrPullFactor, PULLFACTORGAMES } from "../Firebase/database.js";
 
 export default function CalculatingElo(){
 
@@ -13,7 +13,7 @@ export default function CalculatingElo(){
             <p>The basic elo formula is the following equation:</p>
             <BlockEquation text={"elo_{new} = elo_{old} + K(outcome_{actual} - outcome_{expected})"}/>
             <p>However, we use a slightly altered equation:</p>
-            <BlockEquation text={"elo_{new} = elo_{old} + \\frac{K(outcome_{actual} - outcome_{expected})}{loserPulled? - PullFactor}"}/>
+            <BlockEquation text={"elo_{new} = elo_{old} + \\frac{K(outcome_{actual} - outcome_{expected})}{PullFactor}"}/>
 
             <h4>Elo</h4>
             <p>
@@ -45,24 +45,31 @@ export default function CalculatingElo(){
             <p>
                 Since mini is make-it-take-it, the team that pulls must get a D and score 3 times which is much harder than receiving a pull and scoring 3 times.
                 From a test session of mini, it was found that teams who pulled won 23% of games and lost 77%. This means that receiving the pull makes it so winning
-                is about 3 times more likely (23% vs 77%). Thus we currently have set <InlineEquation text={"PullFactor="+PULL_FACTOR}/> which is calculated from 
-                <InlineEquation text={"\\frac{P(PullAndWin)}{P(PullAndLose)}"}/>.
-                The rationale behind this is that since breaking to win is much harder, we want to reward players who do so by giving them more elo gain.
+                is about 3 times more likely (0.23/0.77 = 3.34782608 times less likely to win). Thus we currently have set <InlineEquation text={"PullFactor=.23/.77="+PULL_FACTOR}/> 
+                which is calculated from <InlineEquation text={"\\frac{P(PullAndWin)}{P(PullAndLose)}"}/>.
+                The rationale behind this is that since breaking to win is much harder, we want to reward players who do so by giving them more elo gain. Likewise,
+                holding to win is much easier so we want to reward less elo gain to penalize players who only receive.
             </p>
+            <p>In the following examples, <InlineEquation text={"K=32"}/>, and the 2 teams have the same initial elo so <InlineEquation text={"outcome_{expected}=0.5"}/>:</p>
+            <BlockEquation text={"elo_{gain} = \\frac{K(outcome_{actual} - outcome_{expected})}{PullFactor}"}/>
+            <p>If there was no PullFactor, the base elo gain/loss would be <InlineEquation text={`${NormalK}*(\\pm0.5)`+"="+(NormalK*0.5).toFixed(2)}/></p>
+
             <ul>
-                <h5>Ex) 2 even teams play (base expected outcome is 0.5) and the pulling team won (<InlineEquation text={"loserPulled?=0"}/>) </h5>
-                <p>The winning team gains <InlineEquation text={NormalK+"*(1-0.5)/(0-"+PULL_FACTOR.toFixed(2)+")="+(NormalK*0.5/PULL_FACTOR).toFixed(2)}/>.</p>
-                <p>The losing team loses <InlineEquation text={NormalK+"*(0-0.5)/(0-"+PULL_FACTOR.toFixed(2)+")="+(NormalK*-0.5/PULL_FACTOR).toFixed(2)}/>.</p>
+                <h5>Ex) Pulling team broke to win</h5>
+                <p>The winning team gains <InlineEquation text={`\\frac{${NormalK}*(1-0.5)}{${PULL_FACTOR.toFixed(4)}}`+"="+(NormalK*0.5/PULL_FACTOR).toFixed(2)}/> ({((NormalK*0.5/PULL_FACTOR)/(NormalK*0.5)).toFixed(3)} multiplier).</p>
+                <p>The losing team loses <InlineEquation text={`\\frac{${NormalK}*(0-0.5)}{${PULL_FACTOR.toFixed(4)}}`+"="+(NormalK*-0.5/PULL_FACTOR).toFixed(2)}/>.</p>
             </ul>
             <ul>
-                <h5>Ex) 2 even teams play (base expected outcome is 0.5) and the pulling team lost (<InlineEquation text={"loserPulled?=1"}/>)</h5>
-                <p>The winning team gains <InlineEquation text={NormalK+"*(1-0.5)/(1-"+PULL_FACTOR.toFixed(2)+")="+(NormalK*0.5/(1-PULL_FACTOR)).toFixed(2)}/>.</p>
-                <p>The losing team loses <InlineEquation text={NormalK+"*(0-0.5)/(1-"+PULL_FACTOR.toFixed(2)+")="+(NormalK*-0.5/(1-PULL_FACTOR)).toFixed(2)}/>.</p>
+                <h5>Ex) Receiving team holds</h5>
+                <p>The winning team gains <InlineEquation text={`\\frac{${NormalK}*(1-0.5)}{1/${PULL_FACTOR.toFixed(4)}}`+"="+(NormalK*0.5/(1/PULL_FACTOR)).toFixed(2)}/> ({((NormalK*0.5/(1/PULL_FACTOR))/(NormalK*0.5)).toFixed(3)} multiplier).</p>
+                <p>The losing team loses <InlineEquation text={`\\frac{${NormalK}*(0-0.5)}{1/${PULL_FACTOR.toFixed(4)}}`+"="+(NormalK*-0.5/(1/PULL_FACTOR)).toFixed(2)}/>.</p>
             </ul>
             <p>
                 As seen from the examples shown, a game where the winner pulls results in much more elo being gained/lost. 
                 Thus, we reward players that break to win and penalize players that get broken to win.
             </p>
+
+            <p>11/13/23: Instead of a fixed PullFactor, a dynamic PullFactor calculated from the pull percentages of the past {PULLFACTORGAMES} games, is used.</p>
 
             <h4>K and Unranked Uncertainty</h4>
             <p>
