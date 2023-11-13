@@ -14,12 +14,11 @@ import {
     update, 
     startAt} from "firebase/database";
 import {STARTING_ELO, calculateNewElo, calculateTeamElo} from "../Elo/elo.js"
-import data from "../../11-12-23 wrong elo gen.json" assert { type: 'json' };
 
 export const PULLFACTORGAMES = 100
 export const albertuser = "7zDTQ16f3Sah2sOSncu3zLf6PeG3"
 
-const db = getDatabase(app)
+export const db = getDatabase(app)
 // const player_history = ref(db, '/player_history')
 const player_now = ref(db, `/${albertuser}/player_now`)
 const player_uid = ref(db, `/${albertuser}/player_uid/`)
@@ -399,8 +398,8 @@ export async function firebase_getTotalPlayerData(uid){
  */
 export async function firebase_getPlayerData(uid, gameid){
     
-    const beforeStats = (await get(query(ref(db,`${albertuser}/player_history/`+uid), orderByChild('game_id'), endAt(gameid - 1), limitToLast(1)))).val()
-    const afterStats = (await get(query(ref(db,`${albertuser}/player_history/`+uid), orderByChild('game_id'), endAt(gameid), limitToLast(1)))).val()
+    const beforeStats = (await get(query(ref(db,`/${albertuser}/player_history/`+uid), orderByChild('game_id'), endAt(gameid - 1), limitToLast(1)))).val()
+    const afterStats = (await get(query(ref(db,`/${albertuser}/player_history/`+uid), orderByChild('game_id'), endAt(gameid), limitToLast(1)))).val()
     return [beforeStats, afterStats]
 }
 
@@ -594,64 +593,4 @@ export async function changeDatesToISO(){
     }catch{
         return false
     }
-    
-}
-
-export async function loadjson(startingGameID){
-    
-    const games = data[albertuser]["games"]
-    const players = data[albertuser]["player_uid"]
-
-    const games_to_load = []
-    for (const gameid of Object.keys(games)){
-        if (gameid < startingGameID){
-            continue
-        }
-        const gameobj = games[gameid]
-        gameobj["game_id"] = gameid
-        games_to_load.push(gameobj)
-    }
-    let breaks = 0
-    
-    const dynamic_pull_factor = true
-    for (const game of games_to_load){
-        const updates = {}
-        if (game["winner_pulled"]){
-            breaks += 1
-        }
-        
-        const newGameID = game["game_id"]
-        const winners = [game["winner_1"], game["winner_2"], game["winner_3"]] 
-        const losers = [game["loser_1"], game["loser_2"], game["loser_3"]]
-        const ts = game["timestamp"]
-        const winner_pulled = game["winner_pulled"]
-
-        updates[`${albertuser}/games/`+ newGameID] = {
-            winner_1: winners[0],
-            winner_2: winners[1],
-            winner_3: winners[2],
-            loser_1: losers[0],
-            loser_2: losers[1],
-            loser_3: losers[2],
-            timestamp: ts,
-            winner_pulled: winner_pulled
-        }
-
-        const [_, players] = await firebase_getPlayers()
-
-        const winnerData = filterPlayerObjects(winners, players)
-        const loserData = filterPlayerObjects(losers, players)
-
-        const winningTeamElo = calculateTeamElo(Array.from(winnerData.values()))
-        const losingTeamElo = calculateTeamElo(Array.from(loserData.values()))
-        
-        console.log(newGameID, ts,"winner pulled:", winner_pulled)
-        console.log("winners",winningTeamElo)
-        await updateNewPlayerElo(updates, winnerData,winningTeamElo,losingTeamElo,newGameID, ts, true, winner_pulled, dynamic_pull_factor)
-        console.log("losers",losingTeamElo)
-        await updateNewPlayerElo(updates, loserData,winningTeamElo,losingTeamElo,newGameID, ts, false, winner_pulled, dynamic_pull_factor)
-        update(ref(db), updates);
-    }
-
-    console.log("breakpct: ",breaks/games.length)
 }
