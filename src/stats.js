@@ -55,6 +55,6 @@ async function Summary(days){
     console.log(diffs_INCLplacements)
 }
 Summary(1)
-firebase.getCurrPullFactor(100).then((res) => {
+firebase.getCurrPullFactor(firebase.PULLFACTORGAMES).then((res) => {
     console.log("pull factor:",res)
 })

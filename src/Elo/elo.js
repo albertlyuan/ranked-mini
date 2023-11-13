@@ -6,9 +6,10 @@ const PULL_FACTOR = 0.298701299
 //.23/.77 = 0.298701299 times less likely to win if pull
 //1/.29 = 3.34782608 times more elo gain/loss
 
-//if data shoes .47 games break
-//.47/.53 = 0.886792453 times less likely to win if pull
-//1/0.886792453 = 1.12765957 times more elo gain/loss
+// const PULL_FACTOR = 0.846153846
+//if data shoes 0.458 games break
+//.458/.542 = 0.846153846 times less likely to win if pull
+//1/0.846153846 = 1.18181818 times more elo gain/loss
 
 //amount of elo to gain/lose per game
 const NormalK = 32
