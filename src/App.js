@@ -72,7 +72,7 @@ function App() {
 
             <Route path="/login" element={<Login /> } />
 
-            <Route path="/game/:gameid" element={<GameInfo gamesLog={gameLog}/> } />
+            <Route path="/games/:gameid" element={<GameInfo/> } />
             <Route path="/player/:uid" element={<PlayerBio games={gameLog}/> } />
           </Routes>
         </Suspense>

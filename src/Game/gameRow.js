@@ -14,7 +14,7 @@ function GameRow({game, eloGain}){
     }
 
     const goToGame = () => {
-        navigate(`/game/${game[0]}`);
+        navigate(`/games/${game[0]}`);
     };
 
     if (eloGain){

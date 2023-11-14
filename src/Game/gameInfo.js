@@ -3,8 +3,10 @@ import {queryGamePlayersData} from "../Firebase/database.js"
 import { useParams ,useNavigate} from 'react-router-dom';
 import {useState, useEffect} from 'react'
 import { MonthDateYear } from "../Elo/dateutils.js";
+import { getGamesLog } from "../Firebase/database.js";
+
 // [gameid, date string, winners, losers, broke to win]
-export default function GameInfo({gamesLog}){
+export default function GameInfo(){
     //data = [player,[before.elo, after.elo], before.wins, before.losses]
     const [winnerData, setWinnerData] = useState([]);
     const [loserData, setLoserData] = useState([]);
@@ -12,28 +14,36 @@ export default function GameInfo({gamesLog}){
     const { gameid } = useParams();
     const [hypothetical, setHypothetical] = useState(false);
 
+    const [game, setGame] = useState();
+    const [nextgame, setNextgame] = useState();
+
     const navigate = useNavigate();
-    const game = gamesLog.find((game_obj) => game_obj[0] == parseInt(gameid))
-    const nextgame = gamesLog.find((game_obj) => game_obj[0] == parseInt(gameid)+1)
 
     useEffect(() => {
-        const winners = game[2]
-        const losers = game[3]
-        setBreakToWin(game[4])
-        queryGamePlayersData(winners, gameid).then(data => {
-            data.sort((a,b) => b[1][0]-a[1][0])
-            setWinnerData(data)
-        })
-        queryGamePlayersData(losers, gameid).then(data => {
-            data.sort((a,b) => b[1][0]-a[1][0])
-            setLoserData(data)  
+        //query gameslog
+        getGamesLog().then((gamesLog) => {
+            const game = gamesLog.find((game_obj) => game_obj[0] == parseInt(gameid))
+            const nextgame = gamesLog.find((game_obj) => game_obj[0] == parseInt(gameid)+1)
+            setGame(game)
+            setNextgame(nextgame)
+            const winners = game[2]
+            const losers = game[3]
+            setBreakToWin(game[4])
+            queryGamePlayersData(winners, gameid).then(data => {
+                data.sort((a,b) => b[1][0]-a[1][0])
+                setWinnerData(data)
+            })
+            queryGamePlayersData(losers, gameid).then(data => {
+                data.sort((a,b) => b[1][0]-a[1][0])
+                setLoserData(data)  
+            })
         })
     }, [game])
     const goToPrevGame = () => {
-        navigate(`/game/${parseInt(gameid)-1}`);
+        navigate(`/games/${parseInt(gameid)-1}`);
     };
     const goToNextGame = () => {
-        navigate(`/game/${parseInt(gameid)+1}`);
+        navigate(`/games/${parseInt(gameid)+1}`);
     };
 
     const toggleHypothetical = () => {
