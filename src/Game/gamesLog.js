@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import GameRow from './gameRow.js'
-
+// import {}
 export default function GamesLog({gamesLog, eloGain}){
     const [gameList, setGameList] =  useState([]);
 

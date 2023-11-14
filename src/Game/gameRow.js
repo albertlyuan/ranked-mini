@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom"
-
+import { DayMonthDateYear } from "../Elo/dateutils.js";
 /**
  * game = list of [gameid, ts, winners (list), losers (list), winnerPulled (bool)]
  * @param {*} param0 game, setTab, setGame
@@ -10,11 +10,7 @@ function GameRow({game, eloGain}){
     const navigate = useNavigate();
 
     const formattedDate = () => {
-        const date = game[1].split(/\b\d{2}:\d{2}:\d{2}\b/)
-        if (date.length < 2){
-            return game[1]
-        }
-        return date[0]
+        return DayMonthDateYear(game[1])
     }
 
     const goToGame = () => {

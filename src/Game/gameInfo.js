@@ -2,10 +2,7 @@ import Teams from "./gameInfoTeams.js"
 import {queryGamePlayersData} from "../Firebase/database.js"
 import { useParams ,useNavigate} from 'react-router-dom';
 import {useState, useEffect} from 'react'
-
-// var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
+import { MonthDateYear } from "../Elo/dateutils.js";
 // [gameid, date string, winners, losers, broke to win]
 export default function GameInfo({gamesLog}){
     //data = [player,[before.elo, after.elo], before.wins, before.losses]
@@ -42,12 +39,6 @@ export default function GameInfo({gamesLog}){
     const toggleHypothetical = () => {
         setHypothetical(!hypothetical)
     }
-
-    const fullDate = (dateString) => {
-        const date = new Date(dateString)
-        const formattedDate = monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear()
-        return formattedDate
-    }
     
     if (game!=null){
         return(
@@ -58,7 +49,7 @@ export default function GameInfo({gamesLog}){
                     </a>
                     <div class="date">
                         <h3 id="DayOfWeek">Game ID: {game[0]}</h3>
-                        <p id="FullDate">{fullDate(game[1])}</p>
+                        <p id="FullDate">{MonthDateYear(game[1])}</p>
                     </div> 
                     <a class="clickable highlights arrowbutton" style={{display: nextgame!=null ? "block" : "none"}} onClick={goToNextGame}>
                         &gt;
