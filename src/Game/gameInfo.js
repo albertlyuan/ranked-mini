@@ -4,7 +4,7 @@ import {queryGamePlayersData} from "../Firebase/database.js"
 import { useParams ,useNavigate} from 'react-router-dom';
 import {useState, useEffect} from 'react'
 import { MonthDateYear } from "../Elo/dateutils.js";
-import { getGamesLog } from "../Firebase/database.js";
+import { getGamesLog, getGame } from "../Firebase/database.js";
 
 // [gameid, date string, winners, losers, broke to win]
 export default function GameInfo(){
@@ -21,22 +21,30 @@ export default function GameInfo(){
     const navigate = useNavigate();
 
     useEffect(() => {
-        getGamesLog().then((gamesLog) => {
-            const game = gamesLog.find((game_obj) => game_obj[0] == parseInt(gameid))
-            const nextgame = gamesLog.find((game_obj) => game_obj[0] == parseInt(gameid)+1)
-            setGame(game)
-            setNextgame(nextgame)
-            const winners = game[2]
-            const losers = game[3]
-            setBreakToWin(game[4])
-            queryGamePlayersData(winners, gameid).then(data => {
-                data.sort((a,b) => b[1][0]-a[1][0])
-                setWinnerData(data)
-            })
-            queryGamePlayersData(losers, gameid).then(data => {
-                data.sort((a,b) => b[1][0]-a[1][0])
-                setLoserData(data)  
-            })
+        getGame(gameid).then((g)=>{
+            if (g){
+                setGame(g)
+                const winners = g[2]
+                const losers = g[3]
+                setBreakToWin(g[4])
+                queryGamePlayersData(winners, gameid).then(data => {
+                    data.sort((a,b) => b[1][0]-a[1][0])
+                    setWinnerData(data)
+                })
+            
+                queryGamePlayersData(losers, gameid).then(data => {
+                    data.sort((a,b) => b[1][0]-a[1][0])
+                    setLoserData(data)  
+                })
+            }
+        })
+        getGame(`${parseInt(gameid)+1}`).then((g)=>{
+            if (g[0] == parseInt(gameid)+1){
+                setNextgame(g)
+            }else{
+                setNextgame(null)
+            }
+            
         })
     }, [game])
     const goToPrevGame = () => {
@@ -68,10 +76,13 @@ export default function GameInfo(){
                 <button style={{textAlign:"center"}} class="scoreReportButton clickable highlights" onClick={toggleHypothetical}>Flip Result (Currently: {hypothetical ? "Alternate": "Normal"})</button>
                 <br></br>
                 {hypothetical 
-                ? <h3 style={{textAlign:"center"}}>Broke to win: {breakToWin  ? "False" : "True"}</h3>
-                : <h3 style={{textAlign:"center"}}>Broke to win: {breakToWin  ? "True" : "False"}</h3>
+                    ? <h3 style={{textAlign:"center"}}>Broke to win: {breakToWin  ? "False" : "True"}</h3>
+                    : <h3 style={{textAlign:"center"}}>Broke to win: {breakToWin  ? "True" : "False"}</h3>
                 }
-                <Teams gameID={gameid} winnerData={winnerData} loserData={loserData} alternateResult={hypothetical} breakToWin={breakToWin}/>        
+                {game 
+                    ?<Teams gameID={gameid} winnerData={winnerData} loserData={loserData} alternateResult={hypothetical} breakToWin={breakToWin}/>        
+                    : null
+                }
             </div>        
         );
     }else{

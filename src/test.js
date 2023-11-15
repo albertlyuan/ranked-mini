@@ -107,6 +107,9 @@ async function randomgame(players){
 //     )
 
 // firebase.getCurrPullFactor(firebase.PULLFACTORGAMES).then(console.log)
-firebase.getUIDFromName("andy").then((uid)=>{
-    firebase.getPlayerGameLog(uid)
+// firebase.getUIDFromName("andy").then((uid)=>{
+//     firebase.getPlayerGameLog(uid)
+// })
+firebase.getGame("174").then((g)=>{
+    console.log(g)
 })

@@ -13,7 +13,8 @@ import {
     orderByValue,
     update, 
     startAt,
-    equalTo} from "firebase/database";
+    equalTo,
+    limitToFirst} from "firebase/database";
 import {STARTING_ELO, calculateNewElo, calculateTeamElo} from "../Elo/elo.js"
 
 export const PULLFACTORGAMES = 100
@@ -98,6 +99,18 @@ export async function getGamesLog(){
     
     const ret = await createGameLogObjects(gameLog)
     return ret
+}
+
+/**
+ * 
+ * @param {str} gameid 
+ * @returns one game object
+ */
+export async function getGame(gameid){
+    const game = (await get(query(games, orderByKey(), endAt(gameid), limitToLast(1)))).val()
+
+    const ret = await createGameLogObjects(game)
+    return ret[0]
 }
 
 /**
