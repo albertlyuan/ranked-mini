@@ -1,6 +1,7 @@
 import {firebase_getTotalPlayerData, blankPlayer, getNameFromUID, firebase_getPlayerTeams} from '../Firebase/database.js'
 import { useEffect, useState, lazy } from 'react'
 import { AppLoader } from "../loader.js";
+import { getPlayerGameLog } from '../Firebase/database.js';
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
 import { useParams } from 'react-router-dom';
@@ -24,7 +25,7 @@ export default function PlayerBio({games}){
     const { uid } = useParams();
 
     const [playerName, setPlayerName] = useState()
-    const [playerGames, setPlayerGames] = useState()
+    const [playerGames, setPlayerGames] = useState([])
     const [playerData, setPlayerData] = useState()
     const [currWins, setCurrWins] = useState(0)
     const [currLosses, setCurrLosses] = useState(0)
@@ -41,6 +42,9 @@ export default function PlayerBio({games}){
             }else{
             setLoggedin(false)
             }
+        })
+        getPlayerGameLog(uid).then((games) => {
+            setPlayerGames(games)
         })
         getNameFromUID(uid).then((name) =>{
             setPlayerName(name)
@@ -104,7 +108,7 @@ export default function PlayerBio({games}){
         
         getTeams()
         
-    }, [playerData, uid, observer])
+    }, [playerGames, playerData, uid, observer])
 
     function getTeams(){
         firebase_getPlayerTeams(uid)
@@ -133,26 +137,17 @@ export default function PlayerBio({games}){
         const gameWinners = [[-1,null]]
         const gameLosers = [[-1,null]]
         const pullers = [[-1,null]]
-        const thisplayerGames = []
-        let gameIDs = new Set(Object.keys(playerData))
         
-        for (const g of games){
-            if (gameIDs.has(g[0])){
-                const intGameId = parseInt(g[0])
-                gameWinners.push([intGameId,g[2]])
-                gameLosers.push([intGameId,g[3]])
-                pullers.push([intGameId,g[4]])
-                thisplayerGames.push(g)
-            }
-            if (gameWinners.length === gameIDs.length){
-                break
-            }
+        for (const g of playerGames){
+            const intGameId = parseInt(g[0])
+            gameWinners.push([intGameId,g[2]])
+            gameLosers.push([intGameId,g[3]])
+            pullers.push([intGameId,g[4]])
         }
         gameLosers.sort(sortListByGameID)
         gameWinners.sort(sortListByGameID)
         pullers.sort(sortListByGameID)
 
-        setPlayerGames(thisplayerGames)
         return [gameWinners, gameLosers, pullers]
     }
 

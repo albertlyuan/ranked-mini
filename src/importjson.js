@@ -4,8 +4,33 @@ import {
     ref, 
     update
 } from "firebase/database";
-import data from "../11-12-23 wrong elo gen.json" assert { type: 'json' };
+import data from "./ranked-mini-default-rtdb-export dynamic pullFactor.json" assert { type: 'json' };
 const startingGameid = 150
+// async function changeGamesSchema(startingGameID){
+//     const games = data[firebase.albertuser]["games"]
+//     for (const g of Object.keys(games)){
+//         const winners = []
+//         const losers = []
+//         winners.push(games[g]["winner_1"])
+//         winners.push(games[g]["winner_2"])
+//         winners.push(games[g]["winner_3"])
+//         losers.push(games[g]["loser_1"])
+//         losers.push(games[g]["loser_2"])
+//         losers.push(games[g]["loser_3"])
+//         const newEntry = {
+//             "winners":winners.join(" "),
+//             "losers":losers.join(" "),
+//             "timestamp":games[g]["timestamp"],
+//             "winner_pulled":games[g]["winner_pulled"],
+//         }
+//         games[g] = newEntry
+//     }
+//     const updates = {}
+//     updates[`/${firebase.albertuser}/games/`] = games
+//     update(ref(firebase.db), updates);
+//     console.log("done")
+// }
+// changeGamesSchema(0)
 
 async function loadjson(startingGameID){
     // console.log(Object.keys(data[firebase.albertuser]))
@@ -113,4 +138,4 @@ async function loadjson(startingGameID){
     console.log("breakpct: ",breaks/games_to_load.length)
 }
 
-loadjson(startingGameid)
+// loadjson(startingGameid)

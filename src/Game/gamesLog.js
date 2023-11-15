@@ -5,13 +5,15 @@ export default function GamesLog({gamesLog, eloGain}){
     const [gameList, setGameList] =  useState([]);
 
     useEffect(() => {
-        const temp = gamesLog.map((game) =>
-            <GameRow 
-                game={game}
-                eloGain={eloGain}
-            />
-        )
-        setGameList(temp)
+        if (gamesLog.length > 0){
+            const temp = gamesLog.map((game) =>
+                <GameRow 
+                    game={game}
+                    eloGain={eloGain}
+                />
+            )
+            setGameList(temp)
+        }
     },[gamesLog])
     
 

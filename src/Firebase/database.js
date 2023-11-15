@@ -12,7 +12,8 @@ import {
     push,
     orderByValue,
     update, 
-    startAt} from "firebase/database";
+    startAt,
+    equalTo} from "firebase/database";
 import {STARTING_ELO, calculateNewElo, calculateTeamElo} from "../Elo/elo.js"
 
 export const PULLFACTORGAMES = 100
@@ -90,20 +91,30 @@ export async function queryGamesSinceDate(date){
 
 /**
  * 
- * @returns sorted list of [game_id, ts, winningTeam (list of names), losingTeam (list of names)]
+ * @returns sorted list of [game_id, ts, winningTeam (list of names), losingTeam (list of names), puller]
  */
 export async function getGamesLog(){
     const gameLog = (await get(query(games))).val()
+    
+    const ret = await createGameLogObjects(gameLog)
+    return ret
+}
+
+/**
+ * helper function for getGamesLog and getPlayerGameLog
+ * returns [game_id, ts, winningTeam (list of names), losingTeam (list of names), puller]
+ * @param {*} queryGamesObj 
+ */
+async function createGameLogObjects(queryGamesObj){
     const uidToName = await getNamesFromUIDs()
 
-
     const gameLogObjects = []
-    for (const g in gameLog){
-        const winningTeam = [uidToName.get(gameLog[g]['winner_1']), uidToName.get(gameLog[g]['winner_2']), uidToName.get(gameLog[g]['winner_3'])]
-        const losingTeam = [uidToName.get(gameLog[g]['loser_1']), uidToName.get(gameLog[g]['loser_2']), uidToName.get(gameLog[g]['loser_3'])]
+    for (const g in queryGamesObj){
+        const winningTeam = [uidToName.get(queryGamesObj[g]['winner_1']), uidToName.get(queryGamesObj[g]['winner_2']), uidToName.get(queryGamesObj[g]['winner_3'])]
+        const losingTeam = [uidToName.get(queryGamesObj[g]['loser_1']), uidToName.get(queryGamesObj[g]['loser_2']), uidToName.get(queryGamesObj[g]['loser_3'])]
 
-        const ts = gameLog[g]['timestamp']
-        const puller = gameLog[g]['winner_pulled']
+        const ts = queryGamesObj[g]['timestamp']
+        const puller = queryGamesObj[g]['winner_pulled']
         winningTeam.sort((a, b) => a.localeCompare(b))
         losingTeam.sort((a, b) => a.localeCompare(b))
 
@@ -112,8 +123,39 @@ export async function getGamesLog(){
     }
     gameLogObjects.sort((a,b) => b[0]-a[0])
     return gameLogObjects
+
+}
+/**
+ * GetGamesLog but for a specific uid
+ * @returns sorted list of [game_id, ts, winningTeam (list of names), losingTeam (list of names), puller]
+ */
+export async function getPlayerGameLog(uid){
+
+    const winner_1 = (await get(query(games, orderByChild("winner_1"), equalTo(uid)))).val()
+    const winner_2 = (await get(query(games, orderByChild("winner_2"), equalTo(uid)))).val()
+    const winner_3 = (await get(query(games, orderByChild("winner_3"), equalTo(uid)))).val()
+    const loser_1 = (await get(query(games, orderByChild("loser_1"), equalTo(uid)))).val()
+    const loser_2 = (await get(query(games, orderByChild("loser_2"), equalTo(uid)))).val()
+    const loser_3 = (await get(query(games, orderByChild("loser_3"), equalTo(uid)))).val()
+
+    // const uidToName = await getNamesFromUIDs()
+    const allGames = {
+        ...winner_1,
+        ...winner_2,
+        ...winner_3,
+        ...loser_1,
+        ...loser_2,
+        ...loser_3,
+    }
+    console.log(allGames.length)
+    const ret = await createGameLogObjects(allGames)
+    return ret
 }
 
+/**
+ * 
+ * @returns map of uid: playername
+ */
 export async function getNamesFromUIDs(){
     const uids = (await get(player_uid)).val()
     const ret = new Map()
@@ -123,6 +165,11 @@ export async function getNamesFromUIDs(){
     return ret
 }
 
+/**
+ * Get name (string) from uid
+ * @param {*} uid 
+ * @returns 
+ */
 export async function getNameFromUID(uid){
     const res = (await get(query(player_uid, orderByValue(), endAt(uid), limitToLast(1)))).val()
     return Object.keys(res)[0]
