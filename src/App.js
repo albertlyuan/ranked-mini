@@ -65,8 +65,8 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Leaderboard roster={roster}/> } />
-            <Route path="/reportscore" element={<ReportScore roster={roster} setRoster={setRoster} updater={updater}/> } />
-            <Route path="/games" element={<GamesLog gamesLog={gameLog} update={update}/> } />
+            <Route path="/reportscore" element={<ReportScore roster={roster} updater={updater}/> } />
+            <Route path="/games" element={<GamesLog gamesLog={gameLog}/> } />
             <Route path="/elo" element={<CalculatingElo /> } />
             <Route path="/ranks" element={<RankTable /> } />
 

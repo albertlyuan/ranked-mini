@@ -6,7 +6,7 @@ import { auth } from '../Firebase/auth.js';
 import PullSelector from './pullSelector.js';
 import PullFactorSetter from './pullFactorSetter.js';
 
-export default function ReportScore({roster, setRoster, updater}){
+export default function ReportScore({roster, updater}){
     const [availablePlayers, setAvailablePlayers] = useState(new Set());
     
     const [winner1, setWinner1] = useState('');
