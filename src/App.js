@@ -73,7 +73,7 @@ function App() {
             <Route path="/login" element={<Login /> } />
 
             <Route path="/games/:gameid" element={<GameInfo/> } />
-            <Route path="/player/:uid" element={<PlayerBio games={gameLog}/> } />
+            <Route path="/player/:uid" element={<PlayerBio/> } />
           </Routes>
         </Suspense>
       </BrowserRouter>

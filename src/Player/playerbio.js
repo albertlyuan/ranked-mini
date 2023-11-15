@@ -21,7 +21,7 @@ function sortListByGameID(a,b){
     }
 }
 const NUM_PLACEMENTS = 10  
-export default function PlayerBio({games}){
+export default function PlayerBio(){
     const { uid } = useParams();
 
     const [playerName, setPlayerName] = useState()
