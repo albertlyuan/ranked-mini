@@ -1,5 +1,6 @@
 import {firebase_getTotalPlayerData, blankPlayer, getNameFromUID, firebase_getPlayerTeams} from '../Firebase/database.js'
 import { useEffect, useState, lazy } from 'react'
+import { AppLoader } from "../loader.js";
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
 import { useParams } from 'react-router-dom';
@@ -218,35 +219,38 @@ export default function PlayerBio({games}){
         return [elos, timestamps, elogain]
     }
 
+    if (!playerData){
+        <AppLoader></AppLoader>
+    }else{
+        return(
+            <div class="animatedLoad">
+                <h2>
+                    {playerName} ({currWins}-{currLosses})  
+                    <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/>
+                </h2>
+                {loggedin && playerName ? <TextInputAlert oldname={playerName} /> : null}
+                <div class="horizontal_left">
+                    {teams}
+                    <AddPlayerTeam uid={uid} getTeams={getTeams}/> 
+                </div>
+                <div>
+                    <h3>Elo: {currWins + currLosses >= 10 ? currElo : loggedin ? currElo : "Unranked"} </h3>
+                    {chartData ? <EloChart rawChartData={chartData} noPlacementGames={makeCroppedChartData()}/> : null}
+                </div>
+                <br></br>
+                <div>
+                    <h3>Game History</h3>
+                    {playerGames ? <GamesLog
+                        gamesLog={playerGames}
+                        eloGain={loggedin ? 
+                            [chartData["labels"], chartData["datasets"][2].data]  //show all elo gain if logged in
+                            : [chartData["labels"].slice(NUM_PLACEMENTS+1), chartData["datasets"][2].data.slice(NUM_PLACEMENTS+1)]} //hide elo gain of placement games
+                    /> : null}
+                </div>
+            </div>
 
-    return(
-        <div class="animatedLoad">
-            <h2>
-                {playerName} ({currWins}-{currLosses})  
-                <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/>
-            </h2>
-            {loggedin && playerName ? <TextInputAlert oldname={playerName} /> : null}
-            <div class="horizontal_left">
-                {teams}
-                <AddPlayerTeam uid={uid} getTeams={getTeams}/> 
-            </div>
-            <div>
-                <h3>Elo: {currWins + currLosses >= 10 ? currElo : loggedin ? currElo : "Unranked"} </h3>
-                {chartData ? <EloChart rawChartData={chartData} noPlacementGames={makeCroppedChartData()}/> : null}
-            </div>
-            <br></br>
-            <div>
-                <h3>Game History</h3>
-                {playerGames ? <GamesLog
-                    gamesLog={playerGames}
-                    eloGain={loggedin ? 
-                        [chartData["labels"], chartData["datasets"][2].data]  //show all elo gain if logged in
-                        : [chartData["labels"].slice(NUM_PLACEMENTS+1), chartData["datasets"][2].data.slice(NUM_PLACEMENTS+1)]} //hide elo gain of placement games
-                /> : null}
-            </div>
-        </div>
-
-    );
+        );
+    }
 }
 
 

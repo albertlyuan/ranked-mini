@@ -1,4 +1,5 @@
 import Teams from "./gameInfoTeams.js"
+import { AppLoader } from "../loader.js";
 import {queryGamePlayersData} from "../Firebase/database.js"
 import { useParams ,useNavigate} from 'react-router-dom';
 import {useState, useEffect} from 'react'
@@ -20,7 +21,6 @@ export default function GameInfo(){
     const navigate = useNavigate();
 
     useEffect(() => {
-        //query gameslog
         getGamesLog().then((gamesLog) => {
             const game = gamesLog.find((game_obj) => game_obj[0] == parseInt(gameid))
             const nextgame = gamesLog.find((game_obj) => game_obj[0] == parseInt(gameid)+1)
@@ -76,7 +76,7 @@ export default function GameInfo(){
         );
     }else{
         return (
-            <p>No game found</p>
+            <AppLoader></AppLoader>
         )
     }
 }
