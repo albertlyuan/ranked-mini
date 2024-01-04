@@ -52,7 +52,7 @@ function App() {
                   cookieSecure={false}
     >
       <BrowserRouter>
-        <div className="verticalAlign">{loggedin ? <Logout /> : <Login />}</div>
+        <div className="verticalAlign">{loggedin ? <Logout leagueid={leagueid} /> : <Login />}</div>
         <h1>Ranked Mini</h1>
         <ul className="toolbar sticky">
           <li><NavLink to={`/${leagueid}/`}>Leaderboard</NavLink></li>
