@@ -1,5 +1,5 @@
 import {getRankFromElo} from "../rank-images/rankImages.js";
-import {useNavigate  } from "react-router-dom"
+import {useNavigate, useParams  } from "react-router-dom"
 import { useEffect, useState } from 'react'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
@@ -9,7 +9,7 @@ import { calculateNewElo } from "../Elo/elo.js";
 function PlayerCell({player, alternateResult, winningTeamElo, losingTeamElo, win, breakToWin}){
     const [loggedin, setLoggedin] = useState(false);
     const [uid, setUid] = useState();
-
+    const {leagueid} = useParams()
     //player = [name,[before.elo, after.elo], before.wins, before.losses]
     const [name, set_name] = useState("");
     const [before_elo, set_before_elo] = useState(0);
@@ -48,7 +48,7 @@ function PlayerCell({player, alternateResult, winningTeamElo, losingTeamElo, win
     }, [player, alternateResult])
     const navigate = useNavigate();
     const goToPlayer = () => {
-        navigate(`/player/${uid}`);
+        navigate(`/${leagueid}/player/${uid}`);
     };
 
     return(

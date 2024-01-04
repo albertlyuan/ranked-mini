@@ -12,7 +12,7 @@ export default function GameInfo(){
     const [winnerData, setWinnerData] = useState([]);
     const [loserData, setLoserData] = useState([]);
     const [breakToWin, setBreakToWin] = useState(false);
-    const { gameid } = useParams();
+    const { gameid, leagueid } = useParams();
     const [hypothetical, setHypothetical] = useState(false);
 
     const [game, setGame] = useState();
@@ -48,10 +48,10 @@ export default function GameInfo(){
         })
     }, [game])
     const goToPrevGame = () => {
-        navigate(`/games/${parseInt(gameid)-1}`);
+        navigate(`/${leagueid}/games/${parseInt(gameid)-1}`);
     };
     const goToNextGame = () => {
-        navigate(`/games/${parseInt(gameid)+1}`);
+        navigate(`/${leagueid}/games/${parseInt(gameid)+1}`);
     };
 
     const toggleHypothetical = () => {

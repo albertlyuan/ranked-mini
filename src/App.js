@@ -16,13 +16,14 @@ const RankTable = lazy(() => import('./About/rankTable.js'));
 const GamesLog = lazy(() => import('./Game/gamesLog.js'));
 const GameInfo = lazy(() => import('./Game/gameInfo.js'));
 const PlayerBio = lazy(() => import('./Player/playerbio.js'));
-
+const GettingStarted = lazy(() => import('./About/gettingStarted.js'));
 
 function App() {
   const [update, triggerUpdate] = useState(false);
   const [roster, setRoster] = useState([]);
   const [gameLog, setGameLog] = useState([]);
   const [loggedin, setLoggedin] = useState(false);
+  const [leagueid, setLeagueid] = useState()
 
   function updater(){
       triggerUpdate(!update)
@@ -54,26 +55,27 @@ function App() {
         <div className="verticalAlign">{loggedin ? <Logout /> : <Login />}</div>
         <h1>Ranked Mini</h1>
         <ul className="toolbar sticky">
-          <li><NavLink to="/">Leaderboard</NavLink></li>
-          {loggedin ? <li><NavLink to="/reportscore">Report Score</NavLink></li> : null}
+          <li><NavLink to={`/${leagueid}/`}>Leaderboard</NavLink></li>
+          {loggedin ? <li><NavLink to="/:leagueid/reportscore">Report Score</NavLink></li> : null}
           {/* <li><NavLink to="/reportscore">Report Score</NavLink></li> */}
-          <li><NavLink to="/games">Games</NavLink></li>
-          <li><NavLink to="/elo">Elo</NavLink></li>
-          <li><NavLink to="/ranks">Ranks</NavLink></li>
+          <li><NavLink to={`/${leagueid}/games`}>Games</NavLink></li>
+          <li><NavLink to={`/${leagueid}/elo`}>Elo</NavLink></li>
+          <li><NavLink to={`/${leagueid}/ranks`}>Ranks</NavLink></li>
         </ul>
         <Suspense fallback={<AppLoader/>}>
 
           <Routes>
-            <Route path="/" element={<Leaderboard roster={roster}/> } />
-            <Route path="/reportscore" element={<ReportScore roster={roster} updater={updater}/> } />
-            <Route path="/games" element={<GamesLog gamesLog={gameLog}/> } />
-            <Route path="/elo" element={<CalculatingElo /> } />
-            <Route path="/ranks" element={<RankTable /> } />
+            <Route path="/" element={<GettingStarted/> } />
+            <Route path="/:leagueid/" element={<Leaderboard roster={roster} setLeagueid={setLeagueid}/> } />
+            <Route path="/:leagueid/reportscore" element={<ReportScore roster={roster} updater={updater}/> } />
+            <Route path="/:leagueid/games" element={<GamesLog gamesLog={gameLog}/> } />
+            <Route path="/:leagueid/elo" element={<CalculatingElo /> } />
+            <Route path="/:leagueid/ranks" element={<RankTable /> } />
 
-            <Route path="/login" element={<Login /> } />
+            <Route path="/:leagueid/login" element={<Login /> } />
 
-            <Route path="/games/:gameid" element={<GameInfo/> } />
-            <Route path="/player/:uid" element={<PlayerBio/> } />
+            <Route path="/:leagueid/games/:gameid" element={<GameInfo/> } />
+            <Route path="/:leagueid/player/:uid" element={<PlayerBio/> } />
           </Routes>
         </Suspense>
       </BrowserRouter>

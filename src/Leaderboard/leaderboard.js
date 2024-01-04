@@ -1,18 +1,22 @@
 import {useState, useEffect} from 'react';
 import AddPlayer from './addPlayer.js';
+import {useParams } from 'react-router-dom'
+
 import PlayerRow from './leaderboardPlayer.js';
 import SearchPlayer from './searchPlayer.js';
 import { SelectTeam } from './selectTeam.js';
 import { firebase_getAllTeams } from '../Firebase/database.js';
 
-export default function Leaderboard({roster}){
+export default function Leaderboard({roster, setLeagueid}){
     const [statusMsg, setStatusMsg] = useState('');
     const [filter, setFilter] = useState('');
     const [listItems, setListItems] = useState([]);
     const [teamList, setTeamList] = useState([]);
     const [teamfilter, setTeamFilter] = useState('');
+    const {leagueid} = useParams()
 
     useEffect(() => {
+        setLeagueid(leagueid)
         let playerrows = []
         if (teamfilter.length > 0 ){
             playerrows = roster.map((person) => {
@@ -51,7 +55,7 @@ export default function Leaderboard({roster}){
       },[roster, teamfilter, filter])
     
     return (
-        <div id="leaderboard" class="tabcontent animatedLoad horizontal_left">
+        <div id="leaderboard" class="tabcontent animatedLoad">
             <table>
                 <thead>
                     <th style={{"text-align": "left"}}>Player (record)</th>
@@ -80,10 +84,6 @@ export default function Leaderboard({roster}){
                 {listItems}
                 
             </table>
-            <div class="vertical">
-                <h3>Teams</h3>
-                {teamList}
-            </div>
         </div>
       );
 }

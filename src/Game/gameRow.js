@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import { DayMonthDateYear } from "../Elo/dateutils.js";
 /**
  * game = list of [gameid, ts, winners (list), losers (list), winnerPulled (bool)]
@@ -8,13 +8,13 @@ import { DayMonthDateYear } from "../Elo/dateutils.js";
 function GameRow({game, eloGain}){
     //[gameid, ts, winners (list), losers (list), winnerPulled (bool)]
     const navigate = useNavigate();
-
+    const {leagueid} = useParams()
     const formattedDate = () => {
         return DayMonthDateYear(game[1])
     }
 
     const goToGame = () => {
-        navigate(`/games/${game[0]}`);
+        navigate(`/${leagueid}/games/${game[0]}`);
     };
 
     if (eloGain){
