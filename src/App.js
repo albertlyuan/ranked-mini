@@ -37,10 +37,10 @@ function App() {
         setLoggedin(false)
       }
     })
-    buildLeaderboard().then(leaderboard => setRoster(leaderboard))
-    getGamesLog().then(gameLog => setGameLog(gameLog))
+    buildLeaderboard(leagueid).then(leaderboard => setRoster(leaderboard))
+    getGamesLog(leagueid).then(gameLog => setGameLog(gameLog))
 
-  },[update])
+  },[update, leagueid])
 
   
 
@@ -53,11 +53,10 @@ function App() {
     >
       <BrowserRouter>
         <div className="verticalAlign">{loggedin ? <Logout leagueid={leagueid} /> : <Login />}</div>
-        <h1>Ranked Mini</h1>
+        <h1><NavLink to="/">Ranked Mini</NavLink></h1>
         <ul className="toolbar sticky">
           <li><NavLink to={`/${leagueid}/`}>Leaderboard</NavLink></li>
-          {loggedin ? <li><NavLink to="/:leagueid/reportscore">Report Score</NavLink></li> : null}
-          {/* <li><NavLink to="/reportscore">Report Score</NavLink></li> */}
+          {loggedin ? <li><NavLink to={`/${leagueid}/reportscore`}>Report Score</NavLink></li> : null}
           <li><NavLink to={`/${leagueid}/games`}>Games</NavLink></li>
           <li><NavLink to={`/${leagueid}/elo`}>Elo</NavLink></li>
           <li><NavLink to={`/${leagueid}/ranks`}>Ranks</NavLink></li>
@@ -67,15 +66,15 @@ function App() {
           <Routes>
             <Route path="/" element={<GettingStarted/> } />
             <Route path="/:leagueid/" element={<Leaderboard roster={roster} setLeagueid={setLeagueid}/> } />
-            <Route path="/:leagueid/reportscore" element={<ReportScore roster={roster} updater={updater}/> } />
-            <Route path="/:leagueid/games" element={<GamesLog gamesLog={gameLog}/> } />
-            <Route path="/:leagueid/elo" element={<CalculatingElo /> } />
-            <Route path="/:leagueid/ranks" element={<RankTable /> } />
+            <Route path="/:leagueid/reportscore" element={<ReportScore roster={roster} updater={updater} setLeagueid={setLeagueid}/> } />
+            <Route path="/:leagueid/games" element={<GamesLog gamesLog={gameLog} setLeagueid={setLeagueid}/> }/>
+            <Route path="/:leagueid/elo" element={<CalculatingElo setLeagueid={setLeagueid}/> } />
+            <Route path="/:leagueid/ranks" element={<RankTable setLeagueid={setLeagueid}/> } />
 
             <Route path="/:leagueid/login" element={<Login /> } />
 
-            <Route path="/:leagueid/games/:gameid" element={<GameInfo/> } />
-            <Route path="/:leagueid/player/:uid" element={<PlayerBio/> } />
+            <Route path="/:leagueid/games/:gameid" element={<GameInfo setLeagueid={setLeagueid}/> } />
+            <Route path="/:leagueid/player/:uid" element={<PlayerBio setLeagueid={setLeagueid}/> } />
           </Routes>
         </Suspense>
       </BrowserRouter>

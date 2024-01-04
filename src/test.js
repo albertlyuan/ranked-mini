@@ -110,6 +110,6 @@ async function randomgame(players){
 // firebase.getUIDFromName("andy").then((uid)=>{
 //     firebase.getPlayerGameLog(uid)
 // })
-firebase.getGame("174").then((g)=>{
-    console.log(g)
-})
+// firebase.getGame(firebase.albertuser,"174").then((g)=>{
+//     console.log(g)
+// })

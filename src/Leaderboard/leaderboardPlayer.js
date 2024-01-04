@@ -18,7 +18,7 @@ function PlayerRow({name, elo, wins, losses, filter}){
         setLoggedin(false)
       }
     })
-    getUIDFromName(name).then((id)=>{
+    getUIDFromName(leagueid, name).then((id)=>{
       setUid(id)
     })
    

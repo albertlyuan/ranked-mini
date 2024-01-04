@@ -5,10 +5,11 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import PullSelector from './pullSelector.js';
 import PullFactorSetter from './pullFactorSetter.js';
+import { useParams} from 'react-router-dom';
 
-export default function ReportScore({roster, updater}){
+export default function ReportScore({roster, updater, setLeagueid}){
     const [availablePlayers, setAvailablePlayers] = useState(new Set());
-    
+    const {leagueid} = useParams()
     const [winner1, setWinner1] = useState('');
     const [winner2, setWinner2] = useState('');
     const [winner3, setWinner3] = useState('');
@@ -26,16 +27,17 @@ export default function ReportScore({roster, updater}){
     const [loggedin, setLoggedin] = useState(false);
 
     useEffect(() => {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setLoggedin(true)
-        }else{
-          setLoggedin(false)
+        setLeagueid(leagueid)
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+            setLoggedin(true)
+            }else{
+            setLoggedin(false)
+            }
+        })      
+        if (availablePlayers.size == 0){
+            setAvailablePlayers(new Set(roster.map((person) => person[0])))
         }
-      })      
-      if (availablePlayers.size == 0){
-        setAvailablePlayers(new Set(roster.map((person) => person[0])))
-      }
     })
 
     useEffect(() => {
@@ -94,7 +96,7 @@ export default function ReportScore({roster, updater}){
         }
         
 
-        firebase_logNewGame(winner1,winner2,winner3,loser1,loser2,loser3, winnerPulled,dynamicPullFactor).then(()=>{
+        firebase_logNewGame(leagueid, winner1,winner2,winner3,loser1,loser2,loser3, winnerPulled,dynamicPullFactor).then(()=>{
             updater()
             clearSelection()
         })

@@ -21,8 +21,8 @@ function sortListByGameID(a,b){
     }
 }
 const NUM_PLACEMENTS = 10  
-export default function PlayerBio(){
-    const { uid } = useParams();
+export default function PlayerBio({setLeagueid}){
+    const { leagueid, uid } = useParams();
 
     const [playerName, setPlayerName] = useState()
     const [playerGames, setPlayerGames] = useState([])
@@ -36,6 +36,7 @@ export default function PlayerBio(){
     const [observer, triggerReload] = useState(false);
 
     useEffect(() => {
+        setLeagueid(leagueid)
         onAuthStateChanged(auth, (user) => {
             if (user) {
             setLoggedin(true)
@@ -43,13 +44,13 @@ export default function PlayerBio(){
             setLoggedin(false)
             }
         })
-        getPlayerGameLog(uid).then((games) => {
+        getPlayerGameLog(leagueid, uid).then((games) => {
             setPlayerGames(games)
         })
-        getNameFromUID(uid).then((name) =>{
+        getNameFromUID(leagueid, uid).then((name) =>{
             setPlayerName(name)
         })
-        firebase_getTotalPlayerData(uid)
+        firebase_getTotalPlayerData(leagueid, uid)
         .then(data => {
             setPlayerData(data)
         })
@@ -223,7 +224,7 @@ export default function PlayerBio(){
                     {playerName} ({currWins}-{currLosses})  
                     <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/>
                 </h2>
-                {loggedin && playerName ? <TextInputAlert oldname={playerName} /> : null}
+                {loggedin && playerName ? <TextInputAlert leagueid={leagueid} oldname={playerName} /> : null}
                 <div class="horizontal_left">
                     {teams}
                     <AddPlayerTeam uid={uid} getTeams={getTeams}/> 
@@ -240,6 +241,7 @@ export default function PlayerBio(){
                         eloGain={loggedin ? 
                             [chartData["labels"], chartData["datasets"][2].data]  //show all elo gain if logged in
                             : [chartData["labels"].slice(NUM_PLACEMENTS+1), chartData["datasets"][2].data.slice(NUM_PLACEMENTS+1)]} //hide elo gain of placement games
+                        setLeagueid={setLeagueid}
                     /> : null}
                 </div>
             </div>

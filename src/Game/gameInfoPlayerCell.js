@@ -26,7 +26,7 @@ function PlayerCell({player, alternateResult, winningTeamElo, losingTeamElo, win
         }
       })
       
-      getUIDFromName(player[0]).then((id)=>{
+      getUIDFromName(leagueid, player[0]).then((id)=>{
         setUid(id)
       })
       if (alternateResult){

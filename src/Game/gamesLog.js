@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import GameRow from './gameRow.js'
-// import {}
-export default function GamesLog({gamesLog, eloGain}){
-    const [gameList, setGameList] =  useState([]);
+import { useParams } from 'react-router-dom';
 
+export default function GamesLog({gamesLog, eloGain, setLeagueid}){
+    const [gameList, setGameList] =  useState([]);
+    const {leagueid} = useParams()
     useEffect(() => {
         if (gamesLog.length > 0){
             const temp = gamesLog.map((game) =>
@@ -14,6 +15,7 @@ export default function GamesLog({gamesLog, eloGain}){
             )
             setGameList(temp)
         }
+        setLeagueid(leagueid)
     },[gamesLog])
     
 
