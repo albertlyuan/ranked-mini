@@ -1,10 +1,11 @@
 import * as firebase from './Firebase/database.js'
 import * as elo from './Elo/elo.js'
+import * as fs from 'fs'
 import { 
     ref, 
     update
 } from "firebase/database";
-import data from "./rdu.json" assert { type: 'json' };
+// import data from "./rdu.json" assert { type: 'json' };
 const startingGameid = 150
 // async function changeGamesSchema(startingGameID){
 //     const games = data[league]["games"]
@@ -32,7 +33,7 @@ const startingGameid = 150
 // }
 // changeGamesSchema(0)
 
-async function loadjson(league){
+async function loadjson(league, data){
 
     // //to change
     const games = data[league]["games"]
@@ -144,4 +145,21 @@ async function loadjson(league){
     console.log("breakpct: ",breaks/games_to_load.length)
 }
 
-loadjson("rdutest")
+
+
+fs.readFile("duke.json", 'utf8', (err, data) => {
+    if (err) {
+        console.error('Error reading the file:', err);
+        return;
+    }
+
+    // Parse the JSON data
+    try {
+        const jsonData = JSON.parse(data);
+        loadjson("duke",jsonData)
+    } catch (jsonError) {
+        console.error('Error parsing JSON:', jsonError);
+    }
+});
+
+
