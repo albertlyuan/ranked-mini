@@ -58,7 +58,6 @@ test('break and hold game', async () => {
   for (const [pname, [startelo, endelo], [beforewins, beforelosses], [afterwins,afterlosses]] of breakwin_winners){
     expect(startelo).toEqual(400)
     expect(endelo).toEqual(breakwin)
-    console.log(breakwin_winners)
     expect(afterwins).toEqual(1)
     expect(afterlosses).toEqual(0)
   }
