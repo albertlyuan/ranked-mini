@@ -5,7 +5,6 @@ import {
     ref, 
     update
 } from "firebase/database";
-// import data from "./rdu.json" assert { type: 'json' };
 const startingGameid = 150
 // async function changeGamesSchema(startingGameID){
 //     const games = data[league]["games"]
@@ -147,7 +146,7 @@ async function loadjson(league, data){
 
 
 
-fs.readFile("duke.json", 'utf8', (err, data) => {
+fs.readFile("testData.json", 'utf8', (err, data) => {
     if (err) {
         console.error('Error reading the file:', err);
         return;
@@ -156,7 +155,7 @@ fs.readFile("duke.json", 'utf8', (err, data) => {
     // Parse the JSON data
     try {
         const jsonData = JSON.parse(data);
-        loadjson("duke",jsonData)
+        loadjson("test",jsonData)
     } catch (jsonError) {
         console.error('Error parsing JSON:', jsonError);
     }

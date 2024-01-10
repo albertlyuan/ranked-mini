@@ -75,6 +75,7 @@ export default function Leaderboard({roster, setLeagueid}){
                             setStatusMsgFunc={(msg) => {
                                 setStatusMsg(msg)
                             }}
+                            leagueid={leagueid}
                         />
                     </td>
                     <td>

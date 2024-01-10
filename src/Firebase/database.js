@@ -203,10 +203,10 @@ export function firebase_addNewPlayer(league, playerName){
     const newKey = push(ref(db, `/${league}/player_uid/`)).key //makes new key
     const updates = {};
     firebase_mapNameToUid(league, updates, playerName, newKey)
-    console.log(updates)
     updatePlayerHistory(league, updates, newKey,STARTING_ELO,STARTING_GAMEID,0,0, ts, null, null)
     updatePlayerNow(league, updates, newKey,STARTING_ELO,STARTING_GAMEID,0,0,{})
     
+    console.log(updates)
     return update(ref(db), updates);
 }
 
@@ -456,16 +456,8 @@ export async function getNewGameID(league){
  * @returns list of player Objects for each game played by a player
  */
 export async function firebase_getTotalPlayerData(league, uid){
-    return new Promise((resolve, reject) => {
-        get(query(ref(db,`${league}/player_history/`+uid), orderByChild('game_id')))
-        .then(result =>{
-            resolve(result.val())
-        })
-        .catch(error => {
-            
-            reject(blankPlayer(uid))
-        })
-    })
+    const res = (await get(query(ref(db,`${league}/player_history/`+uid), orderByChild('game_id')))).val()
+    return res
 }
 
 /**
