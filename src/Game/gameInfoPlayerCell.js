@@ -33,16 +33,16 @@ function PlayerCell({player, alternateResult, winningTeamElo, losingTeamElo, win
         set_name(player[0])
         set_before_elo(player[1][0])
         
-        set_wins(player[2])
-        set_losses(player[3])
+        set_wins(player[2][0])
+        set_losses(player[2][1])
         const hypotheticalNewElo = calculateNewElo(before_elo, winningTeamElo, losingTeamElo, !win, wins+losses, !breakToWin)
         set_after_elo(hypotheticalNewElo)
       }else{
         set_name(player[0])
         set_before_elo(player[1][0])
         set_after_elo(player[1][1])
-        set_wins(player[2])
-        set_losses(player[3])
+        set_wins(player[2][0])
+        set_losses(player[2][1])
       }
       
     }, [player, alternateResult])

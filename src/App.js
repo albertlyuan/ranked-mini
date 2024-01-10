@@ -8,9 +8,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './Firebase/auth.js';
 import Logout from "./Login/logout.js"
 import Login from "./Login/login.js"
+import PageNotFound from './pageNotFound.js';
 
 const Leaderboard = lazy(() => import('./Leaderboard/leaderboard.js'));
-const ReportScore = lazy(() => import('./ReportScore/reportscore.js'));
+const ReportScoreWrapper = lazy(() => import('./ReportScore/reportscoreWrapper.js'));
 const CalculatingElo = lazy(() => import('./About/calculatingElo.js'));
 const RankTable = lazy(() => import('./About/rankTable.js'));
 const GamesLog = lazy(() => import('./Game/gamesLog.js'));
@@ -66,7 +67,7 @@ function App() {
           <Routes>
             <Route path="/" element={<GettingStarted/> } />
             <Route path="/:leagueid/" element={<Leaderboard roster={roster} setLeagueid={setLeagueid}/> } />
-            <Route path="/:leagueid/reportscore" element={<ReportScore roster={roster} updater={updater} setLeagueid={setLeagueid}/> } />
+            <Route path="/:leagueid/reportscore" element={<ReportScoreWrapper roster={roster} updater={updater} setLeagueid={setLeagueid}/> } />
             <Route path="/:leagueid/games" element={<GamesLog gamesLog={gameLog} setLeagueid={setLeagueid}/> }/>
             <Route path="/:leagueid/elo" element={<CalculatingElo setLeagueid={setLeagueid}/> } />
             <Route path="/:leagueid/ranks" element={<RankTable setLeagueid={setLeagueid}/> } />
@@ -75,6 +76,7 @@ function App() {
 
             <Route path="/:leagueid/games/:gameid" element={<GameInfo setLeagueid={setLeagueid}/> } />
             <Route path="/:leagueid/player/:uid" element={<PlayerBio setLeagueid={setLeagueid}/> } />
+            <Route path="*" element={<PageNotFound/>} />
           </Routes>
         </Suspense>
       </BrowserRouter>

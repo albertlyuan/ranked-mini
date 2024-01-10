@@ -194,7 +194,7 @@ export async function getNameFromUID(league, uid){
  * WRITES: adds new player to the database. 
  * @param {str} playerName 
  */
-export function firebase_addNewPlayer(league, playerName){
+export async function firebase_addNewPlayer(league, playerName){
     const ts = new Date().toISOString()
 
     playerName = playerName.trim()
@@ -206,8 +206,8 @@ export function firebase_addNewPlayer(league, playerName){
     updatePlayerHistory(league, updates, newKey,STARTING_ELO,STARTING_GAMEID,0,0, ts, null, null)
     updatePlayerNow(league, updates, newKey,STARTING_ELO,STARTING_GAMEID,0,0,{})
     
-    console.log(updates)
-    return update(ref(db), updates);
+    // console.log(updates)
+    await update(ref(db), updates);
 }
 
 async function getUIDsFromNames(league, people){
@@ -254,9 +254,10 @@ export async function firebase_logNewGame(league, winner1, winner2, winner3, los
     await updateNewPlayerElo(league, updates, winnerData,winningTeamElo,losingTeamElo,newGameID, ts, true, winner_pulled, dynamic_pull_factor)
     await updateNewPlayerElo(league, updates, loserData,winningTeamElo,losingTeamElo,newGameID, ts, false, winner_pulled, dynamic_pull_factor)
 
-    console.log(updates)
 
-    update(ref(db), updates);
+    // console.log("updates",updates)
+
+    await update(ref(db), updates);
 }
 
 /** 
@@ -326,7 +327,7 @@ export async function updateNewPlayerElo(league, updates, playerData, winningTea
             newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, win_status, wins+losses, winner_pulled)
         }
         const diff = newElo - oldElo
-        console.log(`${uidToName.get(name)} (${wins}-${losses})`, oldElo, newElo,newGameID, `diff: ${diff}`)
+        // console.log(`${uidToName.get(name)} (${wins}-${losses})`, oldElo, newElo,newGameID, `diff: ${diff}`)
 
         if (win_status){
             wins+=1
@@ -346,7 +347,7 @@ export async function updateNewPlayerElo(league, updates, playerData, winningTea
 export async function firebase_getPlayers(league){
     const playeruids = (await get(query(ref(db, `/${league}/player_uid/`)))).val()
     const players = (await get(query(ref(db, `/${league}/player_now`)))).val()
-
+    // console.log(league,playeruids,players)
     if (playeruids != null){
         const nameToUids = Object.entries(playeruids)
         return [nameToUids, players]
@@ -467,7 +468,6 @@ export async function firebase_getTotalPlayerData(league, uid){
  * @returns player object of gameid and gameid - 1 (used to see elo of player at time of gameid)
  */
 export async function firebase_getPlayerData(league, uid, gameid){
-    
     const beforeStats = (await get(query(ref(db,`/${league}/player_history/`+uid), orderByChild('game_id'), endAt(gameid - 1), limitToLast(1)))).val()
     const afterStats = (await get(query(ref(db,`/${league}/player_history/`+uid), orderByChild('game_id'), endAt(gameid), limitToLast(1)))).val()
     return [beforeStats, afterStats]
@@ -485,7 +485,7 @@ export function queryGamePlayersData(league, players, gameID){
         const beforeAfterData = await firebase_getPlayerData(league, uid, parseInt(gameID))
         const before = Object.values(beforeAfterData[0])[0]
         const after = Object.values(beforeAfterData[1])[0]
-        return [player,[before.elo, after.elo], before.wins, before.losses]
+        return [player,[before.elo, after.elo], [before.wins, before.losses], [after.wins, after.losses]]
     })
     return Promise.all(playerData)
 }
@@ -502,9 +502,9 @@ export function queryGamePlayersData(league, players, gameID){
 /**
  * **probably not used**
  */
-// export function cleardb(){ 
-//     set(ref(db,"/"), null)
-// }
+async function cleardb(league){ 
+    await set(ref(db,`/${league}/`), null)
+}
 
 /**
  * WRITES: change display name of a give uid
@@ -664,4 +664,12 @@ export async function changeDatesToISO(league){
     }catch{
         return false
     }
+}
+
+export async function firebase_loadTest(testdb, testjson){
+    // await cleardb(testdb)
+    // for (const p of testroster){
+    //     await firebase_addNewPlayer(testdb,p[0])
+    // }
+    await set(ref(db,`/${testdb}/`), testjson)
 }

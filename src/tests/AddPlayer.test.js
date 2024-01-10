@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import AddPlayer from '../src/Leaderboard/addPlayer';
-import { getUIDFromName, firebase_getTotalPlayerData } from '../src/Firebase/database';
+import AddPlayer from '../Leaderboard/addPlayer';
+import { getUIDFromName, firebase_getTotalPlayerData } from '../Firebase/database';
 
 const TESTDB_NAME = "test"
 
@@ -34,7 +34,7 @@ test('Add existing player name', () =>{
 
 test('Successful add player', async () =>{
   const testName = "testnewplayer1"
-  const roster = [['xander' -400, 0, 0, ['teams']]]
+  const roster = []
   const setStatusMsg = jest.fn();
 
   const { getByTestId } = render(<AddPlayer setStatusMsgFunc={setStatusMsg} roster={roster} leagueid={TESTDB_NAME}/>);

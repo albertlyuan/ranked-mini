@@ -1,0 +1,212 @@
+{
+  "player_history": {
+    "-NnljvaD6W9ZT2fea8w3": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-NnljvaD6W9ZT2fea8w3",
+        "timestamp": "2024-01-10T05:02:02.984Z",
+        "wins": 0
+      }
+    },
+    "-NnljvavNa8083A-MRUA": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-NnljvavNa8083A-MRUA",
+        "timestamp": "2024-01-10T05:02:03.030Z",
+        "wins": 0
+      }
+    },
+    "-Nnljvbk65xzxP4hwIbU": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-Nnljvbk65xzxP4hwIbU",
+        "timestamp": "2024-01-10T05:02:03.082Z",
+        "wins": 0
+      }
+    },
+    "-NnljvcQfdq1fExfoAcw": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-NnljvcQfdq1fExfoAcw",
+        "timestamp": "2024-01-10T05:02:03.126Z",
+        "wins": 0
+      }
+    },
+    "-Nnljvd2nWh28E34fiYI": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-Nnljvd2nWh28E34fiYI",
+        "timestamp": "2024-01-10T05:02:03.166Z",
+        "wins": 0
+      }
+    },
+    "-Nnljvdg0jrEY6dfE-54": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-Nnljvdg0jrEY6dfE-54",
+        "timestamp": "2024-01-10T05:02:03.207Z",
+        "wins": 0
+      }
+    },
+    "-NnljveNZ0MgXxXXAcfI": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-NnljveNZ0MgXxXXAcfI",
+        "timestamp": "2024-01-10T05:02:03.251Z",
+        "wins": 0
+      }
+    },
+    "-Nnljvf5HgkdIN7Md3U5": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-Nnljvf5HgkdIN7Md3U5",
+        "timestamp": "2024-01-10T05:02:03.297Z",
+        "wins": 0
+      }
+    },
+    "-Nnljvfoy6oAjAFvqoC-": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-Nnljvfoy6oAjAFvqoC-",
+        "timestamp": "2024-01-10T05:02:03.343Z",
+        "wins": 0
+      }
+    },
+    "-NnljvgT9nKfZFR3RBOu": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-NnljvgT9nKfZFR3RBOu",
+        "timestamp": "2024-01-10T05:02:03.385Z",
+        "wins": 0
+      }
+    },
+    "-Nnljvh4ydhKfZ2IFGA3": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-Nnljvh4ydhKfZ2IFGA3",
+        "timestamp": "2024-01-10T05:02:03.424Z",
+        "wins": 0
+      }
+    },
+    "-Nnljvhn9PEOhY0_nLpe": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-Nnljvhn9PEOhY0_nLpe",
+        "timestamp": "2024-01-10T05:02:03.470Z",
+        "wins": 0
+      }
+    }
+  },
+  "player_now": {
+    "-NnljvaD6W9ZT2fea8w3": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-NnljvavNa8083A-MRUA": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-Nnljvbk65xzxP4hwIbU": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-NnljvcQfdq1fExfoAcw": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-Nnljvd2nWh28E34fiYI": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-Nnljvdg0jrEY6dfE-54": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-NnljveNZ0MgXxXXAcfI": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-Nnljvf5HgkdIN7Md3U5": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-Nnljvfoy6oAjAFvqoC-": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-NnljvgT9nKfZFR3RBOu": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-Nnljvh4ydhKfZ2IFGA3": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-Nnljvhn9PEOhY0_nLpe": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    }
+  },
+  "player_uid": {
+    "p1": "-NnljvaD6W9ZT2fea8w3",
+    "p10": "-NnljvgT9nKfZFR3RBOu",
+    "p11": "-Nnljvh4ydhKfZ2IFGA3",
+    "p12": "-Nnljvhn9PEOhY0_nLpe",
+    "p2": "-NnljvavNa8083A-MRUA",
+    "p3": "-Nnljvbk65xzxP4hwIbU",
+    "p4": "-NnljvcQfdq1fExfoAcw",
+    "p5": "-Nnljvd2nWh28E34fiYI",
+    "p6": "-Nnljvdg0jrEY6dfE-54",
+    "p7": "-NnljveNZ0MgXxXXAcfI",
+    "p8": "-Nnljvf5HgkdIN7Md3U5",
+    "p9": "-Nnljvfoy6oAjAFvqoC-"
+  }
+}
