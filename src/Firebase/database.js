@@ -46,8 +46,18 @@ const STARTING_GAMEID = -1
  * Async function. 
  * @returns list of [name, elo, num wins, num losses, teams(list)]
  */
+export async function leagueExists(league){
+    const res = (await get(query(ref(db,`/${league}`)))).val()
+    if (res == null || res == "null" ){
+        return false
+    }
+    return true
+}
+/**
+ * Async function. 
+ * @returns list of [name, elo, num wins, num losses, teams(list)]
+ */
 export async function buildLeaderboard(league){
-
     const [nameToUids, players] = await firebase_getPlayers(league)
     const ranked = []
     const unranked = []

@@ -1,8 +1,9 @@
 import {useState, useEffect} from 'react';
 import AddPlayer from './addPlayer.js';
-import {useParams } from 'react-router-dom'
+import {useNavigate, useParams } from 'react-router-dom'
 import PlayerRow from './leaderboardPlayer.js';
 import SearchPlayer from './searchPlayer.js';
+import { leagueExists } from '../Firebase/database.js';
 
 export default function Leaderboard({roster, setLeagueid}){
     const [statusMsg, setStatusMsg] = useState('');
@@ -10,7 +11,17 @@ export default function Leaderboard({roster, setLeagueid}){
     const [listItems, setListItems] = useState([]);
     const {leagueid} = useParams()
 
+    const navigate = useNavigate();
+    leagueExists(leagueid).then((res)=>{
+        if (!res){
+            setLeagueid(null)
+            navigate("/page/not/found")
+        }
+    })
+
     useEffect(() => {
+        
+        
         setLeagueid(leagueid)
         const playerrows = roster.map((person) => {
             return (<PlayerRow

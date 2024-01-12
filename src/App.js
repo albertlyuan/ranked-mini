@@ -59,13 +59,13 @@ function App() {
         <Routes>
           <Route path="/" element={<GettingStarted currLeagueid={leagueid}/> } />
           <Route path="/login" element={<LoginPage/>}/>
+
           <Route path="/:leagueid/" element={<Leaderboard roster={roster} setLeagueid={setLeagueid}/> } />
           <Route path="/:leagueid/reportscore" element={<ReportScoreWrapper roster={roster} updater={updater} setLeagueid={setLeagueid}/> } />
           <Route path="/:leagueid/games" element={<GamesLog gamesLog={gameLog} setLeagueid={setLeagueid}/> }/>
           <Route path="/elo" element={<CalculatingElo setLeagueid={setLeagueid}/> } />
           <Route path="/ranks" element={<RankTable setLeagueid={setLeagueid}/> } />
 
-          
           <Route path="/:leagueid/games/:gameid" element={<GameInfoWrapper setLeagueid={setLeagueid}/> } />
           <Route path="/:leagueid/player/:uid" element={<PlayerBio setLeagueid={setLeagueid}/> } />
           <Route path="*" element={<PageNotFound/>} />

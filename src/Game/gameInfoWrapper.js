@@ -1,7 +1,7 @@
 import { AppLoader } from "../loader.js";
 import { useParams ,useNavigate} from 'react-router-dom';
 import {useState, useEffect} from 'react'
-import { getGame, queryGamePlayersData } from "../Firebase/database.js";
+import { getGame, leagueExists, queryGamePlayersData } from "../Firebase/database.js";
 import GameInfo from "./gameInfo.js";
 
 // [gameid, date string, winners, losers, broke to win]
@@ -15,6 +15,12 @@ export default function GameInfoWrapper({setLeagueid}){
     const [breakToWin, setBreakToWin] = useState(false);
 
     const navigate = useNavigate();
+    leagueExists(leagueid).then((res)=>{
+        if (!res){
+            setLeagueid(null)
+            navigate("/page/not/found")
+        }
+    })
 
     useEffect(() => {
         setLeagueid(leagueid)

@@ -1,14 +1,13 @@
-import {firebase_getTotalPlayerData, blankPlayer, getNameFromUID, firebase_getPlayerTeams} from '../Firebase/database.js'
+import {firebase_getTotalPlayerData, blankPlayer, getNameFromUID, leagueExists} from '../Firebase/database.js'
 import { useEffect, useState, lazy } from 'react'
 import { AppLoader } from "../loader.js";
 import { getPlayerGameLog } from '../Firebase/database.js';
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import TextInputAlert from './textInputAlert.js';
-import { PlayerTeam, AddPlayerTeam } from './playerteam.js';
 const GamesLog = lazy(() => import('../Game/gamesLog.js'));
 
 function sortListByGameID(a,b){
@@ -32,9 +31,15 @@ export default function PlayerBio({setLeagueid}){
     const [currElo, setCurrElo] = useState(0)
     const [chartData, setChartData] = useState(blankChartData)
     const [loggedin, setLoggedin] = useState(false);
-    const [teams, setTeams] = useState([]);
     const [observer, triggerReload] = useState(false);
-
+    const navigate = useNavigate();
+    leagueExists(leagueid).then((res)=>{
+        if (!res){
+            setLeagueid(null)
+            navigate("/page/not/found")
+        }
+    })
+    
     useEffect(() => {
         setLeagueid(leagueid)
         onAuthStateChanged(auth, (user) => {
@@ -106,20 +111,8 @@ export default function PlayerBio({setLeagueid}){
                 setChartData(dataobj)
             }
         })
-        
-        getTeams()
-        
+                
     }, [playerGames, playerData, uid, observer])
-
-    function getTeams(){
-        firebase_getPlayerTeams(uid)
-        .then(teamnames => {
-            const namecomponents = teamnames.map(name => {
-                return (<PlayerTeam uid={uid} teamname={name} triggerReload={triggerReload} observer={observer}/>)
-            })
-            setTeams(namecomponents)
-        })
-    }
 
     function getMostRecentGame(){
         if (!playerData){

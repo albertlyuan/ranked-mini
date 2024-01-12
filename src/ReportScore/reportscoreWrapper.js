@@ -2,12 +2,21 @@ import {useState, useEffect } from 'react';
 import { auth } from '../Firebase/auth.js';
 import ReportScore from './reportscore.js';
 import LoginButton from '../Login/loginbutton.js';
-import { useParams} from 'react-router-dom';
+import { useNavigate, useParams} from 'react-router-dom';
+import { leagueExists } from '../Firebase/database.js';
 
 
 export default function ReportScoreWrapper({roster, updater, setLeagueid}){
     const {leagueid} = useParams()
     const [currUser, setCurrUser ] = useState()
+    const navigate = useNavigate();
+    leagueExists(leagueid).then((res)=>{
+        if (!res){
+            setLeagueid(null)
+            navigate("/page/not/found")
+        }
+    })
+
     useEffect(()=>{
         if (auth.currentUser){
             setCurrUser(auth.currentUser)

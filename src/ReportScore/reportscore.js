@@ -22,7 +22,6 @@ export default function ReportScore({roster, updater, setLeagueid}){
 
     const [dynamicPullFactor, toggleDynamicPullFactor] = useState(true);
 
-
     useEffect(() => {
         setLeagueid(leagueid)    
         if (availablePlayers.size == 0){
@@ -92,7 +91,7 @@ export default function ReportScore({roster, updater, setLeagueid}){
         clearSelection()
 
     }
-
+ 
     return(
         <div className="scoreReport animatedLoad">
             <div style={{display: "flex", justifyContent:"center", alignContent:"center", textAlign: "center"}}>
