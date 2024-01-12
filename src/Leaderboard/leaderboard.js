@@ -11,7 +11,6 @@ export default function Leaderboard({roster, setLeagueid}){
     const [statusMsg, setStatusMsg] = useState('');
     const [filter, setFilter] = useState('');
     const [listItems, setListItems] = useState([]);
-    const [teamList, setTeamList] = useState([]);
     const [teamfilter, setTeamFilter] = useState('');
     const {leagueid} = useParams()
 
@@ -42,15 +41,7 @@ export default function Leaderboard({roster, setLeagueid}){
             }); 
         }
 
-        
         setListItems(playerrows)
-
-        firebase_getAllTeams()
-        .then(teamnames => {
-            setTeamList(teamnames.map(name => {
-                return (<SelectTeam teamname={name} teamfilter={teamfilter} setTeamFilter={setTeamFilter}/>)
-            }))
-        })
 
       },[roster, teamfilter, filter])
     
