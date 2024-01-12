@@ -11,39 +11,23 @@ export default function Leaderboard({roster, setLeagueid}){
     const [statusMsg, setStatusMsg] = useState('');
     const [filter, setFilter] = useState('');
     const [listItems, setListItems] = useState([]);
-    const [teamfilter, setTeamFilter] = useState('');
     const {leagueid} = useParams()
 
     useEffect(() => {
         setLeagueid(leagueid)
-        let playerrows = []
-        if (teamfilter.length > 0 ){
-            playerrows = roster.map((person) => {
-                if (person[4].find((teamname) => teamname == teamfilter)){
-                    return (<PlayerRow
-                        name={person[0]}
-                        elo={person[1]}
-                        wins={person[2]}
-                        losses={person[3]}
-                        filter={filter}
-                    />)
-                }
-            })
-        }else{
-            playerrows = roster.map((person) => {
-                return (<PlayerRow
-                    name={person[0]}
-                    elo={person[1]}
-                    wins={person[2]}
-                    losses={person[3]}
-                    filter={filter}
-                />)
-            }); 
-        }
+        const playerrows = roster.map((person) => {
+            return (<PlayerRow
+                name={person[0]}
+                elo={person[1]}
+                wins={person[2]}
+                losses={person[3]}
+                filter={filter}
+            />)
+        }); 
 
         setListItems(playerrows)
 
-      },[roster, teamfilter, filter])
+      },[roster, filter])
     
     return (
         <div id="leaderboard" class="tabcontent animatedLoad">
