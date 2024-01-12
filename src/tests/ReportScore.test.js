@@ -21,7 +21,7 @@ const TEST_ROSTER = [
 ]
 
 jest.mock('../Firebase/database', () => ({
-  firebase_logNewGame: jest.fn(),
+  firebase_logNewGame: jest.fn()
 }));
 
 test("Inputs Work", () =>{

@@ -265,9 +265,7 @@ export async function firebase_logNewGame(league, winner1, winner2, winner3, los
     await updateNewPlayerElo(league, updates, loserData,winningTeamElo,losingTeamElo,newGameID, ts, false, winner_pulled, dynamic_pull_factor)
 
 
-    // console.log("updates",updates)
-
-    await update(ref(db), updates);
+    update(ref(db), updates);
 }
 
 /** 
