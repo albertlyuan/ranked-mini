@@ -86,9 +86,11 @@ export default function ReportScore({roster, updater, setLeagueid}){
         }
         
 
-        await firebase_logNewGame(leagueid, winner1,winner2,winner3,loser1,loser2,loser3, winnerPulled,dynamicPullFactor)
-        updater()
+        firebase_logNewGame(leagueid, winner1,winner2,winner3,loser1,loser2,loser3, winnerPulled,dynamicPullFactor).then(
+            updater()
+        )
         clearSelection()
+
     }
 
     return(

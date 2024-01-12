@@ -1,6 +1,7 @@
 import * as firebase from './Firebase/database.js'
 import * as elo from './Elo/elo.js'
 
+// THIS FILE IS SOLELY USED FOR THE TESTING FUNCTIONS OUTSIDE OF REACT
 
 
   

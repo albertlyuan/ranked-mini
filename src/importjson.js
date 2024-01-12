@@ -73,10 +73,24 @@ async function loadjson(league, data){
 
     //refresh players before rerender
     for (const uid of uids){
+        if (!player_now.hasOwnProperty(uid)){
+            player_now[uid] = {}
+        }
         player_now[uid]["elo"]=400
         player_now[uid]["losses"]=0
         player_now[uid]["wins"]=0
         player_now[uid]["most_recent_game"]=-1
+        if (!player_history.hasOwnProperty(uid)){
+            player_history[uid] = {}
+            player_history[uid]["-1"] = {
+                "elo": 400,
+                "game_id": -1,
+                "losses": 0,
+                "name": uid,
+                "timestamp": null,
+                "wins": 0
+              }
+        }
         player_history[uid] = {"-1":player_history[uid]["-1"]}
     }
     const updates = {}
@@ -134,6 +148,7 @@ async function loadjson(league, data){
         
         console.log(newGameID, ts,"winner pulled:", winner_pulled)
         console.log("winners",winningTeamElo)
+        // one by one log each game. need to await since each result is dependent on the prev
         await firebase.updateNewPlayerElo(league, updates, winnerData,winningTeamElo,losingTeamElo,newGameID, ts, true, winner_pulled, dynamic_pull_factor)
         console.log("losers",losingTeamElo)
         await firebase.updateNewPlayerElo(league, updates, loserData,winningTeamElo,losingTeamElo,newGameID, ts, false, winner_pulled, dynamic_pull_factor)
@@ -145,8 +160,12 @@ async function loadjson(league, data){
 }
 
 
+// const filename = "testData.json"
+// const leagueid = "test"
+const filename = "duke.json"
+const leagueid = "duke"
 
-fs.readFile("testData.json", 'utf8', (err, data) => {
+fs.readFile(filename, 'utf8', (err, data) => {
     if (err) {
         console.error('Error reading the file:', err);
         return;
@@ -155,7 +174,7 @@ fs.readFile("testData.json", 'utf8', (err, data) => {
     // Parse the JSON data
     try {
         const jsonData = JSON.parse(data);
-        loadjson("test",jsonData)
+        loadjson(leagueid,jsonData)
     } catch (jsonError) {
         console.error('Error parsing JSON:', jsonError);
     }

@@ -292,11 +292,13 @@ export async function getCurrPullFactor(league, numGames){
         }
 
     }
-    console.log("percent break", (break2win/numGames));
+
     const newPullFactor = (break2win/numGames) / (1-(break2win/numGames))
     if (newPullFactor == 0){
         return PULL_FACTOR
     }
+    console.log("BreakPct:",break2win/numGames)
+    console.log("PullFactor:",newPullFactor)
     return newPullFactor
 
 }

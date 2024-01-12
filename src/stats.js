@@ -8,7 +8,7 @@ async function Summary(league, days){
     let queryDate = new Date()
     queryDate.setDate(queryDate.getDate()-days)
     queryDate = queryDate.toISOString()
-    const uidToName = await firebase.getNamesFromUIDs()
+    const uidToName = await firebase.getNamesFromUIDs(league)
     const startelo = new Map() //uid: elo
     const startelo_incPlacements = new Map() //uid: elo
     const endelo = new Map() //uid: elo
@@ -51,10 +51,12 @@ async function Summary(league, days){
     diffs.sort((a,b) => b[1]-a[1])
     diffs_INCLplacements.sort((a,b) => b[1]-a[1])
 
+    console.log("name, elodiff, numgames")
     console.log(diffs)
+    console.log("name, elodiff, numgames, CurrElo")
     console.log(diffs_INCLplacements)
 }
-Summary(1)
+Summary("duke",5)
 firebase.getCurrPullFactor(firebase.albertuser,firebase.PULLFACTORGAMES).then((res) => {
     console.log("pull factor:",res)
 })
