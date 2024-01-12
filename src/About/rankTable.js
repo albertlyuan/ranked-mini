@@ -3,10 +3,10 @@ import { useParams} from 'react-router-dom';
 import {React, useEffect } from 'react';
 
 export default function RankTable({setLeagueid}){
-    const {leagueid} = useParams()
-    useEffect(() => {
-        setLeagueid(leagueid)
-    })
+    // const {leagueid} = useParams()
+    // useEffect(() => {
+    //     setLeagueid(leagueid)
+    // })
     const rankMarkdown = ranks.toReversed().map((rank) => {
         const rankImg = rank[0]
         const rankThreshold = rank[1]

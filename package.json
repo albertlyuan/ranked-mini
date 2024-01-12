@@ -20,7 +20,7 @@
     "net": "^1.0.2",
     "path": "^0.12.7",
     "react": "^18.2.0",
-    "react-auth-kit": "^2.12.5",
+    "react-auth-kit": "^2.12.7",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-mathjax2": "^0.0.2",
@@ -54,5 +54,8 @@
       "last 1 safari version"
     ]
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
 }

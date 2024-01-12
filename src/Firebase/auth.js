@@ -9,9 +9,10 @@ import { getAuth,
 export const auth = getAuth(app);
 
 export function login(email, password){
+   
     setPersistence(auth, browserSessionPersistence)
     .then(() => {
-        return signInWithEmailAndPassword(auth, email, password);
+        signInWithEmailAndPassword(auth, email, password)
     })
     .catch((error) => {
         console.log(error.message)

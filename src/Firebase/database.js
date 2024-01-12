@@ -17,7 +17,7 @@ import {
     limitToFirst} from "firebase/database";
 import {STARTING_ELO, PULL_FACTOR, calculateNewElo, calculateTeamElo} from "../Elo/elo.js"
 
-export const PULLFACTORGAMES = 100
+export const PULLFACTORGAMES = 30
 export const albertuser = "7zDTQ16f3Sah2sOSncu3zLf6PeG3"
 
 export const db = getDatabase(app)

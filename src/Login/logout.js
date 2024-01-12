@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom'
 import { signout } from '../Firebase/auth.js';
 
-export default function Logout({leagueid}){
+export default function Logout(){
     const navigate = useNavigate();
     function handleLogout(){
         signout()
-        navigate(`/${leagueid}/`)
+        navigate(`/`)
     }
 
     return (
-        <a className="clickable" onClick={handleLogout}>Log out</a> 
+        <a className="createAccountButton" onClick={handleLogout}>Log out</a> 
     )
 }

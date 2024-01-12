@@ -1,31 +1,40 @@
 import {useState, useEffect } from 'react';
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import ReportScore from './reportscore.js';
+import LoginButton from '../Login/loginbutton.js';
+import { useParams} from 'react-router-dom';
 
 
 export default function ReportScoreWrapper({roster, updater, setLeagueid}){
-    const [loggedin, setLoggedin] = useState(false);
+    const {leagueid} = useParams()
+    const [currUser, setCurrUser ] = useState()
+    useEffect(()=>{
+        if (auth.currentUser){
+            setCurrUser(auth.currentUser)
+        }
+    },[auth.currentUser])
 
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setLoggedin(true)
-            }else{
-                setLoggedin(false)
-            }
-        })      
+        setLeagueid(leagueid)
     })
 
-    if (loggedin){
-        return(
-            <ReportScore roster={roster} updater={updater} setLeagueid={setLeagueid}/>
-        )
+    if(currUser){
+        if (leagueid == currUser.uid){
+            return(
+                <ReportScore roster={roster} updater={updater} setLeagueid={setLeagueid}/>
+            )
+        }
+        else{
+            return(
+                <>
+                    <LoginButton text={`Log into [${leagueid}] to Report Score`} />
+                    <p>Currently logged into: {currUser.uid}</p>
+                </>
+            )
+        }
     }else{
         return(
-            <>
-                <h2>Login To Report Score</h2>
-            </>
+            <LoginButton text={"Log in / Sign up"} />
         )
     }
 }
