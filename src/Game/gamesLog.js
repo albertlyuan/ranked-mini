@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import GameRow from './gameRow.js'
 import { useParams } from 'react-router-dom';
+import SearchPlayer from '../Leaderboard/searchPlayer.js';
 
 export default function GamesLog({gamesLog, eloGain, setLeagueid}){
     const [gameList, setGameList] =  useState([]);
+    const [dateFilter, setDateFilter] = useState('');
+    const [playerFilter, setPlayerFilter] = useState('');
+
     const {leagueid} = useParams()
     useEffect(() => {
         if (gamesLog.length > 0){
@@ -11,16 +15,36 @@ export default function GamesLog({gamesLog, eloGain, setLeagueid}){
                 <GameRow 
                     game={game}
                     eloGain={eloGain}
+                    dateFilter={dateFilter}
+                    playerFilter={playerFilter}
                 />
             )
             setGameList(temp)
         }
         setLeagueid(leagueid)
-    },[gamesLog])
+    },[gamesLog, dateFilter, playerFilter])
     
-
     return(
         <div class="animatedLoad">
+            <table class="gamelog">
+                <tr>
+                    <td>
+                        <SearchPlayer
+                            setFilter={setDateFilter}
+                            text={"Search Date"}
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <SearchPlayer
+                            setFilter={setPlayerFilter}
+                            text={"Search Players"}
+                        />
+                    </td>
+                </tr>
+
+            </table>
             <table class="gamelog">
                 <tr style={{textAlign: "left"}}>
                     <th>Game ID</th>
@@ -30,6 +54,7 @@ export default function GamesLog({gamesLog, eloGain, setLeagueid}){
                     {eloGain ? <th>+/- Elo</th> : <></>}
                     <th>Broke to Win</th>
                 </tr>
+                
                 {gameList}
             </table>
             

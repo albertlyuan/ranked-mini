@@ -1,13 +1,15 @@
 import {useNavigate, useParams} from "react-router-dom"
 import { DayMonthDateYear } from "../Elo/dateutils.js";
+import { useEffect, useState } from "react";
 /**
  * game = list of [gameid, ts, winners (list), losers (list), winnerPulled (bool)]
  * @param {*} param0 game, setTab, setGame
  * @returns <tr> with gameID, timestamp, winning team, losing team
  */
-function GameRow({game, eloGain}){
+function GameRow({game, eloGain, dateFilter, playerFilter}){
     //[gameid, ts, winners (list), losers (list), winnerPulled (bool)]
     const navigate = useNavigate();
+    const [showRow, setShowRow] = useState("table-row")
     const {leagueid} = useParams()
     const formattedDate = () => {
         return DayMonthDateYear(game[1])
@@ -16,6 +18,16 @@ function GameRow({game, eloGain}){
     const goToGame = () => {
         navigate(`/${leagueid}/games/${game[0]}`);
     };
+
+    useEffect(()=>{
+        if ((game[2].join(", ").toLowerCase().indexOf(playerFilter) > -1
+        || game[3].join(", ").toLowerCase().indexOf(playerFilter) > -1)
+        && formattedDate().toLowerCase().indexOf(dateFilter) > -1){
+            setShowRow("table-row")
+        } else{
+            setShowRow("none")
+        }
+    })
 
     if (eloGain){
         const deltaElo = () => {
@@ -33,7 +45,11 @@ function GameRow({game, eloGain}){
         }
         return(
 
-            <tr class={(deltaElo() > 0 ? "elogain " : deltaElo() < 0 ? "eloloss " : "")  + "clickable highlights"} onClick={goToGame}>
+            <tr 
+                class={(deltaElo() > 0 ? "elogain " : deltaElo() < 0 ? "eloloss " : "")  + "clickable highlights"} 
+                onClick={goToGame}
+                style={{display: showRow}}
+            >   
                 <td>{game[0]} </td>
                 <td>{formattedDate()}</td>
                 <td>{game[2].join(", ")} </td>
@@ -45,7 +61,11 @@ function GameRow({game, eloGain}){
         )
     }
     return (
-        <tr class={"clickable highlights"}  onClick={goToGame}>
+        <tr 
+            class={"clickable highlights"}  
+            onClick={goToGame}
+            style={{display: showRow}}
+            >
             <td>{game[0]}</td>
             <td>{formattedDate()}</td>
             <td>{game[2].join(", ")} </td>

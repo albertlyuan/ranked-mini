@@ -37,6 +37,7 @@ export default function Leaderboard({roster, setLeagueid}){
                     <td>
                         <SearchPlayer
                             setFilter={setFilter}
+                            text={"Search Player"}
                         />
                     </td>
                 </tr>

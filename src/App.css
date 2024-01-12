@@ -176,7 +176,7 @@ tr #addplayerRow{
     background-color: #ddd;
   }
 
-  #playerNameBox {
+  .playerNameBox {
     font-size: 1rem;
     border-width: 0px;
     border-style: solid;

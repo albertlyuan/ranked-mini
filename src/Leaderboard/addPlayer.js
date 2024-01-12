@@ -33,7 +33,7 @@ function AddPlayer({setStatusMsgFunc, roster, leagueid}){
         <form className="newPlayer" onSubmit={handleSubmit}>
             <input 
                 type="text" 
-                id="playerNameBox" 
+                className="playerNameBox" 
                 data-testid="AddNewPlayerBox"
                 placeholder="Add New Player" 
                 value={inputName}
