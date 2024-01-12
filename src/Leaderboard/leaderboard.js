@@ -1,11 +1,8 @@
 import {useState, useEffect} from 'react';
 import AddPlayer from './addPlayer.js';
 import {useParams } from 'react-router-dom'
-
 import PlayerRow from './leaderboardPlayer.js';
 import SearchPlayer from './searchPlayer.js';
-import { SelectTeam } from './selectTeam.js';
-import { firebase_getAllTeams } from '../Firebase/database.js';
 
 export default function Leaderboard({roster, setLeagueid}){
     const [statusMsg, setStatusMsg] = useState('');
