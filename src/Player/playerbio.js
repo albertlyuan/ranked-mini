@@ -225,10 +225,6 @@ export default function PlayerBio({setLeagueid}){
                     <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/>
                 </h2>
                 {loggedin && playerName ? <TextInputAlert leagueid={leagueid} oldname={playerName} /> : null}
-                <div class="horizontal_left">
-                    {teams}
-                    <AddPlayerTeam uid={uid} getTeams={getTeams}/> 
-                </div>
                 <div>
                     <h3>Elo: {currWins + currLosses >= 10 ? currElo : loggedin ? currElo : "Unranked"} </h3>
                     {chartData ? <EloChart rawChartData={chartData} noPlacementGames={makeCroppedChartData()}/> : null}
