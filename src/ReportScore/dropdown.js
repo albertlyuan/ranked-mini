@@ -2,7 +2,7 @@ import { useComponentVisible } from './DetectExternalClick.js';
 import {useState, useRef, useEffect } from 'react'
 import { DropdownSearch, DropdownButton, DropdownPlayer } from './dropdownComponents.js';
 
-function Dropdown({availablePlayers, setAvailablePlayers, selection, setSelection}){
+function Dropdown({availablePlayers, setAvailablePlayers, players, setPlayers, thisplayer}){
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false);
     const [filter, setFilter] = useState('');
     const inputRef = useRef(null);
@@ -25,7 +25,7 @@ function Dropdown({availablePlayers, setAvailablePlayers, selection, setSelectio
     }
 
     const addToAvailablePlayers = () => {
-        setAvailablePlayers(prevSet => new Set(prevSet.add(selection)))    
+        setAvailablePlayers(prevSet => new Set(prevSet.add(players[thisplayer])))    
     }
 
     const removeFromAvailablePlayers = (removeItem) => {
@@ -36,10 +36,12 @@ function Dropdown({availablePlayers, setAvailablePlayers, selection, setSelectio
     }
 
     const setSelectionHandler = (newSelection) => {
-        if (selection !== ""){
+        if (players[thisplayer] !== ""){
             addToAvailablePlayers()
         }
-        setSelection(newSelection)
+        // setSelection(newSelection)
+
+        setPlayers({...players, [thisplayer]: newSelection})
         removeFromAvailablePlayers(newSelection)
         setIsComponentVisible(false)
     }
@@ -61,7 +63,7 @@ function Dropdown({availablePlayers, setAvailablePlayers, selection, setSelectio
         <div className="dropdown" ref={ref}>  
             <DropdownButton 
                 toggle={toggleDropdown}
-                selection={selection}
+                selection={players[thisplayer]}
             />
             
             { isComponentVisible && (

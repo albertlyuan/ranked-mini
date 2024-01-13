@@ -202,7 +202,13 @@ tr #addplayerRow{
   .eloloss:hover{ 
     background-color: #ff4e45;
   }
-
+  .neutralColor{
+    background-color: #ddd;
+  
+  }
+  .neutralColor:hover{
+    background-color: #ccc;
+  }
   .gamelog{
     width: 100%;
   }
@@ -294,7 +300,27 @@ tr #addplayerRow{
   border: none;
   border-radius: 25px;
   width: 100%;
-  padding: 15px;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.reportscoreTeamButtons{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+.reportscoreTeamButtons button{
+  width: 5%;
+  border: none;
+  border-radius: 25px;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: center;
+  margin: 1%;
   background-color: #ddd;
 }
 
@@ -328,18 +354,6 @@ tr #addplayerRow{
   outline: transparent;
   background-color: transparent;
   padding: 1% 2%;
-}
-
-.swapTeamsButton{
-  border: none;
-  border-radius: 25px;
-  width: 10%;
-  padding: 15px;
-  background-color: #ddd;
-}
-
-.scoreReportButton:hover{
-  background-color: #ccc;
 }
 
 #submitGame{
