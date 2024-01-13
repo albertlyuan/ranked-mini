@@ -24,7 +24,7 @@ jest.mock('../Firebase/database', () => ({
   firebase_logNewGame: jest.fn()
 }));
 
-test("Inputs Work", () =>{
+function renderReportScore(){
   const setLeagueid = jest.fn()
   const updater = jest.fn()
 
@@ -38,6 +38,12 @@ test("Inputs Work", () =>{
     </Routes>
   </MemoryRouter>
   )
+  return debug
+}
+
+test("Inputs Work", () =>{
+  const debug = renderReportScore()
+
   fireEvent.click(screen.getByTestId('winner1').querySelector('.dropbtn'))
   expect(screen.queryByText('p1')).toBeInTheDocument();
   expect(screen.queryByText('p2')).toBeInTheDocument();
@@ -49,33 +55,18 @@ test("Inputs Work", () =>{
 
 
   fireEvent.click(screen.getByTestId('winner2').querySelector('.dropbtn'))
-  expect(screen.queryByText('p2')).toBeInTheDocument();
-  expect(screen.queryByText('p3')).toBeInTheDocument();
-  expect(screen.queryByText('p4')).toBeInTheDocument();
-  expect(screen.queryByText('p5')).toBeInTheDocument();
-  expect(screen.queryByText('p6')).toBeInTheDocument();
   fireEvent.click(screen.queryByText('p2'));
 
   fireEvent.click(screen.getByTestId('winner3').querySelector('.dropbtn'))
-  expect(screen.queryByText('p3')).toBeInTheDocument();
-  expect(screen.queryByText('p4')).toBeInTheDocument();
-  expect(screen.queryByText('p5')).toBeInTheDocument();
-  expect(screen.queryByText('p6')).toBeInTheDocument();
   fireEvent.click(screen.queryByText('p3'));
 
   fireEvent.click(screen.getByTestId('loser1').querySelector('.dropbtn'))
-  expect(screen.queryByText('p4')).toBeInTheDocument();
-  expect(screen.queryByText('p5')).toBeInTheDocument();
-  expect(screen.queryByText('p6')).toBeInTheDocument();
   fireEvent.click(screen.queryByText('p4'));
 
   fireEvent.click(screen.getByTestId('loser2').querySelector('.dropbtn'))
-  expect(screen.queryByText('p5')).toBeInTheDocument();
-  expect(screen.queryByText('p6')).toBeInTheDocument();
   fireEvent.click(screen.queryByText('p5'));
 
   fireEvent.click(screen.getByTestId('loser3').querySelector('.dropbtn'))
-  expect(screen.queryByText('p6')).toBeInTheDocument();
   fireEvent.click(screen.queryByText('p6'));
 
   expect(screen.queryByTestId("pullSelector"))
@@ -84,4 +75,77 @@ test("Inputs Work", () =>{
   fireEvent.submit(screen.queryByTestId('submitButton'));
 
   expect(firebase_logNewGame).toBeCalledWith(TESTDB,'p1','p2','p3','p4','p5','p6',true,true);
+})
+
+
+test("Swap Players", () =>{
+  const debug = renderReportScore()
+
+  fireEvent.click(screen.getByTestId('winner1').querySelector('.dropbtn'))
+  fireEvent.click(screen.queryByText('p1'));
+
+  fireEvent.click(screen.getByTestId('winner2').querySelector('.dropbtn'))
+  fireEvent.click(screen.queryByText('p2'));
+
+  fireEvent.click(screen.getByTestId('winner3').querySelector('.dropbtn'))
+  fireEvent.click(screen.queryByText('p3'));
+
+  fireEvent.click(screen.getByTestId('loser1').querySelector('.dropbtn'))
+  fireEvent.click(screen.queryByText('p4'));
+
+  fireEvent.click(screen.getByTestId('loser2').querySelector('.dropbtn'))
+  fireEvent.click(screen.queryByText('p5'));
+
+  fireEvent.click(screen.getByTestId('loser3').querySelector('.dropbtn'))
+  fireEvent.click(screen.queryByText('p6'));
+
+  fireEvent.click(screen.queryByTestId('swapButton'));
+
+  expect(screen.queryByTestId("pullSelector"))
+  fireEvent.click(screen.queryByTestId('winpuller'));
+
+  expect(screen.queryByTestId("submitButton"))
+  fireEvent.submit(screen.queryByTestId('submitButton'));
+
+  expect(firebase_logNewGame).toBeCalledWith(TESTDB,'p4','p5','p6','p1','p2','p3',true,true);
+})
+
+test("Clear Players", () =>{
+  const debug = renderReportScore()
+  
+  fireEvent.click(screen.getByTestId('winner1').querySelector('.dropbtn'))
+  fireEvent.click(screen.queryByText('p1'));
+
+  fireEvent.click(screen.getByTestId('winner2').querySelector('.dropbtn'))
+  fireEvent.click(screen.queryByText('p2'));
+
+  fireEvent.click(screen.getByTestId('winner3').querySelector('.dropbtn'))
+  fireEvent.click(screen.queryByText('p3'));
+
+  fireEvent.click(screen.getByTestId('loser1').querySelector('.dropbtn'))
+  fireEvent.click(screen.queryByText('p4'));
+
+  fireEvent.click(screen.getByTestId('loser2').querySelector('.dropbtn'))
+  fireEvent.click(screen.queryByText('p5'));
+
+  fireEvent.click(screen.getByTestId('loser3').querySelector('.dropbtn'))
+  fireEvent.click(screen.queryByText('p6'));
+
+  fireEvent.click(screen.queryByTestId('swapButton'));
+
+  expect(screen.queryByTestId("pullSelector"))
+  fireEvent.click(screen.queryByTestId('winpuller'));
+
+  expect(screen.queryByTestId("clearButton"))
+  fireEvent.click(screen.queryByTestId('clearButton'));
+
+  expect(screen.queryByTestId("submitButton")).not.toBeInTheDocument()
+  expect(screen.queryByTestId("pullSelector")).not.toBeInTheDocument()
+  expect(screen.queryByText('p1')).not.toBeInTheDocument();
+  expect(screen.queryByText('p2')).not.toBeInTheDocument();
+  expect(screen.queryByText('p3')).not.toBeInTheDocument();
+  expect(screen.queryByText('p4')).not.toBeInTheDocument();
+  expect(screen.queryByText('p5')).not.toBeInTheDocument();
+  expect(screen.queryByText('p6')).not.toBeInTheDocument();
+
 })

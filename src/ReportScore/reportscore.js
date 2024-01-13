@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
 import { firebase_logNewGame } from '../Firebase/database.js'
 import Dropdown from "./dropdown.js"
-import PullSelector from './pullSelector.js';
-import PullFactorSetter from './pullFactorSetter.js';
 import { useParams } from 'react-router-dom';
-import RandomizeTeamsButton from './randomizeTeamsButton.js';
-import SwapTeamsButton from './swapTeamsButton.js';
+import {PullFactorSetter, PullSelector, SwapTeamsButton, RandomizeTeamsButton} from "./reportscoreButtons.js"
 
 export default function ReportScore({ roster, updater, setLeagueid }) {
     const [availablePlayers, setAvailablePlayers] = useState(new Set());
@@ -23,26 +20,26 @@ export default function ReportScore({ roster, updater, setLeagueid }) {
         const winner = `winner${n}`
         const loser = `loser${n}`
         return (
-            <tr>
-                    <td data-testid={winner}>
-                        <Dropdown
-                            availablePlayers={availablePlayers}
-                            setAvailablePlayers={setAvailablePlayers}
-                            players={players}
-                            setPlayers={setPlayers}
-                            thisplayer={winner}
-                        />
-                    </td>
-                    <td data-testid={loser}>
-                        <Dropdown
-                            availablePlayers={availablePlayers}
-                            setAvailablePlayers={setAvailablePlayers}
-                            players={players}
-                            setPlayers={setPlayers}
-                            thisplayer={loser}
-                        />
-                    </td>
-                </tr>
+            <tr key={n}>
+                <td data-testid={winner}>
+                    <Dropdown
+                        availablePlayers={availablePlayers}
+                        setAvailablePlayers={setAvailablePlayers}
+                        players={players}
+                        setPlayers={setPlayers}
+                        thisplayer={winner}
+                    />
+                </td>
+                <td data-testid={loser}>
+                    <Dropdown
+                        availablePlayers={availablePlayers}
+                        setAvailablePlayers={setAvailablePlayers}
+                        players={players}
+                        setPlayers={setPlayers}
+                        thisplayer={loser}
+                    />
+                </td>
+            </tr>
         )
     })
     
@@ -106,12 +103,15 @@ export default function ReportScore({ roster, updater, setLeagueid }) {
         
 
             <table >
-                {/* <ToggleSwitch label="Broke to Win" puller={winnerPulled} setPuller={setWinnerPulled}/> */}
-                <tr>
-                    <th>Winning Team</th>
-                    <th>Losing Team</th>
-                </tr>
-                {playerSelectors}
+                <thead>
+                    <tr>
+                        <th>Winning Team</th>
+                        <th>Losing Team</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {playerSelectors}
+                </tbody>
             </table>
             <br></br>
 
@@ -124,6 +124,7 @@ export default function ReportScore({ roster, updater, setLeagueid }) {
 
             {didSetPuller ?
                 <table>
+                    <tbody>
                     <tr>
                         <td style={{ textAlign: "center" }}>
                             <form onSubmit={handleSubmit} id="submitGame" data-testid="submitButton">
@@ -131,9 +132,10 @@ export default function ReportScore({ roster, updater, setLeagueid }) {
                             </form>
                         </td>
                         <td>
-                            <button onClick={clearSelection} className="eloloss scoreReportButton clickable highlights ">Clear</button>
+                            <button onClick={clearSelection} data-testid="clearButton" className="eloloss scoreReportButton clickable highlights ">Clear</button>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
                 : null
             }

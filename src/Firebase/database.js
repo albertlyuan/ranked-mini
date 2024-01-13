@@ -343,7 +343,7 @@ export async function updateNewPlayerElo(league, updates, playerData, winningTea
         }else{
             newElo = calculateNewElo(oldElo, winningTeamElo, losingTeamElo, win_status, wins+losses, winner_pulled)
         }
-        const diff = newElo - oldElo
+        // const diff = newElo - oldElo
         // console.log(`${uidToName.get(name)} (${wins}-${losses})`, oldElo, newElo,newGameID, `diff: ${diff}`)
 
         if (win_status){

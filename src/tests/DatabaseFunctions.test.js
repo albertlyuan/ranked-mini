@@ -41,8 +41,8 @@ test('break and hold game', async () => {
   await resetDB()
   const [playernames, _] = await firebase_getPlayers(TESTDB)
   expect(playernames.length).toBeGreaterThanOrEqual(TEST_ROSTER.length)
-  await firebase_logNewGame(TESTDB,'p1','p2','p3','p4','p5','p6',true,true)
-  await firebase_logNewGame(TESTDB,'p7','p8','p9','p10','p11','p12',false,true)
+  await firebase_logNewGame(TESTDB,'p1','p2','p3','p4','p5','p6',true,false)
+  await firebase_logNewGame(TESTDB,'p7','p8','p9','p10','p11','p12',false,false)
   setTimeout(()=>{console.log("Saving...")}, 2000)
 
   const breakwin = 513.0046654728586
