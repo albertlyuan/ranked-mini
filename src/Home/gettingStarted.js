@@ -50,7 +50,7 @@ export default function GettingStarted({currLeagueid}){
                     <p>Currently Viewing League: <b>{currLeagueid}</b></p>
                     <LeaderboardIDInput/>
                     {auth.currentUser ? 
-                        <p>Signed in as: <b>{auth.currentUser.uid}</b></p> 
+                        <p>Signed in as: <b>{auth.currentUser.email} ({auth.currentUser.uid})</b></p> 
                         :
                         <p>Log in or sign up to create a league for your team.</p>
                     }

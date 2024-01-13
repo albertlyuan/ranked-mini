@@ -44,7 +44,6 @@ const STARTING_GAMEID = -1
 
 /**
  * Async function. 
- * @returns list of [name, elo, num wins, num losses, teams(list)]
  */
 export async function leagueExists(league){
     const res = (await get(query(ref(db,`/${league}`)))).val()
@@ -53,6 +52,15 @@ export async function leagueExists(league){
     }
     return true
 }
+
+// /**
+//  * Async function. 
+//  * @returns list of [name, elo, num wins, num losses, teams(list)]
+//  */
+// export async function createLeague(leagueid){
+//     await set(ref(db,`/${leagueid}`), {'games':{}, "player_history":{}, "player_now":{}, "player_uid":{}})
+// }
+
 /**
  * Async function. 
  * @returns list of [name, elo, num wins, num losses, teams(list)]
