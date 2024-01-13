@@ -1,14 +1,13 @@
-import {firebase_getTotalPlayerData, blankPlayer, getNameFromUID, firebase_getPlayerTeams} from '../Firebase/database.js'
+import {firebase_getTotalPlayerData, blankPlayer, getNameFromUID, leagueExists} from '../Firebase/database.js'
 import { useEffect, useState, lazy } from 'react'
 import { AppLoader } from "../loader.js";
 import { getPlayerGameLog } from '../Firebase/database.js';
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import TextInputAlert from './textInputAlert.js';
-import { PlayerTeam, AddPlayerTeam } from './playerteam.js';
 const GamesLog = lazy(() => import('../Game/gamesLog.js'));
 
 function sortListByGameID(a,b){
@@ -21,8 +20,8 @@ function sortListByGameID(a,b){
     }
 }
 const NUM_PLACEMENTS = 10  
-export default function PlayerBio(){
-    const { uid } = useParams();
+export default function PlayerBio({setLeagueid}){
+    const { leagueid, uid } = useParams();
 
     const [playerName, setPlayerName] = useState()
     const [playerGames, setPlayerGames] = useState([])
@@ -32,10 +31,17 @@ export default function PlayerBio(){
     const [currElo, setCurrElo] = useState(0)
     const [chartData, setChartData] = useState(blankChartData)
     const [loggedin, setLoggedin] = useState(false);
-    const [teams, setTeams] = useState([]);
     const [observer, triggerReload] = useState(false);
-
+    const navigate = useNavigate();
+    leagueExists(leagueid).then((res)=>{
+        if (!res){
+            setLeagueid(null)
+            navigate("/page/not/found")
+        }
+    })
+    
     useEffect(() => {
+        setLeagueid(leagueid)
         onAuthStateChanged(auth, (user) => {
             if (user) {
             setLoggedin(true)
@@ -43,13 +49,13 @@ export default function PlayerBio(){
             setLoggedin(false)
             }
         })
-        getPlayerGameLog(uid).then((games) => {
+        getPlayerGameLog(leagueid, uid).then((games) => {
             setPlayerGames(games)
         })
-        getNameFromUID(uid).then((name) =>{
+        getNameFromUID(leagueid, uid).then((name) =>{
             setPlayerName(name)
         })
-        firebase_getTotalPlayerData(uid)
+        firebase_getTotalPlayerData(leagueid, uid)
         .then(data => {
             setPlayerData(data)
         })
@@ -105,20 +111,8 @@ export default function PlayerBio(){
                 setChartData(dataobj)
             }
         })
-        
-        getTeams()
-        
+                
     }, [playerGames, playerData, uid, observer])
-
-    function getTeams(){
-        firebase_getPlayerTeams(uid)
-        .then(teamnames => {
-            const namecomponents = teamnames.map(name => {
-                return (<PlayerTeam uid={uid} teamname={name} triggerReload={triggerReload} observer={observer}/>)
-            })
-            setTeams(namecomponents)
-        })
-    }
 
     function getMostRecentGame(){
         if (!playerData){
@@ -223,11 +217,7 @@ export default function PlayerBio(){
                     {playerName} ({currWins}-{currLosses})  
                     <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/>
                 </h2>
-                {loggedin && playerName ? <TextInputAlert oldname={playerName} /> : null}
-                <div class="horizontal_left">
-                    {teams}
-                    <AddPlayerTeam uid={uid} getTeams={getTeams}/> 
-                </div>
+                {loggedin && playerName ? <TextInputAlert leagueid={leagueid} oldname={playerName} /> : null}
                 <div>
                     <h3>Elo: {currWins + currLosses >= 10 ? currElo : loggedin ? currElo : "Unranked"} </h3>
                     {chartData ? <EloChart rawChartData={chartData} noPlacementGames={makeCroppedChartData()}/> : null}
@@ -240,6 +230,7 @@ export default function PlayerBio(){
                         eloGain={loggedin ? 
                             [chartData["labels"], chartData["datasets"][2].data]  //show all elo gain if logged in
                             : [chartData["labels"].slice(NUM_PLACEMENTS+1), chartData["datasets"][2].data.slice(NUM_PLACEMENTS+1)]} //hide elo gain of placement games
+                        setLeagueid={setLeagueid}
                     /> : null}
                 </div>
             </div>

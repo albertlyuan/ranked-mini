@@ -5,10 +5,10 @@ export default function Logout(){
     const navigate = useNavigate();
     function handleLogout(){
         signout()
-        navigate("/")
+        navigate(`/`)
     }
-    
+
     return (
-        <a className="clickable" onClick={handleLogout}>Log out</a> 
+        <a className="createAccountButton" onClick={handleLogout}>Log out</a> 
     )
 }

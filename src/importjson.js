@@ -1,13 +1,13 @@
 import * as firebase from './Firebase/database.js'
 import * as elo from './Elo/elo.js'
+import * as fs from 'fs'
 import { 
     ref, 
     update
 } from "firebase/database";
-import data from "./ranked-mini-default-rtdb-export dynamic pullFactor.json" assert { type: 'json' };
 const startingGameid = 150
 // async function changeGamesSchema(startingGameID){
-//     const games = data[firebase.albertuser]["games"]
+//     const games = data[league]["games"]
 //     for (const g of Object.keys(games)){
 //         const winners = []
 //         const losers = []
@@ -26,38 +26,41 @@ const startingGameid = 150
 //         games[g] = newEntry
 //     }
 //     const updates = {}
-//     updates[`/${firebase.albertuser}/games/`] = games
+//     updates[`/${league}/games/`] = games
 //     update(ref(firebase.db), updates);
 //     console.log("done")
 // }
 // changeGamesSchema(0)
 
-async function loadjson(startingGameID){
-    // console.log(Object.keys(data[firebase.albertuser]))
+async function loadjson(league, data){
 
     // //to change
-    const games = data[firebase.albertuser]["games"]
-    const player_history = data[firebase.albertuser]["player_history"]
-    const player_now = data[firebase.albertuser]["player_now"]
+    const games = data[league]["games"]
+    const player_history = data[league]["player_history"]
+    const player_now = data[league]["player_now"]
 
     //dont change these
-    const name_uid = data[firebase.albertuser]["player_uid"]
-    const teams = data[firebase.albertuser]["teams"]
+    const name_uid = data[league]["player_uid"]
+    const teams = data[league]["teams"]
     
     //games to reload
     const games_to_load = []
     
-    //players to reload
+    //players to reset to 400
     const uids = new Set()
 
     //games to keep
     const original_games = {}
-    for (const gameid of Object.keys(games)){
-        if (gameid < 30){
-            original_games[gameid] = games[gameid]
-            continue
-        }
+    for (let gameid = 0; gameid < games.length; gameid++){
+
+        // <30 because first 30 games were unc games. we keep as is
+        // if (gameid < 30){
+        //     original_games[gameid] = games[gameid]
+        //     continue
+        // }
+
         const gameobj = games[gameid]
+        console.log(gameobj)
         gameobj["game_id"] = gameid
         games_to_load.push(gameobj)
         uids.add(gameobj["loser_1"])
@@ -70,16 +73,31 @@ async function loadjson(startingGameID){
 
     //refresh players before rerender
     for (const uid of uids){
+        if (!player_now.hasOwnProperty(uid)){
+            player_now[uid] = {}
+        }
         player_now[uid]["elo"]=400
         player_now[uid]["losses"]=0
         player_now[uid]["wins"]=0
         player_now[uid]["most_recent_game"]=-1
+        if (!player_history.hasOwnProperty(uid)){
+            player_history[uid] = {}
+            player_history[uid]["-1"] = {
+                "elo": 400,
+                "game_id": -1,
+                "losses": 0,
+                "name": uid,
+                "timestamp": null,
+                "wins": 0
+              }
+        }
         player_history[uid] = {"-1":player_history[uid]["-1"]}
     }
     const updates = {}
-    updates[`/${firebase.albertuser}/player_history/`] = player_history
-    updates[`/${firebase.albertuser}/games/`] = original_games
-    updates[`/${firebase.albertuser}/player_now/`] = player_now
+    updates[`/${league}/player_history/`] = player_history
+    updates[`/${league}/games/`] = original_games
+    updates[`/${league}/player_now/`] = player_now
+    updates[`/${league}/player_uid/`] = name_uid
 
     update(ref(firebase.db), updates)
 
@@ -91,24 +109,25 @@ async function loadjson(startingGameID){
     //     games_to_load.push(games[gameid])
     // }
     let breaks = 0
-    let dynamic_pull_factor = false
+    let dynamic_pull_factor = true
     for (const game of games_to_load){
+
         const updates = {}
         if (game["winner_pulled"]){
             breaks += 1
         }
         
-        const newGameID = await firebase.getNewGameID()
-        if (newGameID > 130){
-            dynamic_pull_factor = true
-        }
+        const newGameID = await firebase.getNewGameID(league)
+        // if (newGameID > 130){
+        //     dynamic_pull_factor = true
+        // }
         const winners = [game["winner_1"], game["winner_2"], game["winner_3"]] 
         const losers = [game["loser_1"], game["loser_2"], game["loser_3"]]
         const ts = game["timestamp"]
         const winner_pulled = game["winner_pulled"]
 
         //add to games
-        updates[`${firebase.albertuser}/games/`+ newGameID] = {
+        updates[`${league}/games/`+ newGameID] = {
             winner_1: winners[0],
             winner_2: winners[1],
             winner_3: winners[2],
@@ -119,7 +138,7 @@ async function loadjson(startingGameID){
             winner_pulled: winner_pulled
         }
 
-        const [_, players] = await firebase.firebase_getPlayers()
+        const [_, players] = await firebase.firebase_getPlayers(league)
 
         const winnerData = firebase.filterPlayerObjects(winners, players)
         const loserData = firebase.filterPlayerObjects(losers, players)
@@ -129,13 +148,36 @@ async function loadjson(startingGameID){
         
         console.log(newGameID, ts,"winner pulled:", winner_pulled)
         console.log("winners",winningTeamElo)
-        await firebase.updateNewPlayerElo(updates, winnerData,winningTeamElo,losingTeamElo,newGameID, ts, true, winner_pulled, dynamic_pull_factor)
+        // one by one log each game. need to await since each result is dependent on the prev
+        await firebase.updateNewPlayerElo(league, updates, winnerData,winningTeamElo,losingTeamElo,newGameID, ts, true, winner_pulled, dynamic_pull_factor)
         console.log("losers",losingTeamElo)
-        await firebase.updateNewPlayerElo(updates, loserData,winningTeamElo,losingTeamElo,newGameID, ts, false, winner_pulled, dynamic_pull_factor)
+        await firebase.updateNewPlayerElo(league, updates, loserData,winningTeamElo,losingTeamElo,newGameID, ts, false, winner_pulled, dynamic_pull_factor)
+        // console.log(updates)
         await update(ref(firebase.db), updates);
     }
 
     console.log("breakpct: ",breaks/games_to_load.length)
 }
 
-// loadjson(startingGameid)
+
+// const filename = "testData.json"
+// const leagueid = "test"
+const filename = "duke.json"
+const leagueid = "duke"
+
+fs.readFile(filename, 'utf8', (err, data) => {
+    if (err) {
+        console.error('Error reading the file:', err);
+        return;
+    }
+
+    // Parse the JSON data
+    try {
+        const jsonData = JSON.parse(data);
+        loadjson(leagueid,jsonData)
+    } catch (jsonError) {
+        console.error('Error parsing JSON:', jsonError);
+    }
+});
+
+

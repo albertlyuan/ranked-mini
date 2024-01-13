@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-function SearchPlayer({setFilter}){
+function SearchPlayer({setFilter, text}){
     const [search, setSearch] = useState('')
 
     const handleChange = (event) => {
@@ -14,8 +14,8 @@ function SearchPlayer({setFilter}){
     return(
         <input 
             type="text" 
-            placeholder="Search.." 
-            id="playerNameBox" 
+            placeholder={text}
+            className="playerNameBox" 
             value={search}
             onChange={handleChange}
             onKeyUp={handleKeyUp}

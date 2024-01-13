@@ -1,5 +1,5 @@
 import {getRankFromElo}  from "../rank-images/rankImages.js" 
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import { useEffect, useState } from 'react'
@@ -9,7 +9,7 @@ import { getUIDFromName } from "../Firebase/database.js";
 function PlayerRow({name, elo, wins, losses, filter}){
   const [loggedin, setLoggedin] = useState(false);
   const [uid, setUid] = useState();
-
+  const {leagueid} = useParams()
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -18,7 +18,7 @@ function PlayerRow({name, elo, wins, losses, filter}){
         setLoggedin(false)
       }
     })
-    getUIDFromName(name).then((id)=>{
+    getUIDFromName(leagueid, name).then((id)=>{
       setUid(id)
     })
    
@@ -27,7 +27,7 @@ function PlayerRow({name, elo, wins, losses, filter}){
     const navigate = useNavigate();
 
     const goToPlayer = () => {
-      navigate(`/player/${uid}`);
+      navigate(`/${leagueid}/player/${uid}`);
     };
     return(
         <tr class="clickable highlights" onClick={goToPlayer} style={{display: name.toLowerCase().indexOf(filter) > -1 ? "table-row" : "none"}}>

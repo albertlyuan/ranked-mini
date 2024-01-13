@@ -111,12 +111,8 @@ tr #addplayerRow{
   align-items: center;
 }
 
-.horizontal_left{
-  padding-top:1%;
-  display:flex; 
-  flex-direction: row; 
-  justify-content: left; 
-  align-items: left;
+.centered{
+  text-align: center;
 }
 
 .clickable{
@@ -180,7 +176,7 @@ tr #addplayerRow{
     background-color: #ddd;
   }
 
-  #playerNameBox {
+  .playerNameBox {
     font-size: 1rem;
     border-width: 0px;
     border-style: solid;
@@ -300,6 +296,38 @@ tr #addplayerRow{
   width: 100%;
   padding: 15px;
   background-color: #ddd;
+}
+
+.createAccountButton{
+  border: none;
+  border-radius: 25px;
+  padding: 15px 30px;
+  background-color: #000;
+  color: #fff;
+}
+
+.createAccountButton:hover{
+  background-color: #555;
+  cursor: pointer;
+}
+
+.LoginButton{
+  border: none;
+  padding: 1% 10%;
+  background-color: #000;
+  color: #fff;
+}
+
+.LoginButton:hover{
+  background-color: #555;
+  cursor: pointer;
+}
+
+.LoginTextInput{
+  border-radius: 5%;
+  outline: transparent;
+  background-color: transparent;
+  padding: 1% 2%;
 }
 
 .swapTeamsButton{

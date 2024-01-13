@@ -29,7 +29,7 @@ function DropdownButton({toggle, selection}){
     return(
         <a 
             onClick={toggle} 
-            class="dropbtn">
+            className="dropbtn">
         {selection === "" ? "Select Player" : selection}
         
         </a>
@@ -41,10 +41,10 @@ function DropdownPlayer({filter, name, setSelectionHandler}){
     const sendSelection = () => {
         setSelectionHandler(name)
     }
-
+    
     return(
         <a  
-            class="clickable highlights"
+        className="clickable highlights"
             style={{display: name.toLowerCase().indexOf(filter) > -1 ? "block" : "none"}}
             onClick={sendSelection}
         >

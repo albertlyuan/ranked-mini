@@ -2,23 +2,23 @@ import * as firebase from './Firebase/database.js'
 import * as elo from './Elo/elo.js'
 
 
-async function Summary(days){
+async function Summary(league, days){
     console.log("days:",days)
     const players = ["loser_1","loser_2","loser_3","winner_1","winner_2","winner_3"]
     let queryDate = new Date()
     queryDate.setDate(queryDate.getDate()-days)
     queryDate = queryDate.toISOString()
-    const uidToName = await firebase.getNamesFromUIDs()
+    const uidToName = await firebase.getNamesFromUIDs(league)
     const startelo = new Map() //uid: elo
     const startelo_incPlacements = new Map() //uid: elo
     const endelo = new Map() //uid: elo
     
-    const games = await firebase.queryGamesSinceDate(queryDate)
+    const games = await firebase.queryGamesSinceDate(league, queryDate)
     console.log("games played:", Object.entries(games).length)
     for (let [gameid, game] of Object.entries(games)){
         for (let p of players){
             let player = game[p]
-            const playerdata = await firebase.firebase_getPlayerData(player, gameid)
+            const playerdata = await firebase.firebase_getPlayerData(league, player, gameid)
             const beforeelo = Object.values(playerdata[0])[0].elo
             const afterelo = Object.values(playerdata[1])[0].elo
             const afterGames = Object.values(playerdata[1])[0].losses + Object.values(playerdata[1])[0].wins
@@ -51,10 +51,12 @@ async function Summary(days){
     diffs.sort((a,b) => b[1]-a[1])
     diffs_INCLplacements.sort((a,b) => b[1]-a[1])
 
+    console.log("name, elodiff, numgames")
     console.log(diffs)
+    console.log("name, elodiff, numgames, CurrElo")
     console.log(diffs_INCLplacements)
 }
-Summary(1)
-firebase.getCurrPullFactor(firebase.PULLFACTORGAMES).then((res) => {
+Summary("duke",5)
+firebase.getCurrPullFactor(firebase.albertuser,firebase.PULLFACTORGAMES).then((res) => {
     console.log("pull factor:",res)
 })

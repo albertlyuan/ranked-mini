@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {firebase_changeName} from '../Firebase/database.js'
 
-function TextInputAlert({oldname}){
+function TextInputAlert({leagueid, oldname}){
   const [newName, setNewName] = useState('');
   const [showAlert, setShowAlert] = useState(false);
 
@@ -15,7 +15,7 @@ function TextInputAlert({oldname}){
 
   const handleConfirmClick = () => {
     // Do something with the input value, e.g. save it or use it
-    firebase_changeName(oldname, newName).then(validNameChange => {
+    firebase_changeName(leagueid, oldname, newName).then(validNameChange => {
         if (validNameChange){
             setShowAlert(false);
             window.location.reload(false);

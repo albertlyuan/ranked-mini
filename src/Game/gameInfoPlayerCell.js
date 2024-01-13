@@ -1,5 +1,5 @@
 import {getRankFromElo} from "../rank-images/rankImages.js";
-import {useNavigate  } from "react-router-dom"
+import {useNavigate, useParams  } from "react-router-dom"
 import { useEffect, useState } from 'react'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
@@ -9,7 +9,7 @@ import { calculateNewElo } from "../Elo/elo.js";
 function PlayerCell({player, alternateResult, winningTeamElo, losingTeamElo, win, breakToWin}){
     const [loggedin, setLoggedin] = useState(false);
     const [uid, setUid] = useState();
-
+    const {leagueid} = useParams()
     //player = [name,[before.elo, after.elo], before.wins, before.losses]
     const [name, set_name] = useState("");
     const [before_elo, set_before_elo] = useState(0);
@@ -26,29 +26,29 @@ function PlayerCell({player, alternateResult, winningTeamElo, losingTeamElo, win
         }
       })
       
-      getUIDFromName(player[0]).then((id)=>{
+      getUIDFromName(leagueid, player[0]).then((id)=>{
         setUid(id)
       })
       if (alternateResult){
         set_name(player[0])
         set_before_elo(player[1][0])
         
-        set_wins(player[2])
-        set_losses(player[3])
+        set_wins(player[2][0])
+        set_losses(player[2][1])
         const hypotheticalNewElo = calculateNewElo(before_elo, winningTeamElo, losingTeamElo, !win, wins+losses, !breakToWin)
         set_after_elo(hypotheticalNewElo)
       }else{
         set_name(player[0])
         set_before_elo(player[1][0])
         set_after_elo(player[1][1])
-        set_wins(player[2])
-        set_losses(player[3])
+        set_wins(player[2][0])
+        set_losses(player[2][1])
       }
       
     }, [player, alternateResult])
     const navigate = useNavigate();
     const goToPlayer = () => {
-        navigate(`/player/${uid}`);
+        navigate(`/${leagueid}/player/${uid}`);
     };
 
     return(

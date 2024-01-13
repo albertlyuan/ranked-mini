@@ -1,0 +1,110 @@
+{
+  "player_history": {
+    "-NnleSWRHcDbybT6Zaa5": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-NnleSWRHcDbybT6Zaa5",
+        "timestamp": "2024-01-10T04:38:09.094Z",
+        "wins": 0
+      }
+    },
+    "-NnleSX2B6O_1-WYXei9": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-NnleSX2B6O_1-WYXei9",
+        "timestamp": "2024-01-10T04:38:09.133Z",
+        "wins": 0
+      }
+    },
+    "-NnleSXcs-xKVj5mAnCB": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-NnleSXcs-xKVj5mAnCB",
+        "timestamp": "2024-01-10T04:38:09.170Z",
+        "wins": 0
+      }
+    },
+    "-NnleSYDbf_2R-ruZEfw": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-NnleSYDbf_2R-ruZEfw",
+        "timestamp": "2024-01-10T04:38:09.207Z",
+        "wins": 0
+      }
+    },
+    "-NnleSYpuQ9XmEchuBOC": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-NnleSYpuQ9XmEchuBOC",
+        "timestamp": "2024-01-10T04:38:09.247Z",
+        "wins": 0
+      }
+    },
+    "-NnleSZSgZD4RVXNNaqN": {
+      "-1": {
+        "elo": 400,
+        "game_id": -1,
+        "losses": 0,
+        "name": "-NnleSZSgZD4RVXNNaqN",
+        "timestamp": "2024-01-10T04:38:09.287Z",
+        "wins": 0
+      }
+    }
+  },
+  "player_now": {
+    "-NnleSWRHcDbybT6Zaa5": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-NnleSX2B6O_1-WYXei9": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-NnleSXcs-xKVj5mAnCB": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-NnleSYDbf_2R-ruZEfw": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-NnleSYpuQ9XmEchuBOC": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    },
+    "-NnleSZSgZD4RVXNNaqN": {
+      "elo": 400,
+      "losses": 0,
+      "most_recent_game": -1,
+      "wins": 0
+    }
+  },
+  "player_uid": {
+    "p1": "-NnleSWRHcDbybT6Zaa5",
+    "p2": "-NnleSX2B6O_1-WYXei9",
+    "p3": "-NnleSXcs-xKVj5mAnCB",
+    "p4": "-NnleSYDbf_2R-ruZEfw",
+    "p5": "-NnleSYpuQ9XmEchuBOC",
+    "p6": "-NnleSZSgZD4RVXNNaqN"
+  }
+}

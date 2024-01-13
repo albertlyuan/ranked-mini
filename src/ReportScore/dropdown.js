@@ -58,14 +58,14 @@ function Dropdown({availablePlayers, setAvailablePlayers, selection, setSelectio
     
 
     return(
-        <div class="dropdown" ref={ref}>  
+        <div className="dropdown" ref={ref}>  
             <DropdownButton 
                 toggle={toggleDropdown}
                 selection={selection}
             />
             
             { isComponentVisible && (
-            <div id="dropdownOptions" class={isComponentVisible ? 'dropdown-show' : "dropdown-hide"}>
+            <div id="dropdownOptions" className={isComponentVisible ? 'dropdown-show' : "dropdown-hide"}>
                 <DropdownSearch id="dropdownSearch"
                     sendSearchInput={sendSearchInput}
                     inputRef={inputRef}

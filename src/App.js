@@ -3,26 +3,30 @@ import { AppLoader } from "./loader.js";
 import { Suspense, useState, useEffect, lazy } from 'react';
 import {buildLeaderboard, getGamesLog} from './Firebase/database.js'
 import { Route, BrowserRouter, Routes, NavLink } from "react-router-dom"
-import { AuthProvider } from 'react-auth-kit'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './Firebase/auth.js';
 import Logout from "./Login/logout.js"
-import Login from "./Login/login.js"
+import LoginPage from "./Login/loginpage.js"
+import LoginButton from "./Login/loginbutton.js"
+import PageNotFound from './pageNotFound.js';
+import Toolbar from './Home/toolbar.js';
+
 
 const Leaderboard = lazy(() => import('./Leaderboard/leaderboard.js'));
-const ReportScore = lazy(() => import('./ReportScore/reportscore.js'));
+const ReportScoreWrapper = lazy(() => import('./ReportScore/reportscoreWrapper.js'));
 const CalculatingElo = lazy(() => import('./About/calculatingElo.js'));
 const RankTable = lazy(() => import('./About/rankTable.js'));
 const GamesLog = lazy(() => import('./Game/gamesLog.js'));
-const GameInfo = lazy(() => import('./Game/gameInfo.js'));
+const GameInfoWrapper = lazy(() => import('./Game/gameInfoWrapper.js'));
 const PlayerBio = lazy(() => import('./Player/playerbio.js'));
-
+const GettingStarted = lazy(() => import('./Home/gettingStarted.js'));
 
 function App() {
   const [update, triggerUpdate] = useState(false);
   const [roster, setRoster] = useState([]);
   const [gameLog, setGameLog] = useState([]);
   const [loggedin, setLoggedin] = useState(false);
+  const [leagueid, setLeagueid] = useState()
 
   function updater(){
       triggerUpdate(!update)
@@ -36,48 +40,38 @@ function App() {
         setLoggedin(false)
       }
     })
-    buildLeaderboard().then(leaderboard => setRoster(leaderboard))
-    getGamesLog().then(gameLog => setGameLog(gameLog))
+    buildLeaderboard(leagueid).then(leaderboard => setRoster(leaderboard))
+    getGamesLog(leagueid).then(gameLog => setGameLog(gameLog))
 
-  },[update])
+  },[update, leagueid])
 
   
 
   return (
-    <AuthProvider authType = {'cookie'}
-                  authName={'_auth'}
-                  cookieDomain={window.location.hostname}
-                  // cookieSecure={window.location.protocol === "https:"}
-                  cookieSecure={false}
-    >
-      <BrowserRouter>
-        <div className="verticalAlign">{loggedin ? <Logout /> : <Login />}</div>
-        <h1>Ranked Mini</h1>
-        <ul className="toolbar sticky">
-          <li><NavLink to="/">Leaderboard</NavLink></li>
-          {loggedin ? <li><NavLink to="/reportscore">Report Score</NavLink></li> : null}
-          {/* <li><NavLink to="/reportscore">Report Score</NavLink></li> */}
-          <li><NavLink to="/games">Games</NavLink></li>
-          <li><NavLink to="/elo">Elo</NavLink></li>
-          <li><NavLink to="/ranks">Ranks</NavLink></li>
-        </ul>
-        <Suspense fallback={<AppLoader/>}>
+    <BrowserRouter>
+      <div className="verticalAlign">{loggedin ? <Logout /> : <LoginButton text={"Log in"}/>}</div>
+      <h1><NavLink to="/">Ranked Mini</NavLink></h1>
 
-          <Routes>
-            <Route path="/" element={<Leaderboard roster={roster}/> } />
-            <Route path="/reportscore" element={<ReportScore roster={roster} updater={updater}/> } />
-            <Route path="/games" element={<GamesLog gamesLog={gameLog}/> } />
-            <Route path="/elo" element={<CalculatingElo /> } />
-            <Route path="/ranks" element={<RankTable /> } />
+      <Toolbar leagueid={leagueid} loggedin={loggedin}/>
 
-            <Route path="/login" element={<Login /> } />
+      <Suspense fallback={<AppLoader/>}>
 
-            <Route path="/games/:gameid" element={<GameInfo/> } />
-            <Route path="/player/:uid" element={<PlayerBio/> } />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </AuthProvider>
+        <Routes>
+          <Route path="/" element={<GettingStarted currLeagueid={leagueid}/> } />
+          <Route path="/login" element={<LoginPage/>}/>
+
+          <Route path="/:leagueid/" element={<Leaderboard roster={roster} setLeagueid={setLeagueid}/> } />
+          <Route path="/:leagueid/reportscore" element={<ReportScoreWrapper roster={roster} updater={updater} setLeagueid={setLeagueid}/> } />
+          <Route path="/:leagueid/games" element={<GamesLog gamesLog={gameLog} setLeagueid={setLeagueid}/> }/>
+          <Route path="/elo" element={<CalculatingElo setLeagueid={setLeagueid}/> } />
+          <Route path="/ranks" element={<RankTable setLeagueid={setLeagueid}/> } />
+
+          <Route path="/:leagueid/games/:gameid" element={<GameInfoWrapper setLeagueid={setLeagueid}/> } />
+          <Route path="/:leagueid/player/:uid" element={<PlayerBio setLeagueid={setLeagueid}/> } />
+          <Route path="*" element={<PageNotFound/>} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
   );
 }
 

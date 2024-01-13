@@ -1,6 +1,7 @@
 import * as firebase from './Firebase/database.js'
 import * as elo from './Elo/elo.js'
 
+// THIS FILE IS SOLELY USED FOR THE TESTING FUNCTIONS OUTSIDE OF REACT
 
 
   
@@ -110,6 +111,20 @@ async function randomgame(players){
 // firebase.getUIDFromName("andy").then((uid)=>{
 //     firebase.getPlayerGameLog(uid)
 // })
-firebase.getGame("174").then((g)=>{
-    console.log(g)
-})
+// firebase.getGame(firebase.albertuser,"174").then((g)=>{
+//     console.log(g)
+// })
+import * as fs from 'fs'
+fs.readFile("./tests/testData.json", 'utf8', (err, data) => {
+    if (err) {
+        console.error('Error reading the file:', err);
+        return;
+    }
+    // Parse the JSON data
+    try {
+        const jsonData = JSON.parse(data);
+        firebase.firebase_loadTest("test",jsonData)
+    } catch (jsonError) {
+        console.error('Error parsing JSON:', jsonError);
+    }
+  });

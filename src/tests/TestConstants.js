@@ -1,0 +1,3 @@
+
+
+export const TESTDB = "test"

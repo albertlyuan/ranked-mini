@@ -1,11 +1,10 @@
 import { MathJax, MathJaxContext } from "better-react-mathjax";
-import React from "react";
+import {React, useEffect } from 'react';
 import {ranks} from "../rank-images/rankImages.js"
 import {STARTING_ELO, PULL_FACTOR, NormalK, UnrankedK,D,L,slope,midpoint, weightedRank} from "../Elo/elo.js"
 import { getCurrPullFactor, PULLFACTORGAMES } from "../Firebase/database.js";
 
-export default function CalculatingElo(){
-
+export default function CalculatingElo({setLeagueid}){
     return (
         <div class="animatedLoad">
             <h2>Calculating Elo</h2>
