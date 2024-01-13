@@ -5,6 +5,7 @@ import PullSelector from './pullSelector.js';
 import PullFactorSetter from './pullFactorSetter.js';
 import { useParams } from 'react-router-dom';
 import RandomizeTeamsButton from './randomizeTeamsButton.js';
+import SwapTeamsButton from './swapTeamsButton.js';
 
 export default function ReportScore({ roster, updater, setLeagueid }) {
     const [availablePlayers, setAvailablePlayers] = useState(new Set());
@@ -74,25 +75,12 @@ export default function ReportScore({ roster, updater, setLeagueid }) {
         setWinnerPulled(null)
     }
 
-    function swapTeams() {
-        const tempWinners = [players["winner1"],players["winner2"],players["winner3"]]
-        setPlayers({
-            winner1: players["loser1"],
-            winner2: players["loser2"],
-            winner3: players["loser3"],
-            loser1:tempWinners[0],
-            loser2:tempWinners[1],
-            loser3:tempWinners[2],
-        })
-    }
-
     function checkForSixPlayers() {
         for (const i of Object.values(players)){
             if (i===""){
                 return false
             }
         }
-        
         return true
     }
 
@@ -112,11 +100,7 @@ export default function ReportScore({ roster, updater, setLeagueid }) {
     return (
         <div className="scoreReport animatedLoad">
             <div className='reportscoreTeamButtons'>
-                <button
-                    className="reportscoreTeamButtons clickable highlights"
-                    onClick={swapTeams}>
-                    Swap Teams
-                </button>
+                <SwapTeamsButton players={players} setPlayers={setPlayers}/>       
                 <RandomizeTeamsButton players={players} setPlayers={setPlayers}/>       
             </div>    
         
