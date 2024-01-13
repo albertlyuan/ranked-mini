@@ -12,15 +12,18 @@ function SearchPlayer({setFilter, text}){
     }
     
     return(
-        <input 
-            type="text" 
-            placeholder={text}
-            className="playerNameBox" 
-            value={search}
-            onChange={handleChange}
-            onKeyUp={handleKeyUp}
-        >
-        </input>
+        <tr>
+            <td>
+                <input 
+                    type="text" 
+                    placeholder={text}
+                    className="playerNameBox" 
+                    value={search}
+                    onChange={handleChange}
+                    onKeyUp={handleKeyUp}
+                />
+            </td>
+        </tr>
     );
 }
 

@@ -44,14 +44,10 @@ export default function Leaderboard({roster, setLeagueid}){
                     <th style={{"text-align": "left"}}>Player (record)</th>
                     <th style={{"text-align": "right"}}>Elo</th>
                 </thead>
-                <tr id="searchplayerRow">
-                    <td>
-                        <SearchPlayer
-                            setFilter={setFilter}
-                            text={"Search Player"}
-                        />
-                    </td>
-                </tr>
+                    <SearchPlayer
+                        setFilter={setFilter}
+                        text={"Search Player"}
+                    />
                 <tr id="addplayerRow">
                     <td>
                         <AddPlayer

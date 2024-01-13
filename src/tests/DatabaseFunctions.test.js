@@ -1,41 +1,6 @@
-import { firebase_getPlayers, firebase_loadTest, queryGamePlayersData, firebase_logNewGame, firebase_addNewPlayer, getUIDFromName, firebase_getTotalPlayerData } from '../Firebase/database';
-import * as fs from 'fs'
-import path from 'path';
-import { TESTDB } from './TestConstants.js';
-import { login } from '../Firebase/auth.js';
+import { firebase_getPlayers, queryGamePlayersData, firebase_logNewGame, firebase_addNewPlayer, getUIDFromName, firebase_getTotalPlayerData } from '../Firebase/database';
 
-const TEST_ROSTER = [
-  ['p1', -400, 0, 0, ['teams']],
-  ['p2', -400, 0, 0, ['teams']],
-  ['p3', -400, 0, 0, ['teams']],
-  ['p4', -400, 0, 0, ['teams']],
-  ['p5', -400, 0, 0, ['teams']],
-  ['p6', -400, 0, 0, ['teams']],
-  ['p7', -400, 0, 0, ['teams']],
-  ['p8', -400, 0, 0, ['teams']],
-  ['p9', -400, 0, 0, ['teams']],
-  ['p10', -400, 0, 0, ['teams']],
-  ['p11', -400, 0, 0, ['teams']],
-  ['p12', -400, 0, 0, ['teams']],
-]
-
-async function resetDB(){
-  // await firebase_loadTest(TESTDB,TEST_ROSTER)
-  fs.readFile(path.dirname(__filename)+"/testData12.json", 'utf8', (err, data) => {
-    if (err) {
-        console.error('Error reading the file:', err);
-        return;
-    }
-    // Parse the JSON data
-    try {
-        const jsonData = JSON.parse(data);
-        firebase_loadTest(TESTDB,jsonData)
-      } catch (jsonError) {
-        console.error('Error parsing JSON:', jsonError);
-    }
-  });
-}
-
+import { TESTDB, TEST_ROSTER, resetDB } from './TestUtils.js';
 
 test('break and hold game', async () => {
   await resetDB()

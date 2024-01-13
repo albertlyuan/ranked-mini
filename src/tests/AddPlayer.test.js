@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 import AddPlayer from '../Leaderboard/addPlayer';
 import { getUIDFromName, firebase_getTotalPlayerData, firebase_addNewPlayer } from '../Firebase/database';
 
-import { TESTDB } from './TestConstants';
+import { TESTDB } from './TestUtils';
 
 test('Add empty player name', () => {
     const roster = []

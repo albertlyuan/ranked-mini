@@ -35,23 +35,14 @@ export default function GamesLog({gamesLog, eloGain, setLeagueid}){
     return(
         <div class="animatedLoad">
             <table class="gamelog">
-                <tr>
-                    <td>
-                        <SearchPlayer
-                            setFilter={setDateFilter}
-                            text={"Search Date"}
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <SearchPlayer
-                            setFilter={setPlayerFilter}
-                            text={"Search Players"}
-                        />
-                    </td>
-                </tr>
-
+                <SearchPlayer
+                    setFilter={setDateFilter}
+                    text={"Search Date"}
+                />
+                <SearchPlayer
+                    setFilter={setPlayerFilter}
+                    text={"Search Players"}
+                />
             </table>
             <table class="gamelog">
                 <tr style={{textAlign: "left"}}>

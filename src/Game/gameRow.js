@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
  * @param {*} param0 game, setTab, setGame
  * @returns <tr> with gameID, timestamp, winning team, losing team
  */
-function GameRow({game, eloGain, dateFilter, playerFilter}){
+export default function GameRow({game, eloGain, dateFilter, playerFilter}){
     //[gameid, ts, winners (list), losers (list), winnerPulled (bool)]
     const navigate = useNavigate();
     const [showRow, setShowRow] = useState("table-row")
@@ -19,6 +19,20 @@ function GameRow({game, eloGain, dateFilter, playerFilter}){
         navigate(`/${leagueid}/games/${game[0]}`);
     };
 
+    const deltaElo = () => {
+        if (eloGain){
+            let idx = 0
+            for (idx= 0; idx < eloGain[0].length ; idx++){
+                if (eloGain[0][idx] == game[0]){
+                    break
+                }
+            }
+            const gainloss = eloGain[1][idx]
+            return gainloss
+        }   
+        return 0
+    }
+
     useEffect(()=>{
         if ((game[2].join(", ").toLowerCase().indexOf(playerFilter) > -1
         || game[3].join(", ").toLowerCase().indexOf(playerFilter) > -1)
@@ -29,22 +43,8 @@ function GameRow({game, eloGain, dateFilter, playerFilter}){
         }
     })
 
-    if (eloGain){
-        const deltaElo = () => {
-            if (eloGain){
-                let idx = 0
-                for (idx= 0; idx < eloGain[0].length ; idx++){
-                    if (eloGain[0][idx] == game[0]){
-                        break
-                    }
-                }
-                const gainloss = eloGain[1][idx]
-                return gainloss
-            }   
-            return 0
-        }
+    if (eloGain){ //for player bio
         return(
-
             <tr 
                 class={(deltaElo() > 0 ? "elogain " : deltaElo() < 0 ? "eloloss " : "")  + "clickable highlights"} 
                 onClick={goToGame}
@@ -57,7 +57,6 @@ function GameRow({game, eloGain, dateFilter, playerFilter}){
                 <td>{deltaElo() ? deltaElo().toFixed(2) : deltaElo()}</td>
                 <td>{game[4]  ? "True" : "False"}</td>
             </tr>
-
         )
     }
     return (
@@ -74,5 +73,3 @@ function GameRow({game, eloGain, dateFilter, playerFilter}){
         </tr>
     )
 }
-
-export default GameRow

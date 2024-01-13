@@ -20,34 +20,50 @@ import Champion3 from "./Champion 3.webp"
 import GrandChampion from "./Grand Champion.png"
 
 
-const ranks = [
-    [Unranked,null],
-    [Bronze1,150],
-    [Bronze2,200],
-    [Bronze3,250],
-    [Silver1,300],
-    [Silver2,350],
-    [Silver3,400],
-    [Gold1,450],
-    [Gold2,500],
-    [Gold3,550],
-    [Platinum1,600],
-    [Platinum2,650],
-    [Platinum3,700],
-    [Diamond1,750],
-    [Diamond2,800],
-    [Diamond3,850],
-    [Champion1,900],
-    [Champion2,950],
-    [Champion3,1000],
-    [GrandChampion, null]
+export const ranks = [
+    [Unranked,"Unranked",null],
+    [Bronze1,"Bronze 1",150],
+    [Bronze2,"Bronze 2",200],
+    [Bronze3,"Bronze 3",250],
+    [Silver1,"Silver 1",300],
+    [Silver2,"Silver 2",350],
+    [Silver3,"Silver 3",400],
+    [Gold1,"Gold 1",450],
+    [Gold2,"Gold 2",500],
+    [Gold3,"Gold 3",550],
+    [Platinum1,"Platinum 1",600],
+    [Platinum2,"Platinum 2",650],
+    [Platinum3,"Platinum 3",700],
+    [Diamond1,"Diamond 1",750],
+    [Diamond2,"Diamond 2",800],
+    [Diamond3,"Diamond 3",850],
+    [Champion1,"Champion 1",900],
+    [Champion2,"Champion 2",950],
+    [Champion3,"Champion 3",1000],
+    [GrandChampion,"Grand Champion", null]
 ]
+      
+// getRankFromElo(before_elo, wins, losses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(before_elo, wins, losses)
+export function getRankTitleFromElo(elo, wins, losses){
+    if (wins + losses < 10){
+        return ranks[0][1] //Unranked
+    } 
+    for (const [rankImg, rankTitle, threshold] of ranks){
+        if (!threshold){
+            continue
+        }
+        if (elo < threshold){
+            return rankTitle
+        }
+    }
+    return ranks[ranks.length-1][1] //Grand champion
+}
+export function getRankFromElo(elo, wins, losses){
 
-function getRankFromElo(elo, wins, losses){
     if (wins + losses < 10){
         return Unranked
     } 
-    for (const [rankImg, threshold] of ranks){
+    for (const [rankImg, rankTitle, threshold] of ranks){
         if (!threshold){
             continue
         }
@@ -59,4 +75,3 @@ function getRankFromElo(elo, wins, losses){
 
 }
 
-export {getRankFromElo, ranks}

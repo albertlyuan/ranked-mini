@@ -3,7 +3,7 @@ import { render, fireEvent, screen} from '@testing-library/react';
 import ReportScore from '../ReportScore/reportscore';
 import { firebase_logNewGame } from '../Firebase/database';
 import { MemoryRouter, Route, Routes} from 'react-router-dom';
-import { TESTDB } from './TestConstants';
+import { TESTDB } from './TestUtils';
 
 const TEST_ROSTER = [
   ['p1', -400, 0, 0, ['teams']],
