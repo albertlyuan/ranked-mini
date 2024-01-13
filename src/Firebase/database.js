@@ -298,7 +298,7 @@ export async function getCurrPullFactor(league, numGames){
 
     const mostRecentGames = (await get(query(ref(db, `/${league}/games`), orderByKey(), limitToLast(numGames)))).val()
     if (mostRecentGames == null || mostRecentGames.length < numGames){
-        return PULL_FACTOR
+        return 1
     }
     let break2win = 0
     for (const game of Object.values(mostRecentGames)){

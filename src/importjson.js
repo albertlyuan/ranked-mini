@@ -5,7 +5,6 @@ import {
     ref, 
     update
 } from "firebase/database";
-const startingGameid = 150
 // async function changeGamesSchema(startingGameID){
 //     const games = data[league]["games"]
 //     for (const g of Object.keys(games)){
@@ -162,8 +161,8 @@ async function loadjson(league, data){
 
 // const filename = "testData.json"
 // const leagueid = "test"
-const filename = "duke.json"
-const leagueid = "duke"
+const filename = "uMPGdPCMakVoBdeSFK2I8Lw3XEs2.json"
+const leagueid = "uMPGdPCMakVoBdeSFK2I8Lw3XEs2"
 
 fs.readFile(filename, 'utf8', (err, data) => {
     if (err) {
