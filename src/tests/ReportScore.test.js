@@ -3,8 +3,8 @@ import { render, fireEvent, screen} from '@testing-library/react';
 import ReportScore from '../ReportScore/reportscore';
 import { firebase_logNewGame } from '../Firebase/database';
 import { MemoryRouter, Route, Routes} from 'react-router-dom';
+import { TESTDB } from './TestConstants';
 
-const TESTDB_NAME = "test"
 const TEST_ROSTER = [
   ['p1', -400, 0, 0, ['teams']],
   ['p2', -400, 0, 0, ['teams']],
@@ -29,7 +29,7 @@ test("Inputs Work", () =>{
   const updater = jest.fn()
 
   const {debug} = render(
-  <MemoryRouter initialEntries={[`/${TESTDB_NAME}/reportscore`]} initialIndex={0}>
+  <MemoryRouter initialEntries={[`/${TESTDB}/reportscore`]} initialIndex={0}>
     <Routes>
     <Route 
       path="/:leagueid/reportscore" 
@@ -83,5 +83,5 @@ test("Inputs Work", () =>{
   expect(screen.queryByTestId("submitButton"))
   fireEvent.submit(screen.queryByTestId('submitButton'));
 
-  expect(firebase_logNewGame).toBeCalledWith(TESTDB_NAME,'p1','p2','p3','p4','p5','p6',true,true);
+  expect(firebase_logNewGame).toBeCalledWith(TESTDB,'p1','p2','p3','p4','p5','p6',true,true);
 })

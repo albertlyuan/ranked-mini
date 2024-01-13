@@ -13,8 +13,7 @@ import {
     orderByValue,
     update, 
     startAt,
-    equalTo,
-    limitToFirst} from "firebase/database";
+    equalTo} from "firebase/database";
 import {STARTING_ELO, PULL_FACTOR, calculateNewElo, calculateTeamElo} from "../Elo/elo.js"
 
 export const PULLFACTORGAMES = 30
@@ -225,7 +224,7 @@ export async function firebase_addNewPlayer(league, playerName){
     updatePlayerNow(league, updates, newKey,STARTING_ELO,STARTING_GAMEID,0,0,{})
     
     // console.log(updates)
-    await update(ref(db), updates);
+    update(ref(db), updates);
 }
 
 async function getUIDsFromNames(league, people){
