@@ -1,6 +1,6 @@
 import {useState, useRef, useEffect } from 'react'
 
-export default function Dropdown({availablePlayers, setAvailablePlayers, players, setPlayers, thisplayer}){
+export default function Dropdown({availablePlayers, setAvailablePlayers, players, setPlayers, thisplayer,setStatusMsg}){
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false);
     const [filter, setFilter] = useState('');
     const inputRef = useRef(null);
@@ -13,6 +13,7 @@ export default function Dropdown({availablePlayers, setAvailablePlayers, players
 
     const toggleDropdown = () => {
         if(!isComponentVisible){
+            setStatusMsg("")
             setIsComponentVisible(true)
             setFilter('')
         }

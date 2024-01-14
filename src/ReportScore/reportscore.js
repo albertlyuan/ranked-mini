@@ -8,7 +8,7 @@ export default function ReportScore({ roster, updater, setLeagueid }) {
     const [availablePlayers, setAvailablePlayers] = useState(new Set());
     const { leagueid } = useParams()
     const [players, setPlayers] = useState({winner1: "", winner2: "",winner3:"",loser1:"",loser2:"",loser3:""})
-
+    const [statusMsg, setStatusMsg] = useState("")
     const [didSelectPlayers, setDidSelectPlayers] = useState(false);
 
     const [winnerPulled, setWinnerPulled] = useState(null);
@@ -28,6 +28,8 @@ export default function ReportScore({ roster, updater, setLeagueid }) {
                         players={players}
                         setPlayers={setPlayers}
                         thisplayer={winner}
+                        setStatusMsg={setStatusMsg}
+
                     />
                 </td>
                 <td data-testid={loser}>
@@ -37,6 +39,7 @@ export default function ReportScore({ roster, updater, setLeagueid }) {
                         players={players}
                         setPlayers={setPlayers}
                         thisplayer={loser}
+                        setStatusMsg={setStatusMsg}
                     />
                 </td>
             </tr>
@@ -87,11 +90,10 @@ export default function ReportScore({ roster, updater, setLeagueid }) {
         if (!checkForSixPlayers()) {
             return
         }
-        clearSelection()
         await firebase_logNewGame(leagueid, ...Object.values(players), winnerPulled, dynamicPullFactor)
-
         updater()
-
+        clearSelection()
+        setStatusMsg("Success!")
     }
     
     return (
@@ -114,7 +116,7 @@ export default function ReportScore({ roster, updater, setLeagueid }) {
                 </tbody>
             </table>
             <br></br>
-
+            <h3 className='reportscoreTeamButtons'>{statusMsg}</h3>
             {didSelectPlayers ?
                 <>
                     <PullFactorSetter dynamicPullFactor={dynamicPullFactor} toggleDynamicPullFactor={toggleDynamicPullFactor} />
