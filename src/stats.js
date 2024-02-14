@@ -56,7 +56,9 @@ async function Summary(league, days){
     console.log("name, elodiff, numgames, CurrElo")
     console.log(diffs_INCLplacements)
 }
-Summary("duke",5)
+
+const brimstoneLeague = "uMPGdPCMakVoBdeSFK2I8Lw3XEs2"
+Summary(brimstoneLeague,1)
 firebase.getCurrPullFactor(firebase.albertuser,firebase.PULLFACTORGAMES).then((res) => {
     console.log("pull factor:",res)
 })

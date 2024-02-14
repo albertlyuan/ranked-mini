@@ -533,16 +533,17 @@ export async function firebase_changeName(league, oldname, newname){
     const lowercaseOldName = oldname.toLowerCase()
     const lowercaseNewName = newname.toLowerCase()
 
-    const uid = (await get(query(ref(db, `${league}/player_uid/`+lowercaseOldName)))).val()
+    const uid = (await get(query(ref(db,`${league}/player_uid/`+lowercaseOldName)))).val()
     if ((await get(query(ref(db, `${league}/player_uid/`+lowercaseNewName)))).val()){
         return false
     }
 
     try{
         const updates = {}
-        updates["/player_uid/"+lowercaseOldName] = null
-        updates["/player_uid/"+lowercaseNewName] = uid
-        return update(ref(db), updates);
+        updates[`${league}/player_uid/`+lowercaseOldName] = null
+        updates[`${league}/player_uid/`+lowercaseNewName] = uid
+        await update(ref(db), updates);
+        return true
     }catch{
         return false
     }
