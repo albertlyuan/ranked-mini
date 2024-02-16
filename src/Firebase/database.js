@@ -157,8 +157,27 @@ async function createGameLogObjects(league, queryGamesObj){
  * GetGamesLog but for a specific uid
  * @returns sorted list of [game_id, ts, winningTeam (list of names), losingTeam (list of names), puller]
  */
+export async function get30PlayerGameLog(league, uid){
+    const playerData = await firebase_get30PlayerData(league,uid)
+
+    const gameIDs = Object.keys(playerData)
+    const allGames = {}
+    for (let gid of gameIDs){
+        const game = (await get(query(ref(db, `/${league}/games`), orderByKey(), endAt(gid), limitToLast(1)))).val()
+        // console.log(game)
+        allGames[gid] = game[gid]
+    }
+    // console.log(allGames)
+    const ret = await createGameLogObjects(league, allGames)
+    return ret
+}
+
+/**
+ * GetGamesLog but for a specific uid
+ * @returns sorted list of [game_id, ts, winningTeam (list of names), losingTeam (list of names), puller]
+ */
 export async function getPlayerGameLog(league, uid){
-    const games = ref(db, `/${league}/games`)
+        const games = ref(db, `/${league}/games`)
     const winner_1 = (await get(query(games, orderByChild("winner_1"), equalTo(uid)))).val()
     const winner_2 = (await get(query(games, orderByChild("winner_2"), equalTo(uid)))).val()
     const winner_3 = (await get(query(games, orderByChild("winner_3"), equalTo(uid)))).val()
@@ -175,7 +194,7 @@ export async function getPlayerGameLog(league, uid){
         ...loser_2,
         ...loser_3,
     }
-    console.log(allGames.length)
+    // console.log(allGames.length)
     const ret = await createGameLogObjects(league, allGames)
     return ret
 }
@@ -475,6 +494,16 @@ export async function getNewGameID(league){
  */
 export async function firebase_getTotalPlayerData(league, uid){
     const res = (await get(query(ref(db,`${league}/player_history/`+uid), orderByChild('game_id')))).val()
+    return res
+}
+
+/**
+ * 
+ * @param {str} name 
+ * @returns list of player Objects for each game played by a player
+ */
+export async function firebase_get30PlayerData(league, uid){
+    const res = (await get(query(ref(db,`${league}/player_history/`+uid), orderByChild('game_id'), limitToLast(30)))).val()
     return res
 }
 

@@ -128,10 +128,13 @@ async function randomgame(players){
 //         console.error('Error parsing JSON:', jsonError);
 //     }
 //   });
-function f(a,b,c,d,e,f,g){
-    console.log(a,b,c,d,e,f,g)
-    return true
-}
-const a = {winner1: "a", winner2: "a",winner3:"a",loser1:"a",loser2:"a",loser3:"a"}
+// function f(a,b,c,d,e,f,g){
+//     console.log(a,b,c,d,e,f,g)
+//     return true
+// }
+// const a = {winner1: "a", winner2: "a",winner3:"a",loser1:"a",loser2:"a",loser3:"a"}
 
-f(...Object.values(a),"b")
+// f(...Object.values(a),"b")
+
+const a = await firebase.get30PlayerGameLog("uMPGdPCMakVoBdeSFK2I8Lw3XEs2","-NdGxDFrv7IlQqL_S_lO")
+console.log(a)

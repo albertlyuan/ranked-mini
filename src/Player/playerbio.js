@@ -1,4 +1,4 @@
-import {firebase_getTotalPlayerData, blankPlayer, getNameFromUID, leagueExists} from '../Firebase/database.js'
+import {firebase_getTotalPlayerData, firebase_get30PlayerData, get30PlayerGameLog, getNameFromUID, leagueExists} from '../Firebase/database.js'
 import { useEffect, useState, lazy } from 'react'
 import { AppLoader } from "../loader.js";
 import { getPlayerGameLog } from '../Firebase/database.js';
@@ -8,17 +8,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import TextInputAlert from './textInputAlert.js';
+import { createChartData, makeCroppedChartData, getMostRecentGame, getGamePlayers, getEloHistory} from './playerDataUtils.js';
+
+// import GamesLog from '../Game/gamesLog.js';
 const GamesLog = lazy(() => import('../Game/gamesLog.js'));
 
-function sortListByGameID(a,b){
-    if (a[0] < b[0]) {
-        return -1;
-    } else if (a[0] > b[0]) {
-        return 1;
-    } else {
-        return 0;
-    }
-}
 const NUM_PLACEMENTS = 10  
 export default function PlayerBio({setLeagueid}){
     const { leagueid, uid } = useParams();
@@ -33,6 +27,7 @@ export default function PlayerBio({setLeagueid}){
     const [loggedin, setLoggedin] = useState(false);
     const [observer, triggerReload] = useState(false);
     const navigate = useNavigate();
+
     leagueExists(leagueid).then((res)=>{
         if (!res){
             setLeagueid(null)
@@ -49,18 +44,19 @@ export default function PlayerBio({setLeagueid}){
             setLoggedin(false)
             }
         })
-        getPlayerGameLog(leagueid, uid).then((games) => {
+        get30PlayerGameLog(leagueid, uid).then((games) => {
             setPlayerGames(games)
         })
         getNameFromUID(leagueid, uid).then((name) =>{
             setPlayerName(name)
         })
-        firebase_getTotalPlayerData(leagueid, uid)
+        // firebase_getTotalPlayerData(leagueid, uid)
+        firebase_get30PlayerData(leagueid, uid)
         .then(data => {
             setPlayerData(data)
         })
         .then(() => {
-            const mostRecentGame = getMostRecentGame()
+            const mostRecentGame = getMostRecentGame(playerData)
             if (!mostRecentGame || mostRecentGame.timestamp === -1){
                 return
             }else{
@@ -68,145 +64,18 @@ export default function PlayerBio({setLeagueid}){
                 setCurrLosses(mostRecentGame.losses)
                 setCurrWins(mostRecentGame.wins)
 
-                const [elos, timestamps, elogain] = eloHistory()
-                const [gameWinners, gameLosers, pullers] = getGamePlayers()
+                const [elos, timestamps, elogain] = getEloHistory(playerData)
+                const [gameWinners, gameLosers, pullers] = getGamePlayers(playerGames)
 
-                const dataobj = {
-                    labels: elos.map(x => x[0]),
-                    datasets: [
-                        {
-                            label: "Elo",
-                            data: elos.map(x => x[1]),
-                            backgroundColor: "black",
-                            borderColor:"black",
-                            borderWidth: 2
-                        },
-                        {
-                            label: "timestamps",
-                            data: timestamps.map(x => x[1]),
-                            hidden: true,
-                        },
-                        {
-                            label: "elogain",
-                            data: elogain.map(x => x[1]),
-                            hidden: true,
-                        },
-                        {
-                            label: "winners",
-                            data: gameWinners.map(x => x[1]),
-                            hidden: true,
-                        },
-                        {
-                            label: "losers",
-                            data: gameLosers.map(x => x[1]),
-                            hidden: true,
-                        },
-                        {
-                            label: "pulled",
-                            data: pullers.map(x => x[1]),
-                            hidden: true,
-                        }
-                    ]
-                }
-                setChartData(dataobj)
+                const chartData = createChartData(elos, timestamps, elogain, gameWinners, gameLosers, pullers)
+
+                setChartData(chartData)
             }
         })
                 
     }, [playerGames, playerData, uid, observer])
 
-    function getMostRecentGame(){
-        if (!playerData){
-            return
-        }
-        let gameIDs = Object.keys(playerData)
-        if (gameIDs.length < 1){
-            return blankPlayer("")
-        }
-        let maxGameID = Math.max.apply(0,gameIDs)
 
-        return playerData[maxGameID]
-    }
-
-    function getGamePlayers(){
-        const gameWinners = [[-1,null]]
-        const gameLosers = [[-1,null]]
-        const pullers = [[-1,null]]
-        
-        for (const g of playerGames){
-            const intGameId = parseInt(g[0])
-            gameWinners.push([intGameId,g[2]])
-            gameLosers.push([intGameId,g[3]])
-            pullers.push([intGameId,g[4]])
-        }
-        gameLosers.sort(sortListByGameID)
-        gameWinners.sort(sortListByGameID)
-        pullers.sort(sortListByGameID)
-
-        return [gameWinners, gameLosers, pullers]
-    }
-
-    function makeCroppedChartData(){
-        const data = {
-            labels: chartData.labels.slice(NUM_PLACEMENTS),
-            datasets: [
-            {
-                label: "Elo",
-                data: chartData.datasets[0].data.slice(NUM_PLACEMENTS),
-                backgroundColor: "black",
-                borderColor:"black",
-                borderWidth: 2
-            },
-            {
-                label: "timestamps",
-                data: chartData.datasets[1].data.slice(NUM_PLACEMENTS),
-                hidden: true
-            },
-            {
-                label: "elogain",
-                data: chartData.datasets[2].data.slice(NUM_PLACEMENTS),
-                hidden: true
-            },
-            {
-                label: "winners",
-                data: chartData.datasets[3].data.slice(NUM_PLACEMENTS),
-                hidden: true
-            },
-            {
-                label: "losers",
-                data: chartData.datasets[4].data.slice(NUM_PLACEMENTS),
-                hidden: true
-            },
-            {
-                label: "pulled",
-                data: chartData.datasets[5].data.slice(NUM_PLACEMENTS),
-                hidden: true
-            }, 
-            ]
-        }
-        data.datasets[2].data[0] = 0
-        return data
-    }
-
-    const eloHistory = () => {
-        const elos = []
-        const timestamps = []
-        const elogain = [0]
-
-        for (const [gameid, game] of Object.entries(playerData)){
-            // ret.push([new Date(game.timestamp), game.elo])
-            const intGameId = parseInt(gameid)
-            const ts = new Date(game.timestamp)
-            elos.push([intGameId, game.elo])
-            timestamps.push([intGameId, `${ts.getMonth()+1}/${ts.getDate()}/${ts.getFullYear()}`])
-        }
-        elos.sort(sortListByGameID)
-
-        for (let i = 1; i < elos.length; i++){
-            elogain.push([elos[i][0], elos[i][1] - elos[i-1][1]])
-        }
-
-        return [elos, timestamps, elogain]
-    }
 
     if (!playerData){
         <AppLoader></AppLoader>
@@ -220,7 +89,7 @@ export default function PlayerBio({setLeagueid}){
                 {loggedin && playerName ? <TextInputAlert leagueid={leagueid} oldname={playerName} /> : null}
                 <div>
                     <h3>Elo: {currWins + currLosses >= 10 ? currElo : loggedin ? currElo : "Unranked"} </h3>
-                    {chartData ? <EloChart rawChartData={chartData} noPlacementGames={makeCroppedChartData()}/> : null}
+                    {chartData ? <EloChart rawChartData={chartData} noPlacementGames={makeCroppedChartData(chartData, NUM_PLACEMENTS)}/> : null}
                 </div>
                 <br></br>
                 <div>
