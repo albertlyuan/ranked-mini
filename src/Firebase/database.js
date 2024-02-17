@@ -118,12 +118,30 @@ export async function getGamesLog(league){
 
 /**
  * 
+ * @param {*} league - league id 
+ * @param {*} n - nth set of 30 games (0 indexed)
+ * @returns sorted list of [game_id, ts, winningTeam (list of names), losingTeam (list of names), puller]
+ */
+const NUM_DISPLAY_GAMES = 20 
+export async function getMostRecentGamesLog(league,pagenum){
+    const most_recent_game = (await get(query(ref(db, `/${league}/games`), orderByKey(), limitToLast(1)))).val()
+
+    const most_recent_game_id = Object.keys(most_recent_game)
+    // alert(most_recent_game_id)
+    const start = `${most_recent_game_id - (pagenum+1)*NUM_DISPLAY_GAMES}`
+    const end = `${most_recent_game_id - pagenum*NUM_DISPLAY_GAMES}`
+    const gameLog = (await get(query(ref(db, `/${league}/games`), orderByKey(), startAt(start), endAt(end)))).val()
+    const ret = await createGameLogObjects(league, gameLog)
+    return ret
+}
+
+/**
+ * 
  * @param {str} gameid 
  * @returns one game object
  */
 export async function getGame(league, gameid){
     const game = (await get(query(ref(db, `/${league}/games`), orderByKey(), endAt(gameid), limitToLast(1)))).val()
-
     const ret = await createGameLogObjects(league, game)
     return ret[0]
 }

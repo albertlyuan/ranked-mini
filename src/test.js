@@ -136,5 +136,8 @@ async function randomgame(players){
 
 // f(...Object.values(a),"b")
 
-const a = await firebase.get30PlayerGameLog("uMPGdPCMakVoBdeSFK2I8Lw3XEs2","-NdGxDFrv7IlQqL_S_lO")
+// const a = await firebase.get30PlayerGameLog("uMPGdPCMakVoBdeSFK2I8Lw3XEs2","-NdGxDFrv7IlQqL_S_lO")
+// const a = await firebase.getMostRecentGamesLog("uMPGdPCMakVoBdeSFK2I8Lw3XEs2",1)
+const a = await firebase.getMostRecentGamesLog("uMPGdPCMakVoBdeSFK2I8Lw3XEs2",200)
+
 console.log(a)

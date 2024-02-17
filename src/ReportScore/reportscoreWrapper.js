@@ -6,7 +6,7 @@ import { useNavigate, useParams} from 'react-router-dom';
 import { leagueExists } from '../Firebase/database.js';
 
 
-export default function ReportScoreWrapper({roster, updater, setLeagueid}){
+export default function ReportScoreWrapper({roster, setLeagueid}){
     const {leagueid} = useParams()
     const [currUser, setCurrUser ] = useState()
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function ReportScoreWrapper({roster, updater, setLeagueid}){
     if(currUser){
         if (leagueid == currUser.uid){
             return(
-                <ReportScore roster={roster} updater={updater} setLeagueid={setLeagueid}/>
+                <ReportScore roster={roster} setLeagueid={setLeagueid}/>
             )
         }
         else{

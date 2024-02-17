@@ -9,9 +9,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import TextInputAlert from './textInputAlert.js';
 import { createChartData, makeCroppedChartData, getMostRecentGame, getGamePlayers, getEloHistory} from './playerDataUtils.js';
-
-// import GamesLog from '../Game/gamesLog.js';
-const GamesLog = lazy(() => import('../Game/gamesLog.js'));
+import GamesLog from '../Game/gamesLog.js';
 
 const NUM_PLACEMENTS = 10  
 export default function PlayerBio({setLeagueid}){
@@ -44,9 +42,11 @@ export default function PlayerBio({setLeagueid}){
             setLoggedin(false)
             }
         })
+        
         get30PlayerGameLog(leagueid, uid).then((games) => {
             setPlayerGames(games)
         })
+
         getNameFromUID(leagueid, uid).then((name) =>{
             setPlayerName(name)
         })
