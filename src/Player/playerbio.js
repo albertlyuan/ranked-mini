@@ -11,7 +11,6 @@ import TextInputAlert from './textInputAlert.js';
 import { createChartData, makeCroppedChartData, getMostRecentGame, getGamePlayers, getEloHistory} from './playerDataUtils.js';
 import GamesLog from '../Game/gamesLog.js';
 
-const NUM_PLACEMENTS = 10  
 export default function PlayerBio({setLeagueid}){
     const { leagueid, uid } = useParams();
 
@@ -89,16 +88,14 @@ export default function PlayerBio({setLeagueid}){
                 {loggedin && playerName ? <TextInputAlert leagueid={leagueid} oldname={playerName} /> : null}
                 <div>
                     <h3>Elo: {currWins + currLosses >= 10 ? currElo : loggedin ? currElo : "Unranked"} </h3>
-                    {chartData ? <EloChart rawChartData={chartData} noPlacementGames={makeCroppedChartData(chartData, NUM_PLACEMENTS)}/> : null}
+                    {chartData ? <EloChart rawChartData={chartData}/> : null}
                 </div>
                 <br></br>
                 <div>
                     <h3>Game History</h3>
                     {playerGames ? <GamesLog
                         gamesLog={playerGames}
-                        eloGain={loggedin ? 
-                            [chartData["labels"], chartData["datasets"][2].data]  //show all elo gain if logged in
-                            : [chartData["labels"].slice(NUM_PLACEMENTS+1), chartData["datasets"][2].data.slice(NUM_PLACEMENTS+1)]} //hide elo gain of placement games
+                        eloGain={[chartData["labels"], chartData["datasets"][2].data]} //hide elo gain of placement games
                         setLeagueid={setLeagueid}
                     /> : null}
                 </div>

@@ -1,39 +1,39 @@
 import { blankPlayer } from "../Firebase/database.js"
 
-export function makeCroppedChartData(chartData, numPlacements){
+export function makeCroppedChartData(chartData){
     const data = {
-        labels: chartData.labels.slice(numPlacements),
+        labels: chartData.labels,
         datasets: [
         {
             label: "Elo",
-            data: chartData.datasets[0].data.slice(numPlacements),
+            data: chartData.datasets[0].data,
             backgroundColor: "black",
             borderColor:"black",
             borderWidth: 2
         },
         {
             label: "timestamps",
-            data: chartData.datasets[1].data.slice(numPlacements),
+            data: chartData.datasets[1].data,
             hidden: true
         },
         {
             label: "elogain",
-            data: chartData.datasets[2].data.slice(numPlacements),
+            data: chartData.datasets[2].data,
             hidden: true
         },
         {
             label: "winners",
-            data: chartData.datasets[3].data.slice(numPlacements),
+            data: chartData.datasets[3],
             hidden: true
         },
         {
             label: "losers",
-            data: chartData.datasets[4].data.slice(numPlacements),
+            data: chartData.datasets[4],
             hidden: true
         },
         {
             label: "pulled",
-            data: chartData.datasets[5].data.slice(numPlacements),
+            data: chartData.datasets[5],
             hidden: true
         }, 
         ]

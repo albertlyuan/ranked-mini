@@ -22,17 +22,11 @@ var blankChartData = {
     ]
 }
 
-function EloChart({rawChartData, noPlacementGames}) {    
+function EloChart({rawChartData}) {    
     const [chartData, setChartData] = useState(rawChartData);
     
     useEffect(() => {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setChartData(rawChartData)
-        }else{
-          setChartData(noPlacementGames)
-        }
-      })
+        setChartData(rawChartData)
     })
 
     const options = {

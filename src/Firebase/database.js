@@ -179,10 +179,14 @@ export async function get30PlayerGameLog(league, uid){
     const playerData = await firebase_get30PlayerData(league,uid)
 
     const gameIDs = Object.keys(playerData)
+    const results = await Promise.all(gameIDs.map(gid => {
+        return (gid, get(query(ref(db, `/${league}/games`), orderByKey(), endAt(gid), limitToLast(1))))
+    }));
+
     const allGames = {}
-    for (let gid of gameIDs){
-        const game = (await get(query(ref(db, `/${league}/games`), orderByKey(), endAt(gid), limitToLast(1)))).val()
-        // console.log(game)
+    for (let game of results){
+        game = game.val()
+        const gid = Object.keys(game)[0]
         allGames[gid] = game[gid]
     }
     // console.log(allGames)
