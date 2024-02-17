@@ -186,6 +186,9 @@ export async function get30PlayerGameLog(league, uid){
     const allGames = {}
     for (let game of results){
         game = game.val()
+        if (game == null){
+            continue
+        }
         const gid = Object.keys(game)[0]
         allGames[gid] = game[gid]
     }

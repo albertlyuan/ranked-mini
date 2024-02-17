@@ -27,7 +27,9 @@ function PlayerRow({name, elo, wins, losses, filter}){
     const navigate = useNavigate();
 
     const goToPlayer = () => {
-      navigate(`/${leagueid}/player/${uid}`);
+      if (uid != null){
+        navigate(`/${leagueid}/player/${uid}`);
+      }
     };
     return(
         <tr class="clickable highlights" onClick={goToPlayer} style={{display: name.toLowerCase().indexOf(filter) > -1 ? "table-row" : "none"}}>
