@@ -43,8 +43,8 @@ export default function Games({setLeagueid}){
     }else{
         return (
             <div>
-                <GamesLog gamesLog={currPage} setLeagueid={setLeagueid}/>
                 <PageSelector pageNum={pagenum} setPageNum={setPageNum} nextPageExists={nextPageExists}/>
+                <GamesLog gamesLog={currPage} setLeagueid={setLeagueid}/>
             </div>
         )
     }

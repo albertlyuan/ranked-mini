@@ -1,14 +1,13 @@
-import {firebase_getTotalPlayerData, firebase_get30PlayerData, get30PlayerGameLog, getNameFromUID, leagueExists} from '../Firebase/database.js'
-import { useEffect, useState, lazy } from 'react'
+import {firebase_get30PlayerData, get30PlayerGameLog, getNameFromUID, leagueExists} from '../Firebase/database.js'
+import { useEffect, useState } from 'react'
 import { AppLoader } from "../loader.js";
-import { getPlayerGameLog } from '../Firebase/database.js';
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
 import { useNavigate, useParams } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../Firebase/auth.js';
 import TextInputAlert from './textInputAlert.js';
-import { createChartData, makeCroppedChartData, getMostRecentGame, getGamePlayers, getEloHistory} from './playerDataUtils.js';
+import { createChartData, getMostRecentGame, getGamePlayers, getEloHistory} from './playerDataUtils.js';
 import GamesLog from '../Game/gamesLog.js';
 
 export default function PlayerBio({setLeagueid}){
