@@ -4,6 +4,12 @@ import './index.css';
 import App from './App.js';
 import reportWebVitals from './reportWebVitals.js';
 import {AuthProvider} from 'react-auth-kit';
+
+// amplify stuff
+import { Amplify } from 'aws-amplify';
+import config from './aws-exports.js';
+Amplify.configure(config);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
