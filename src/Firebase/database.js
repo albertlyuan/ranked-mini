@@ -118,12 +118,30 @@ export async function getGamesLog(league){
 
 /**
  * 
+ * @param {*} league - league id 
+ * @param {*} n - nth set of 30 games (0 indexed)
+ * @returns sorted list of [game_id, ts, winningTeam (list of names), losingTeam (list of names), puller]
+ */
+const NUM_DISPLAY_GAMES = 20 
+export async function getMostRecentGamesLog(league,pagenum){
+    const most_recent_game = (await get(query(ref(db, `/${league}/games`), orderByKey(), limitToLast(1)))).val()
+
+    const most_recent_game_id = Object.keys(most_recent_game)
+    // alert(most_recent_game_id)
+    const start = `${most_recent_game_id - (pagenum+1)*NUM_DISPLAY_GAMES}`
+    const end = `${most_recent_game_id - pagenum*NUM_DISPLAY_GAMES}`
+    const gameLog = (await get(query(ref(db, `/${league}/games`), orderByKey(), startAt(start), endAt(end)))).val()
+    const ret = await createGameLogObjects(league, gameLog)
+    return ret
+}
+
+/**
+ * 
  * @param {str} gameid 
  * @returns one game object
  */
 export async function getGame(league, gameid){
     const game = (await get(query(ref(db, `/${league}/games`), orderByKey(), endAt(gameid), limitToLast(1)))).val()
-
     const ret = await createGameLogObjects(league, game)
     return ret[0]
 }
@@ -157,8 +175,34 @@ async function createGameLogObjects(league, queryGamesObj){
  * GetGamesLog but for a specific uid
  * @returns sorted list of [game_id, ts, winningTeam (list of names), losingTeam (list of names), puller]
  */
+export async function get30PlayerGameLog(league, uid){
+    const playerData = await firebase_get30PlayerData(league,uid)
+
+    const gameIDs = Object.keys(playerData)
+    const results = await Promise.all(gameIDs.map(gid => {
+        return (gid, get(query(ref(db, `/${league}/games`), orderByKey(), endAt(gid), limitToLast(1))))
+    }));
+
+    const allGames = {}
+    for (let game of results){
+        game = game.val()
+        if (game == null){
+            continue
+        }
+        const gid = Object.keys(game)[0]
+        allGames[gid] = game[gid]
+    }
+    // console.log(allGames)
+    const ret = await createGameLogObjects(league, allGames)
+    return ret
+}
+
+/**
+ * GetGamesLog but for a specific uid
+ * @returns sorted list of [game_id, ts, winningTeam (list of names), losingTeam (list of names), puller]
+ */
 export async function getPlayerGameLog(league, uid){
-    const games = ref(db, `/${league}/games`)
+        const games = ref(db, `/${league}/games`)
     const winner_1 = (await get(query(games, orderByChild("winner_1"), equalTo(uid)))).val()
     const winner_2 = (await get(query(games, orderByChild("winner_2"), equalTo(uid)))).val()
     const winner_3 = (await get(query(games, orderByChild("winner_3"), equalTo(uid)))).val()
@@ -175,7 +219,7 @@ export async function getPlayerGameLog(league, uid){
         ...loser_2,
         ...loser_3,
     }
-    console.log(allGames.length)
+    // console.log(allGames.length)
     const ret = await createGameLogObjects(league, allGames)
     return ret
 }
@@ -475,6 +519,16 @@ export async function getNewGameID(league){
  */
 export async function firebase_getTotalPlayerData(league, uid){
     const res = (await get(query(ref(db,`${league}/player_history/`+uid), orderByChild('game_id')))).val()
+    return res
+}
+
+/**
+ * 
+ * @param {str} name 
+ * @returns list of player Objects for each game played by a player
+ */
+export async function firebase_get30PlayerData(league, uid){
+    const res = (await get(query(ref(db,`${league}/player_history/`+uid), orderByChild('game_id'), limitToLast(30)))).val()
     return res
 }
 
