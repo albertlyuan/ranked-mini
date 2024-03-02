@@ -24,15 +24,19 @@ export default function LeagueCreateForm(props) {
   } = props;
   const initialValues = {
     leagueName: "",
+    adminUID: "",
   };
   const [leagueName, setLeagueName] = React.useState(initialValues.leagueName);
+  const [adminUID, setAdminUID] = React.useState(initialValues.adminUID);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setLeagueName(initialValues.leagueName);
+    setAdminUID(initialValues.adminUID);
     setErrors({});
   };
   const validations = {
     leagueName: [],
+    adminUID: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -61,6 +65,7 @@ export default function LeagueCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           leagueName,
+          adminUID,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -124,6 +129,7 @@ export default function LeagueCreateForm(props) {
           if (onChange) {
             const modelFields = {
               leagueName: value,
+              adminUID,
             };
             const result = onChange(modelFields);
             value = result?.leagueName ?? value;
@@ -137,6 +143,31 @@ export default function LeagueCreateForm(props) {
         errorMessage={errors.leagueName?.errorMessage}
         hasError={errors.leagueName?.hasError}
         {...getOverrideProps(overrides, "leagueName")}
+      ></TextField>
+      <TextField
+        label="Admin uid"
+        isRequired={false}
+        isReadOnly={false}
+        value={adminUID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              leagueName,
+              adminUID: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.adminUID ?? value;
+          }
+          if (errors.adminUID?.hasError) {
+            runValidationTasks("adminUID", value);
+          }
+          setAdminUID(value);
+        }}
+        onBlur={() => runValidationTasks("adminUID", adminUID)}
+        errorMessage={errors.adminUID?.errorMessage}
+        hasError={errors.adminUID?.hasError}
+        {...getOverrideProps(overrides, "adminUID")}
       ></TextField>
       <Flex
         justifyContent="space-between"

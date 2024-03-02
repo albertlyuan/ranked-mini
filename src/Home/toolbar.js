@@ -6,13 +6,8 @@ import { onAuthStateChanged } from "firebase/auth";
 export default function Toolbar({leagueid}){  
     const [authUseruid, setAuthUseruid ] = useState()
     useEffect(()=>{
-        onAuthStateChanged(auth, (user)=>{
-            if (user){
-                setAuthUseruid(user.uid)
-            }else{
-                setAuthUseruid(null)
-            }
-        })
+        
+        
     })
     if (authUseruid != null || (leagueid != null && leagueid != undefined)){
         return(

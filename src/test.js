@@ -128,56 +128,17 @@ async function randomgame(players){
 //         console.error('Error parsing JSON:', jsonError);
 //     }
 //   });
-function f(a,b,c,d,e,f,g){
-    console.log(a,b,c,d,e,f,g)
-    return true
-}
-const a = {winner1: "a", winner2: "a",winner3:"a",loser1:"a",loser2:"a",loser3:"a"}
+// function f(a,b,c,d,e,f,g){
+//     console.log(a,b,c,d,e,f,g)
+//     return true
+// }
+// const a = {winner1: "a", winner2: "a",winner3:"a",loser1:"a",loser2:"a",loser3:"a"}
 
-f(...Object.values(a),"b")
-
-import React, { useState, useEffect } from 'react';
-import { Authenticator, AuthState } from '@aws-amplify/ui-react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import Home from './Home';
-import CustomSignIn from './CustomSignIn';
-import CustomSignUp from './CustomSignUp';
-import CustomUnauthorizedPage from './CustomUnauthorizedPage';
-
-const App = () => {
-  const [authState, setAuthState] = useState(null);
-
-  useEffect(() => {
-    const handleAuthStateChange = (nextAuthState) => {
-      setAuthState(nextAuthState);
-    };
-
-    setAuthState(AuthState.SignedIn);
-
-    return () => {
-      // Cleanup
-    };
-  }, []);
-
-  return (
-    <Router>
-      <Authenticator onStateChange={handleAuthStateChange}>
-        {authState === AuthState.SignedIn ? (
-          <>
-            <Route exact path="/" component={Home} />
-            {/* Other authenticated routes */}
-          </>
-        ) : (
-          <>
-            <Redirect to="/unauthorized" />
-            <Route path="/unauthorized" component={CustomUnauthorizedPage} />
-            <Route path="/signin" component={CustomSignIn} />
-            <Route path="/signup" component={CustomSignUp} />
-          </>
-        )}
-      </Authenticator>
-    </Router>
-  );
-};
-
-export default App;
+// f(...Object.values(a),"b")
+import * as league from "./Database/league.js"
+import { Amplify } from 'aws-amplify';
+import config from './aws-exports.js';
+Amplify.configure(config);
+league.listAdminLeagues("f1bb9540-e061-70bc-866e-7b4a4cd5c5fa").then((d)=>{
+  console.log(d['data']['listLeagues']['items'])
+})

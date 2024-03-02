@@ -23,14 +23,17 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type LeagueCreateFormInputValues = {
     leagueName?: string;
+    adminUID?: string;
 };
 export declare type LeagueCreateFormValidationValues = {
     leagueName?: ValidationFunction<string>;
+    adminUID?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type LeagueCreateFormOverridesProps = {
     LeagueCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     leagueName?: PrimitiveOverrideProps<TextFieldProps>;
+    adminUID?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type LeagueCreateFormProps = React.PropsWithChildren<{
     overrides?: LeagueCreateFormOverridesProps | undefined | null;

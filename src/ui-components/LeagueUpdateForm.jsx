@@ -26,14 +26,17 @@ export default function LeagueUpdateForm(props) {
   } = props;
   const initialValues = {
     leagueName: "",
+    adminUID: "",
   };
   const [leagueName, setLeagueName] = React.useState(initialValues.leagueName);
+  const [adminUID, setAdminUID] = React.useState(initialValues.adminUID);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = leagueRecord
       ? { ...initialValues, ...leagueRecord }
       : initialValues;
     setLeagueName(cleanValues.leagueName);
+    setAdminUID(cleanValues.adminUID);
     setErrors({});
   };
   const [leagueRecord, setLeagueRecord] = React.useState(leagueModelProp);
@@ -54,6 +57,7 @@ export default function LeagueUpdateForm(props) {
   React.useEffect(resetStateValues, [leagueRecord]);
   const validations = {
     leagueName: [],
+    adminUID: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -82,6 +86,7 @@ export default function LeagueUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           leagueName: leagueName ?? null,
+          adminUID: adminUID ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -143,6 +148,7 @@ export default function LeagueUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               leagueName: value,
+              adminUID,
             };
             const result = onChange(modelFields);
             value = result?.leagueName ?? value;
@@ -156,6 +162,31 @@ export default function LeagueUpdateForm(props) {
         errorMessage={errors.leagueName?.errorMessage}
         hasError={errors.leagueName?.hasError}
         {...getOverrideProps(overrides, "leagueName")}
+      ></TextField>
+      <TextField
+        label="Admin uid"
+        isRequired={false}
+        isReadOnly={false}
+        value={adminUID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              leagueName,
+              adminUID: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.adminUID ?? value;
+          }
+          if (errors.adminUID?.hasError) {
+            runValidationTasks("adminUID", value);
+          }
+          setAdminUID(value);
+        }}
+        onBlur={() => runValidationTasks("adminUID", adminUID)}
+        errorMessage={errors.adminUID?.errorMessage}
+        hasError={errors.adminUID?.hasError}
+        {...getOverrideProps(overrides, "adminUID")}
       ></TextField>
       <Flex
         justifyContent="space-between"

@@ -4,26 +4,28 @@ import { listLeagues, getLeague } from "../graphql/queries.js";
 
 const client = generateClient()
 
-export async function createLeague_wrapper(leaguename){
+export async function createLeague_wrapper(leaguename, adminUID){
     const newLeague = await client.graphql({
         query: createLeague,
         variables: {
             input: {
             "players": [],
             "games": [],
-            "leagueName": leaguename
+            "leagueName": leaguename,
+            "adminUID": adminUID
         }
         }
     });
 }
-export async function updateLeague_wrapper(leaguename){
+export async function updateLeague_wrapper(leaguename, adminUID){
     const updatedLeague = await client.graphql({
         query: updateLeague,
         variables: {
             input: {
             "players": [],
             "games": [],
-            "leagueName": leaguename
+            "leagueName": leaguename,
+            "adminUID": adminUID
         }
         }
     });
@@ -56,3 +58,12 @@ export async function getLeague_wrapper(leagueid){
     });
     return oneLeague
 }
+
+export async function listAdminLeagues(adminuid){
+    const allLeagues = await client.graphql({
+        query: listLeagues,
+        variables: { filter: { adminUID: { eq: adminuid } } }
+    });
+    return allLeagues
+}
+

@@ -218,6 +218,7 @@ export const createLeague = /* GraphQL */ `
         __typename
       }
       leagueName
+      adminUID
       createdAt
       updatedAt
       __typename
@@ -240,6 +241,7 @@ export const updateLeague = /* GraphQL */ `
         __typename
       }
       leagueName
+      adminUID
       createdAt
       updatedAt
       __typename
@@ -262,6 +264,7 @@ export const deleteLeague = /* GraphQL */ `
         __typename
       }
       leagueName
+      adminUID
       createdAt
       updatedAt
       __typename

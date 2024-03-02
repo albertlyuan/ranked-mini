@@ -1,7 +1,7 @@
 import {Button} from "@aws-amplify/ui-react";
 import { useNavigate } from "react-router-dom";
 
-export default function LoginButton(){
+export default function AdminButton(){
     const navigate = useNavigate();
 
     const goToLogin = () => {
@@ -9,6 +9,6 @@ export default function LoginButton(){
     };
 
     return(                
-        <Button onClick={goToLogin}>Log in</Button>
+        <Button onClick={goToLogin}>Admin Controls</Button>
     )
 }

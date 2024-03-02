@@ -10,6 +10,7 @@ import {
     View,
     Card,
 } from "@aws-amplify/ui-react";
+import AdminLeagues from "./listAdminLeagues.js";
 
 export default function LoginPage(){
     return (
@@ -19,6 +20,7 @@ export default function LoginPage(){
             <Card>
                 <Heading level={1}>We now have Auth!</Heading>
                 <h1>Hello {user.username}</h1>
+                <AdminLeagues adminuid={user.userId}/>
             </Card>
             <Button onClick={signOut}>Sign Out</Button>
             </View>

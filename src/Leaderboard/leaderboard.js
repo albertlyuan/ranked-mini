@@ -5,7 +5,7 @@ import PlayerRow from './leaderboardPlayer.js';
 import SearchPlayer from './searchPlayer.js';
 import { leagueExists } from '../Firebase/database.js';
 
-export default function Leaderboard({roster, setLeagueid}){
+export default function Leaderboard({roster}){
     const [statusMsg, setStatusMsg] = useState('');
     const [filter, setFilter] = useState('');
     const [listItems, setListItems] = useState([]);
@@ -14,15 +14,11 @@ export default function Leaderboard({roster, setLeagueid}){
     const navigate = useNavigate();
     leagueExists(leagueid).then((res)=>{
         if (!res){
-            setLeagueid(null)
             navigate("/page/not/found")
         }
     })
 
     useEffect(() => {
-        
-        
-        setLeagueid(leagueid)
         const playerrows = roster.map((person) => {
             return (<PlayerRow
                 name={person[0]}

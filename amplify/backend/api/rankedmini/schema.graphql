@@ -37,5 +37,6 @@ type League @model @auth(rules: [{allow: public}]) {
   players: [Player] @hasMany(indexName: "byLeague", fields: ["id"])
   games: [Game] @hasMany(indexName: "byLeague", fields: ["id"])
   leagueName: String
+  adminUID: String
 }
  

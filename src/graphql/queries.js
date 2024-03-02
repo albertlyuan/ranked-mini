@@ -276,6 +276,7 @@ export const getLeague = /* GraphQL */ `
         __typename
       }
       leagueName
+      adminUID
       createdAt
       updatedAt
       __typename
@@ -292,6 +293,7 @@ export const listLeagues = /* GraphQL */ `
       items {
         id
         leagueName
+        adminUID
         createdAt
         updatedAt
         __typename
