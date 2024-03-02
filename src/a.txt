@@ -1,0 +1,84 @@
+{
+  games: [
+    {
+      loser_1: '-NnljvcQfdq1fExfoAcw',
+      loser_2: '-Nnljvd2nWh28E34fiYI',
+      loser_3: '-Nnljvdg0jrEY6dfE-54',
+      timestamp: '2024-02-17T22:28:29.261Z',
+      winner_1: '-NnljvaD6W9ZT2fea8w3',
+      winner_2: '-NnljvavNa8083A-MRUA',
+      winner_3: '-Nnljvbk65xzxP4hwIbU',
+      winner_pulled: true
+    },
+    {
+      loser_1: '-NnljvgT9nKfZFR3RBOu',
+      loser_2: '-Nnljvh4ydhKfZ2IFGA3',
+      loser_3: '-Nnljvhn9PEOhY0_nLpe',
+      timestamp: '2024-02-17T22:28:29.874Z',
+      winner_1: '-NnljveNZ0MgXxXXAcfI',
+      winner_2: '-Nnljvf5HgkdIN7Md3U5',
+      winner_3: '-Nnljvfoy6oAjAFvqoC-',
+      winner_pulled: false
+    }
+  ],
+  player_history: {
+    '-NnljvaD6W9ZT2fea8w3': { '0': [Object], '-1': [Object] },
+    '-NnljvavNa8083A-MRUA': { '0': [Object], '-1': [Object] },
+    '-Nnljvbk65xzxP4hwIbU': { '0': [Object], '-1': [Object] },
+    '-NnljvcQfdq1fExfoAcw': { '0': [Object], '-1': [Object] },
+    '-Nnljvd2nWh28E34fiYI': { '0': [Object], '-1': [Object] },
+    '-Nnljvdg0jrEY6dfE-54': { '0': [Object], '-1': [Object] },
+    '-NnljveNZ0MgXxXXAcfI': { '1': [Object], '-1': [Object] },
+    '-Nnljvf5HgkdIN7Md3U5': { '1': [Object], '-1': [Object] },
+    '-Nnljvfoy6oAjAFvqoC-': { '1': [Object], '-1': [Object] },
+    '-NnljvgT9nKfZFR3RBOu': { '1': [Object], '-1': [Object] },
+    '-Nnljvh4ydhKfZ2IFGA3': { '1': [Object], '-1': [Object] },
+    '-Nnljvhn9PEOhY0_nLpe': { '1': [Object], '-1': [Object] },
+    '-NqtArDavp6wv0o8pDx1': { '-1': [Object] }
+  },
+  player_now: {
+    '-NnljvaD6W9ZT2fea8w3': { elo: 513.0046654728586, losses: 0, most_recent_game: 0, wins: 1 },
+    '-NnljvavNa8083A-MRUA': { elo: 513.0046654728586, losses: 0, most_recent_game: 0, wins: 1 },
+    '-Nnljvbk65xzxP4hwIbU': { elo: 513.0046654728586, losses: 0, most_recent_game: 0, wins: 1 },
+    '-NnljvcQfdq1fExfoAcw': {
+      elo: 298.74379612190205,
+      losses: 1,
+      most_recent_game: 0,
+      wins: 0
+    },
+    '-Nnljvd2nWh28E34fiYI': {
+      elo: 298.74379612190205,
+      losses: 1,
+      most_recent_game: 0,
+      wins: 0
+    },
+    '-Nnljvdg0jrEY6dfE-54': {
+      elo: 298.74379612190205,
+      losses: 1,
+      most_recent_game: 0,
+      wins: 0
+    },
+    '-NnljveNZ0MgXxXXAcfI': { elo: 454.9656717897381, losses: 0, most_recent_game: 1, wins: 1 },
+    '-Nnljvf5HgkdIN7Md3U5': { elo: 454.9656717897381, losses: 0, most_recent_game: 1, wins: 1 },
+    '-Nnljvfoy6oAjAFvqoC-': { elo: 454.9656717897381, losses: 0, most_recent_game: 1, wins: 1 },
+    '-NnljvgT9nKfZFR3RBOu': { elo: 390.9656717897381, losses: 1, most_recent_game: 1, wins: 0 },
+    '-Nnljvh4ydhKfZ2IFGA3': { elo: 390.9656717897381, losses: 1, most_recent_game: 1, wins: 0 },
+    '-Nnljvhn9PEOhY0_nLpe': { elo: 390.9656717897381, losses: 1, most_recent_game: 1, wins: 0 },
+    '-NqtArDavp6wv0o8pDx1': { elo: 400, losses: 0, most_recent_game: -1, wins: 0 }
+  },
+  player_uid: {
+    p1: '-NnljvaD6W9ZT2fea8w3',
+    p10: '-NnljvgT9nKfZFR3RBOu',
+    p11: '-Nnljvh4ydhKfZ2IFGA3',
+    p12: '-Nnljvhn9PEOhY0_nLpe',
+    p2: '-NnljvavNa8083A-MRUA',
+    p3: '-Nnljvbk65xzxP4hwIbU',
+    p4: '-NnljvcQfdq1fExfoAcw',
+    p5: '-Nnljvd2nWh28E34fiYI',
+    p6: '-Nnljvdg0jrEY6dfE-54',
+    p7: '-NnljveNZ0MgXxXXAcfI',
+    p8: '-Nnljvf5HgkdIN7Md3U5',
+    p9: '-Nnljvfoy6oAjAFvqoC-',
+    testnewplayer1: '-NqtArDavp6wv0o8pDx1'
+  }
+}

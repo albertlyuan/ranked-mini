@@ -10,3 +10,8 @@
 Run 'amplify pull' to sync future upstream changes.
 "amplify push" will build all your local backend resources and provision it in the cloud
 "amplify publish" will build all your local backend and frontend resources 
+
+`amplify console api` to open amplify studio
+
+`amplify codegen` to update schema
+`amplyify push` to push changes
