@@ -26,7 +26,9 @@ const Leaderboard = lazy(() => import('./Leaderboard/leaderboard.js'));
 const ReportScoreWrapper = lazy(() => import('./ReportScore/reportscoreWrapper.js'));
 const CalculatingElo = lazy(() => import('./About/calculatingElo.js'));
 const RankTable = lazy(() => import('./About/rankTable.js'));
-const GamesLog = lazy(() => import('./Game/gamesLog.js'));
+// const GamesLog = lazy(() => import('./Game/gamesLog.js'));
+const Games = lazy(() => import('./Game/games.js'));
+
 const GameInfoWrapper = lazy(() => import('./Game/gameInfoWrapper.js'));
 const PlayerBio = lazy(() => import('./Player/playerbio.js'));
 const GettingStarted = lazy(() => import('./Home/gettingStarted.js'));
@@ -64,6 +66,7 @@ function App() {
           <Route path="/:leagueid/games" element={<GamesLog gamesLog={gameLog} />} />
           <Route path="/elo" element={<CalculatingElo/>} />
           <Route path="/ranks" element={<RankTable/>} />
+
 
           <Route path="/:leagueid/games/:gameid" element={<GameInfoWrapper/>} />
           <Route path="/:leagueid/player/:uid" element={<PlayerBio/>} />

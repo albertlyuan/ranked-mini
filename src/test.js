@@ -135,6 +135,7 @@ async function randomgame(players){
 // const a = {winner1: "a", winner2: "a",winner3:"a",loser1:"a",loser2:"a",loser3:"a"}
 
 // f(...Object.values(a),"b")
+
 import * as league from "./Database/league.js"
 import { Amplify } from 'aws-amplify';
 import config from './aws-exports.js';

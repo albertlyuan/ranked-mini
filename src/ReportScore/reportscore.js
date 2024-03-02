@@ -4,7 +4,7 @@ import Dropdown from "./dropdown.js"
 import { useParams } from 'react-router-dom';
 import {PullFactorSetter, PullSelector, SwapTeamsButton, RandomizeTeamsButton} from "./reportscoreButtons.js"
 
-export default function ReportScore({ roster, updater, setLeagueid }) {
+export default function ReportScore({ roster, setLeagueid }) {
     const [availablePlayers, setAvailablePlayers] = useState(new Set());
     const { leagueid } = useParams()
     const [players, setPlayers] = useState({winner1: "", winner2: "",winner3:"",loser1:"",loser2:"",loser3:""})
@@ -91,7 +91,6 @@ export default function ReportScore({ roster, updater, setLeagueid }) {
             return
         }
         await firebase_logNewGame(leagueid, ...Object.values(players), winnerPulled, dynamicPullFactor)
-        updater()
         clearSelection()
         setStatusMsg("Success!")
     }

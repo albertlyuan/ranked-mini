@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import path from 'path';
-import { firebase_loadTest } from '../Firebase/database';
+import { firebase_loadTest } from '../Firebase/database.js';
 
 export const TESTDB = "KTADcHMg24fTPi7MD9HBu0lZIzx2"
 export const TEST_ROSTER = [
