@@ -3,25 +3,22 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.js';
 import reportWebVitals from './reportWebVitals.js';
-import {AuthProvider} from 'react-auth-kit';
 
 // amplify stuff
 import { Amplify } from 'aws-amplify';
 import config from './aws-exports.js';
+import {
+  Authenticator,
+} from "@aws-amplify/ui-react";
 Amplify.configure(config);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <AuthProvider authType = {'cookie'}
-                  authName={'_auth'}
-                  cookieDomain={window.location.hostname}
-                  // cookieSecure={window.location.protocol === "https:"}
-                  cookieSecure={false}
-    >
+    <Authenticator.Provider>
       <App />
-    </AuthProvider>
+    </Authenticator.Provider>
   </React.StrictMode>
 );
 

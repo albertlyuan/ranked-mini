@@ -135,3 +135,49 @@ function f(a,b,c,d,e,f,g){
 const a = {winner1: "a", winner2: "a",winner3:"a",loser1:"a",loser2:"a",loser3:"a"}
 
 f(...Object.values(a),"b")
+
+import React, { useState, useEffect } from 'react';
+import { Authenticator, AuthState } from '@aws-amplify/ui-react';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import Home from './Home';
+import CustomSignIn from './CustomSignIn';
+import CustomSignUp from './CustomSignUp';
+import CustomUnauthorizedPage from './CustomUnauthorizedPage';
+
+const App = () => {
+  const [authState, setAuthState] = useState(null);
+
+  useEffect(() => {
+    const handleAuthStateChange = (nextAuthState) => {
+      setAuthState(nextAuthState);
+    };
+
+    setAuthState(AuthState.SignedIn);
+
+    return () => {
+      // Cleanup
+    };
+  }, []);
+
+  return (
+    <Router>
+      <Authenticator onStateChange={handleAuthStateChange}>
+        {authState === AuthState.SignedIn ? (
+          <>
+            <Route exact path="/" component={Home} />
+            {/* Other authenticated routes */}
+          </>
+        ) : (
+          <>
+            <Redirect to="/unauthorized" />
+            <Route path="/unauthorized" component={CustomUnauthorizedPage} />
+            <Route path="/signin" component={CustomSignIn} />
+            <Route path="/signup" component={CustomSignUp} />
+          </>
+        )}
+      </Authenticator>
+    </Router>
+  );
+};
+
+export default App;

@@ -1,15 +1,14 @@
+import {Button} from "@aws-amplify/ui-react";
 import { useNavigate } from "react-router-dom";
-import { signout } from "../Firebase/auth.js";
 
-export default function LoginButton({text}){
+export default function LoginButton(){
     const navigate = useNavigate();
 
-    function goToLogin(){
-        signout()
-        navigate(`/login`);
-    }
+    const goToLogin = () => {
+      navigate(`/login`);
+    };
 
-    return(
-        <button class="createAccountButton" onClick={goToLogin}>{text}</button>
+    return(                
+        <Button onClick={goToLogin}>Log in</Button>
     )
 }
