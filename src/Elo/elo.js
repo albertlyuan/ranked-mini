@@ -4,6 +4,8 @@ const STARTING_ELO = 400
 // const PULL_FACTOR = 1
 const PULL_FACTOR = 0.298701299
 
+export const PULLFACTORGAMES = 30
+
 //data shows 7/30 = 0.23 games break
 //.23/.77 = 0.298701299 times less likely to win if pull
 //1/.29 = 3.34782608 times more elo gain/loss

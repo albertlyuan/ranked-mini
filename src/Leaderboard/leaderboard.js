@@ -3,35 +3,44 @@ import AddPlayer from './addPlayer.js';
 import {useNavigate, useParams } from 'react-router-dom'
 import PlayerRow from './leaderboardPlayer.js';
 import SearchPlayer from './searchPlayer.js';
-import { leagueExists } from '../Firebase/database.js';
+import { aws_getLeaguePlayers } from '../Database/player.js';
+import { aws_getLeague } from '../Database/league.js';
 
-export default function Leaderboard({roster}){
+export default function Leaderboard({setLeagueid}){
     const [statusMsg, setStatusMsg] = useState('');
     const [filter, setFilter] = useState('');
     const [listItems, setListItems] = useState([]);
     const {leagueid} = useParams()
+    setLeagueid(leagueid)
 
     const navigate = useNavigate();
-    leagueExists(leagueid).then((res)=>{
+    aws_getLeague(leagueid).then((res)=>{
         if (!res){
             navigate("/page/not/found")
         }
     })
 
     useEffect(() => {
-        const playerrows = roster.map((person) => {
-            return (<PlayerRow
-                name={person[0]}
-                elo={person[1]}
-                wins={person[2]}
-                losses={person[3]}
-                filter={filter}
-            />)
-        }); 
+        aws_getLeaguePlayers(leagueid).then((data) =>{
+            if (data==null){
+                return []
+            }
+            return data['data']['listPlayers']['items']
+        }).then((roster) =>{
 
-        setListItems(playerrows)
-
-      },[roster, filter])
+            const playerrows = roster.map((person) => {
+                return (<PlayerRow
+                    name={person['displayName']}
+                    elo={person['elo']}
+                    wins={person['wins']}
+                    losses={person['losses']}
+                    filter={filter}
+                />)
+            }); 
+    
+            setListItems(playerrows)
+        })
+      },[filter])
     
     return (
         <div id="leaderboard" class="tabcontent animatedLoad">
@@ -40,14 +49,13 @@ export default function Leaderboard({roster}){
                     <th style={{"text-align": "left"}}>Player (record)</th>
                     <th style={{"text-align": "right"}}>Elo</th>
                 </thead>
-                    <SearchPlayer
-                        setFilter={setFilter}
-                        text={"Search Player"}
-                    />
+                <SearchPlayer
+                    setFilter={setFilter}
+                    text={"Search Player"}
+                />
                 <tr id="addplayerRow">
                     <td>
                         <AddPlayer
-                            roster={roster}
                             setStatusMsgFunc={(msg) => {
                                 setStatusMsg(msg)
                             }}

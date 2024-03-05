@@ -12,18 +12,20 @@ export default function GameRow({game, eloGain, dateFilter, playerFilter}){
     const [showRow, setShowRow] = useState("table-row")
     const {leagueid} = useParams()
     const formattedDate = () => {
-        return DayMonthDateYear(game[1])
+        return DayMonthDateYear(game['timestamp'])
     }
+    const winners = [game['winner1'],game['winner2'],game['winner3']]
+    const losers = [game['loser1'],game['loser2'],game['loser3']]
 
     const goToGame = () => {
-        navigate(`/${leagueid}/games/${game[0]}`);
+        navigate(`/${leagueid}/games/${game['id']}`);
     };
 
     const deltaElo = () => {
         if (eloGain){
             let idx = 0
             for (idx= 0; idx < eloGain[0].length ; idx++){
-                if (eloGain[0][idx] == game[0]){
+                if (eloGain[0][idx] == game['id']){
                     break
                 }
             }
@@ -34,8 +36,8 @@ export default function GameRow({game, eloGain, dateFilter, playerFilter}){
     }
 
     useEffect(()=>{
-        if ((game[2].join(", ").toLowerCase().indexOf(playerFilter) > -1
-        || game[3].join(", ").toLowerCase().indexOf(playerFilter) > -1)
+        if ((winners.join(", ").toLowerCase().indexOf(playerFilter) > -1
+        || losers.join(", ").toLowerCase().indexOf(playerFilter) > -1)
         && formattedDate().toLowerCase().indexOf(dateFilter) > -1){
             setShowRow("table-row")
         } else{
@@ -50,12 +52,12 @@ export default function GameRow({game, eloGain, dateFilter, playerFilter}){
                 onClick={goToGame}
                 style={{display: showRow}}
             >   
-                <td>{game[0]} </td>
+                <td>{game['id']} </td>
                 <td>{formattedDate()}</td>
-                <td>{game[2].join(", ")} </td>
-                <td>{game[3].join(", ")} </td>
+                <td>{winners.join(", ")} </td>
+                <td>{losers.join(", ")} </td>
                 <td>{deltaElo() ? deltaElo().toFixed(2) : deltaElo()}</td>
-                <td>{game[4]  ? "True" : "False"}</td>
+                <td>{game['winnerPulled']  ? "True" : "False"}</td>
             </tr>
         )
     }
@@ -65,11 +67,11 @@ export default function GameRow({game, eloGain, dateFilter, playerFilter}){
             onClick={goToGame}
             style={{display: showRow}}
             >
-            <td>{game[0]}</td>
+                <td>{game['id']} </td>
             <td>{formattedDate()}</td>
-            <td>{game[2].join(", ")} </td>
-            <td>{game[3].join(", ")} </td>
-            <td>{game[4] ? "True" : "False"}</td>
+            <td>{winners.join(", ")} </td>
+            <td>{losers.join(", ")} </td>
+            <td>{game['winnerPulled']  ? "True" : "False"}</td>
         </tr>
     )
 }

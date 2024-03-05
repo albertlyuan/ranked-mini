@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { firebase_logNewGame } from '../Firebase/database.js'
 import Dropdown from "./dropdown.js"
 import { useParams } from 'react-router-dom';
 import {PullFactorSetter, PullSelector, SwapTeamsButton, RandomizeTeamsButton} from "./reportscoreButtons.js"
+import { reportNewGame } from '../Database/reportNewGame.js';
 
 export default function ReportScore({ roster, setLeagueid }) {
     const [availablePlayers, setAvailablePlayers] = useState(new Set());
@@ -50,7 +50,7 @@ export default function ReportScore({ roster, setLeagueid }) {
     useEffect(() => {
         setLeagueid(leagueid)
         if (availablePlayers.size == 0) {
-            setAvailablePlayers(new Set(roster.map((person) => person[0])))
+            setAvailablePlayers(new Set(roster.map((person) => person['displayName'])))
         }
     })
 
@@ -62,7 +62,6 @@ export default function ReportScore({ roster, setLeagueid }) {
         }
     }, [players]);
 
-    // const justPlayerNames = roster.map((person) => person[0])
     function clearSelection() {
         for (let val of Object.values(players)) {
             if (val !== "") {
@@ -90,7 +89,7 @@ export default function ReportScore({ roster, setLeagueid }) {
         if (!checkForSixPlayers()) {
             return
         }
-        await firebase_logNewGame(leagueid, ...Object.values(players), winnerPulled, dynamicPullFactor)
+        await reportNewGame(leagueid, ...Object.values(players), winnerPulled, dynamicPullFactor)
         clearSelection()
         setStatusMsg("Success!")
     }

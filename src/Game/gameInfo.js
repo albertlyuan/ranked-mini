@@ -8,9 +8,25 @@ import { auth } from '../Firebase/auth.js';
 import { getUIDFromName } from "../Firebase/database.js";
 
 // [gameid, date string, winners, losers, broke to win]
-export default function GameInfo({game, goToNextGame, goToPrevGame, nextgame, winnerData, loserData, breakToWin}){
+export default function GameInfo({game, goToNextGame, goToPrevGame, nextgame}){
     //data = [player,[before.elo, after.elo], before.wins, before.losses]
+    const [winnerData, setWinnerData] = useState([]);
+    const [loserData, setLoserData] = useState([]);
     const [hypothetical, setHypothetical] = useState(false);  
+
+    const winners = [game['winner1'],game['winner2'],game['winner3']]
+    const losers = [game['loser1'],game['loser2'],game['loser3']]
+    const breakToWin = game['winnerPulled']
+
+    queryGamePlayersData(leagueid, winners, gameid).then(data => {
+        data.sort((a,b) => b[1][0]-a[1][0])
+        setWinnerData(data)
+    })
+
+    queryGamePlayersData(leagueid, losers, gameid).then(data => {
+        data.sort((a,b) => b[1][0]-a[1][0])
+        setLoserData(data)  
+    })
 
     const toggleHypothetical = () => {
         setHypothetical(!hypothetical)

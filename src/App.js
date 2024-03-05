@@ -35,16 +35,7 @@ const GettingStarted = lazy(() => import('./Home/gettingStarted.js'));
 
 
 function App() {
-  const { authStatus } = useAuthenticator(context => [context.authStatus]);
-  // {authStatus === 'authenticated' ? ifAuth : else}
-
-  const [update, triggerUpdate] = useState(false);
-  const [roster, setRoster] = useState([]);
-  const [gameLog, setGameLog] = useState([]);
-
-  function updater() {
-      triggerUpdate(!update)
-  }
+  const [leagueid, setLeagueid] = useState(null)
 
   return (
     <BrowserRouter>    
@@ -53,7 +44,7 @@ function App() {
       </div>
       <h1><NavLink to="/">Ranked Mini</NavLink></h1>
 
-      <Toolbar/>
+      <Toolbar leagueid={leagueid}/>
 
       <Suspense fallback={<AppLoader />}>
 
@@ -61,15 +52,15 @@ function App() {
           <Route path="/" element={<GettingStarted/>} />
           <Route path="/login" element={<LoginPage/>} />
 
-          <Route path="/:leagueid/" element={<Leaderboard/>} />
-          <Route path="/:leagueid/reportscore" element={<ReportScoreWrapper/>} />
-          <Route path="/:leagueid/games" element={<GamesLog gamesLog={gameLog} />} />
+          <Route path="/:leagueid/" element={<Leaderboard setLeagueid={setLeagueid}/>} />
+          <Route path="/:leagueid/reportscore" element={<ReportScoreWrapper setLeagueid={setLeagueid}/>} />
+          <Route path="/:leagueid/games" element={<Games setLeagueid={setLeagueid}/>} />
           <Route path="/elo" element={<CalculatingElo/>} />
           <Route path="/ranks" element={<RankTable/>} />
 
 
-          <Route path="/:leagueid/games/:gameid" element={<GameInfoWrapper/>} />
-          <Route path="/:leagueid/player/:uid" element={<PlayerBio/>} />
+          <Route path="/:leagueid/games/:gameid" element={<GameInfoWrapper setLeagueid={setLeagueid}/>} />
+          <Route path="/:leagueid/player/:uid" element={<PlayerBio setLeagueid={setLeagueid}/>} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>

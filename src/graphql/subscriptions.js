@@ -10,10 +10,6 @@ export const onCreatePlayer = /* GraphQL */ `
       losses
       leagueID
       displayName
-      PlayerHistories {
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -29,10 +25,6 @@ export const onUpdatePlayer = /* GraphQL */ `
       losses
       leagueID
       displayName
-      PlayerHistories {
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -48,10 +40,6 @@ export const onDeletePlayer = /* GraphQL */ `
       losses
       leagueID
       displayName
-      PlayerHistories {
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -63,18 +51,21 @@ export const onCreateGame = /* GraphQL */ `
     onCreateGame(filter: $filter) {
       id
       timestamp
+      loser1data
+      loser2data
+      loser3data
+      winner1data
+      winner2data
+      winner3data
+      winnerPulled
+      pullfactor
+      leagueID
       loser1
       loser2
       loser3
       winner1
       winner2
       winner3
-      winnerPulled
-      leagueID
-      PlayerHistories {
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -86,18 +77,21 @@ export const onUpdateGame = /* GraphQL */ `
     onUpdateGame(filter: $filter) {
       id
       timestamp
+      loser1data
+      loser2data
+      loser3data
+      winner1data
+      winner2data
+      winner3data
+      winnerPulled
+      pullfactor
+      leagueID
       loser1
       loser2
       loser3
       winner1
       winner2
       winner3
-      winnerPulled
-      leagueID
-      PlayerHistories {
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -109,72 +103,21 @@ export const onDeleteGame = /* GraphQL */ `
     onDeleteGame(filter: $filter) {
       id
       timestamp
+      loser1data
+      loser2data
+      loser3data
+      winner1data
+      winner2data
+      winner3data
+      winnerPulled
+      pullfactor
+      leagueID
       loser1
       loser2
       loser3
       winner1
       winner2
       winner3
-      winnerPulled
-      leagueID
-      PlayerHistories {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onCreatePlayerHistory = /* GraphQL */ `
-  subscription OnCreatePlayerHistory(
-    $filter: ModelSubscriptionPlayerHistoryFilterInput
-  ) {
-    onCreatePlayerHistory(filter: $filter) {
-      id
-      elo
-      wins
-      losses
-      timestamp
-      playerID
-      gameID
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onUpdatePlayerHistory = /* GraphQL */ `
-  subscription OnUpdatePlayerHistory(
-    $filter: ModelSubscriptionPlayerHistoryFilterInput
-  ) {
-    onUpdatePlayerHistory(filter: $filter) {
-      id
-      elo
-      wins
-      losses
-      timestamp
-      playerID
-      gameID
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onDeletePlayerHistory = /* GraphQL */ `
-  subscription OnDeletePlayerHistory(
-    $filter: ModelSubscriptionPlayerHistoryFilterInput
-  ) {
-    onDeletePlayerHistory(filter: $filter) {
-      id
-      elo
-      wins
-      losses
-      timestamp
-      playerID
-      gameID
       createdAt
       updatedAt
       __typename
@@ -195,6 +138,7 @@ export const onCreateLeague = /* GraphQL */ `
       }
       leagueName
       adminUID
+      breaks
       createdAt
       updatedAt
       __typename
@@ -215,6 +159,7 @@ export const onUpdateLeague = /* GraphQL */ `
       }
       leagueName
       adminUID
+      breaks
       createdAt
       updatedAt
       __typename
@@ -235,6 +180,7 @@ export const onDeleteLeague = /* GraphQL */ `
       }
       leagueName
       adminUID
+      breaks
       createdAt
       updatedAt
       __typename

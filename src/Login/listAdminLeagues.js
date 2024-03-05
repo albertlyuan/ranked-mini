@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { listAdminLeagues } from "../Database/league.js";
+import { aws_listAdminLeagues } from "../Database/league.js";
 import { useNavigate } from "react-router-dom";
 
 export default function AdminLeagues({adminuid}){
     const [adminleagues, setAdminleagues] = useState([])
     useEffect(()=>{
-        listAdminLeagues(adminuid).then(data=>{
+        aws_listAdminLeagues(adminuid).then(data=>{
             const leagueids = []
             for (const league of data["data"]["listLeagues"]["items"]){
                 leagueids.push(league)

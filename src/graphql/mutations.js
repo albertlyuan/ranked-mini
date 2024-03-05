@@ -13,10 +13,6 @@ export const createPlayer = /* GraphQL */ `
       losses
       leagueID
       displayName
-      PlayerHistories {
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -35,10 +31,6 @@ export const updatePlayer = /* GraphQL */ `
       losses
       leagueID
       displayName
-      PlayerHistories {
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -57,10 +49,6 @@ export const deletePlayer = /* GraphQL */ `
       losses
       leagueID
       displayName
-      PlayerHistories {
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -75,18 +63,21 @@ export const createGame = /* GraphQL */ `
     createGame(input: $input, condition: $condition) {
       id
       timestamp
+      loser1data
+      loser2data
+      loser3data
+      winner1data
+      winner2data
+      winner3data
+      winnerPulled
+      pullfactor
+      leagueID
       loser1
       loser2
       loser3
       winner1
       winner2
       winner3
-      winnerPulled
-      leagueID
-      PlayerHistories {
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -101,18 +92,21 @@ export const updateGame = /* GraphQL */ `
     updateGame(input: $input, condition: $condition) {
       id
       timestamp
+      loser1data
+      loser2data
+      loser3data
+      winner1data
+      winner2data
+      winner3data
+      winnerPulled
+      pullfactor
+      leagueID
       loser1
       loser2
       loser3
       winner1
       winner2
       winner3
-      winnerPulled
-      leagueID
-      PlayerHistories {
-        nextToken
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -127,75 +121,21 @@ export const deleteGame = /* GraphQL */ `
     deleteGame(input: $input, condition: $condition) {
       id
       timestamp
+      loser1data
+      loser2data
+      loser3data
+      winner1data
+      winner2data
+      winner3data
+      winnerPulled
+      pullfactor
+      leagueID
       loser1
       loser2
       loser3
       winner1
       winner2
       winner3
-      winnerPulled
-      leagueID
-      PlayerHistories {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const createPlayerHistory = /* GraphQL */ `
-  mutation CreatePlayerHistory(
-    $input: CreatePlayerHistoryInput!
-    $condition: ModelPlayerHistoryConditionInput
-  ) {
-    createPlayerHistory(input: $input, condition: $condition) {
-      id
-      elo
-      wins
-      losses
-      timestamp
-      playerID
-      gameID
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const updatePlayerHistory = /* GraphQL */ `
-  mutation UpdatePlayerHistory(
-    $input: UpdatePlayerHistoryInput!
-    $condition: ModelPlayerHistoryConditionInput
-  ) {
-    updatePlayerHistory(input: $input, condition: $condition) {
-      id
-      elo
-      wins
-      losses
-      timestamp
-      playerID
-      gameID
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const deletePlayerHistory = /* GraphQL */ `
-  mutation DeletePlayerHistory(
-    $input: DeletePlayerHistoryInput!
-    $condition: ModelPlayerHistoryConditionInput
-  ) {
-    deletePlayerHistory(input: $input, condition: $condition) {
-      id
-      elo
-      wins
-      losses
-      timestamp
-      playerID
-      gameID
       createdAt
       updatedAt
       __typename
@@ -219,6 +159,7 @@ export const createLeague = /* GraphQL */ `
       }
       leagueName
       adminUID
+      breaks
       createdAt
       updatedAt
       __typename
@@ -242,6 +183,7 @@ export const updateLeague = /* GraphQL */ `
       }
       leagueName
       adminUID
+      breaks
       createdAt
       updatedAt
       __typename
@@ -265,6 +207,7 @@ export const deleteLeague = /* GraphQL */ `
       }
       leagueName
       adminUID
+      breaks
       createdAt
       updatedAt
       __typename

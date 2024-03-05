@@ -1,34 +1,48 @@
 import {useState, useEffect } from 'react';
-import { auth } from '../Firebase/auth.js';
 import ReportScore from './reportscore.js';
 import LoginButton from '../Login/loginbutton.js';
 import { useNavigate, useParams} from 'react-router-dom';
-import { leagueExists } from '../Firebase/database.js';
+
+import { aws_getLeague } from '../Database/league.js';
+import { aws_getLeaguePlayers } from '../Database/player.js';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 
-export default function ReportScoreWrapper({roster, setLeagueid}){
+export default function ReportScoreWrapper({ setLeagueid}){
+    const { user, signOut } = useAuthenticator((context) => [context.user]);
+    const [showReportscore, setShowReportscore] = useState(false)
+    
     const {leagueid} = useParams()
-    const [currUser, setCurrUser ] = useState()
+    const [roster, setRoster] = useState([])
+    setLeagueid(leagueid)
+    
+    if (user != null){
+        aws_getLeague(leagueid).then((leagueobj) =>{
+            const adminid = leagueobj['data']['getLeague']['adminUID']
+            setShowReportscore(adminid == user.userId)
+
+        }).then(()=>{
+            if (showReportscore){
+                aws_getLeaguePlayers(leagueid).then((data) =>{
+                    if (data==null){
+                        return []
+                    }
+                    setRoster(data['data']['listPlayers']['items'])
+                })
+            }
+        })
+    }
+
     const navigate = useNavigate();
-    leagueExists(leagueid).then((res)=>{
+    aws_getLeague(leagueid).then((res)=>{
         if (!res){
             setLeagueid(null)
             navigate("/page/not/found")
         }
     })
 
-    useEffect(()=>{
-        if (auth.currentUser){
-            setCurrUser(auth.currentUser)
-        }
-    },[auth.currentUser])
-
-    useEffect(() => {
-        setLeagueid(leagueid)
-    })
-
-    if(currUser){
-        if (leagueid == currUser.uid){
+    if(user != null){
+        if (showReportscore){
             return(
                 <ReportScore roster={roster} setLeagueid={setLeagueid}/>
             )
@@ -37,7 +51,7 @@ export default function ReportScoreWrapper({roster, setLeagueid}){
             return(
                 <>
                     <LoginButton text={`Log into [${leagueid}] to Report Score`} />
-                    <p>Currently logged into: {currUser.uid}</p>
+                    <p>Currently logged into: {user.userId}</p>
                 </>
             )
         }

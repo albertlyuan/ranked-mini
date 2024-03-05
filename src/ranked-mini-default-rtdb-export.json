@@ -15043,6 +15043,166 @@
         "winner_2": "-NqJKDCdhSAXQSBUtf6M",
         "winner_3": "-NqJK6APS0zRhKQ2cUpu",
         "winner_pulled": true
+      },
+      {
+        "loser_1": "-NqJKDCdhSAXQSBUtf6M",
+        "loser_2": "-NgoyZQsrZqrwvKbMBuu",
+        "loser_3": "-Ns-icAgqZnNWi4QMaju",
+        "timestamp": "2024-03-02T19:54:54.706Z",
+        "winner_1": "-NgoyXIJeJtWy2ZMtXUO",
+        "winner_2": "-NqJKHbeggAYpKmdprmd",
+        "winner_3": "-NqJKGG0BRJshZZsW_FY",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NgoyXIJeJtWy2ZMtXUO",
+        "loser_2": "-NqJKHbeggAYpKmdprmd",
+        "loser_3": "-NqJKGG0BRJshZZsW_FY",
+        "timestamp": "2024-03-02T19:55:58.286Z",
+        "winner_1": "-NgoyhzsMuLFxH5VnQL6",
+        "winner_2": "-NqJKDCdhSAXQSBUtf6M",
+        "winner_3": "-Ns-iemGxBqh5AJtHrTJ",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NgoyZQsrZqrwvKbMBuu",
+        "loser_2": "-Ns-icAgqZnNWi4QMaju",
+        "loser_3": "-NgoyhzsMuLFxH5VnQL6",
+        "timestamp": "2024-03-02T19:57:08.604Z",
+        "winner_1": "-NdGxDG7DkvaC2vJndxg",
+        "winner_2": "-NqJKHbeggAYpKmdprmd",
+        "winner_3": "-NqJKGG0BRJshZZsW_FY",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-NqJKDCdhSAXQSBUtf6M",
+        "loser_2": "-NgoyWjF0fXmCeM1l9Uf",
+        "loser_3": "-NqJKHbeggAYpKmdprmd",
+        "timestamp": "2024-03-02T19:58:44.596Z",
+        "winner_1": "-NgoyXIJeJtWy2ZMtXUO",
+        "winner_2": "-NdGxDG7DkvaC2vJndxg",
+        "winner_3": "-Ns-icAgqZnNWi4QMaju",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-Ns-icAgqZnNWi4QMaju",
+        "loser_2": "-NgoyZQsrZqrwvKbMBuu",
+        "loser_3": "-NgoyhzsMuLFxH5VnQL6",
+        "timestamp": "2024-03-02T20:19:56.410Z",
+        "winner_1": "-NqJKHbeggAYpKmdprmd",
+        "winner_2": "-NqJKGG0BRJshZZsW_FY",
+        "winner_3": "-NqJKDCdhSAXQSBUtf6M",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NdGxDG7DkvaC2vJndxg",
+        "loser_2": "-Ns-icAgqZnNWi4QMaju",
+        "loser_3": "-NqJKGG0BRJshZZsW_FY",
+        "timestamp": "2024-03-02T20:25:26.750Z",
+        "winner_1": "-NqJKHbeggAYpKmdprmd",
+        "winner_2": "-NgoyhzsMuLFxH5VnQL6",
+        "winner_3": "-NgoyWjF0fXmCeM1l9Uf",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-NqJKGG0BRJshZZsW_FY",
+        "loser_2": "-NqJKDCdhSAXQSBUtf6M",
+        "loser_3": "-Ns-icAgqZnNWi4QMaju",
+        "timestamp": "2024-03-02T20:28:36.352Z",
+        "winner_1": "-NqJKHbeggAYpKmdprmd",
+        "winner_2": "-NgoyZQsrZqrwvKbMBuu",
+        "winner_3": "-NgoyWjF0fXmCeM1l9Uf",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-NgoyZQsrZqrwvKbMBuu",
+        "loser_2": "-NqJKGG0BRJshZZsW_FY",
+        "loser_3": "-NqJKHbeggAYpKmdprmd",
+        "timestamp": "2024-03-02T20:36:55.408Z",
+        "winner_1": "-NdGxDG7DkvaC2vJndxg",
+        "winner_2": "-NgoyWjF0fXmCeM1l9Uf",
+        "winner_3": "-NqJKDCdhSAXQSBUtf6M",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NqJKDCdhSAXQSBUtf6M",
+        "loser_2": "-NgoyWjF0fXmCeM1l9Uf",
+        "loser_3": "-NqJKGG0BRJshZZsW_FY",
+        "timestamp": "2024-03-02T20:41:17.313Z",
+        "winner_1": "-NqJKHbeggAYpKmdprmd",
+        "winner_2": "-Ns-icAgqZnNWi4QMaju",
+        "winner_3": "-NdGxDG7DkvaC2vJndxg",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NdGxDG7DkvaC2vJndxg",
+        "loser_2": "-NgoyWjF0fXmCeM1l9Uf",
+        "loser_3": "-Ns-icAgqZnNWi4QMaju",
+        "timestamp": "2024-03-02T20:46:51.103Z",
+        "winner_1": "-NqJKHbeggAYpKmdprmd",
+        "winner_2": "-NgoyZQsrZqrwvKbMBuu",
+        "winner_3": "-NqJKGG0BRJshZZsW_FY",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-NgoyZQsrZqrwvKbMBuu",
+        "loser_2": "-NqJKGG0BRJshZZsW_FY",
+        "loser_3": "-NqJKHbeggAYpKmdprmd",
+        "timestamp": "2024-03-02T21:30:48.899Z",
+        "winner_1": "-NgoyWjF0fXmCeM1l9Uf",
+        "winner_2": "-NgoyhzsMuLFxH5VnQL6",
+        "winner_3": "-NqJKDCdhSAXQSBUtf6M",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NgoyXIJeJtWy2ZMtXUO",
+        "loser_2": "-NgoyWjF0fXmCeM1l9Uf",
+        "loser_3": "-NgoyhzsMuLFxH5VnQL6",
+        "timestamp": "2024-03-02T21:32:00.935Z",
+        "winner_1": "-Ns-icAgqZnNWi4QMaju",
+        "winner_2": "-NqJKGG0BRJshZZsW_FY",
+        "winner_3": "-NqJKHbeggAYpKmdprmd",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NgoyXIJeJtWy2ZMtXUO",
+        "loser_2": "-NqJKDCdhSAXQSBUtf6M",
+        "loser_3": "-Ns-iemGxBqh5AJtHrTJ",
+        "timestamp": "2024-03-02T21:34:28.458Z",
+        "winner_1": "-NgoyWjF0fXmCeM1l9Uf",
+        "winner_2": "-NdGxDG7DkvaC2vJndxg",
+        "winner_3": "-NgoyZQsrZqrwvKbMBuu",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-Ns-icAgqZnNWi4QMaju",
+        "loser_2": "-NdGxDG7DkvaC2vJndxg",
+        "loser_3": "-NqJKDCdhSAXQSBUtf6M",
+        "timestamp": "2024-03-02T21:35:17.418Z",
+        "winner_1": "-NqJKHbeggAYpKmdprmd",
+        "winner_2": "-NgoyhzsMuLFxH5VnQL6",
+        "winner_3": "-NqJKGG0BRJshZZsW_FY",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NqJKHbeggAYpKmdprmd",
+        "loser_2": "-NgoyXIJeJtWy2ZMtXUO",
+        "loser_3": "-NgoyWjF0fXmCeM1l9Uf",
+        "timestamp": "2024-03-02T21:37:53.647Z",
+        "winner_1": "-NgoyZQsrZqrwvKbMBuu",
+        "winner_2": "-NdGxDG7DkvaC2vJndxg",
+        "winner_3": "-NqJKDCdhSAXQSBUtf6M",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NqJKHbeggAYpKmdprmd",
+        "loser_2": "-NdGxDG7DkvaC2vJndxg",
+        "loser_3": "-NqJKGG0BRJshZZsW_FY",
+        "timestamp": "2024-03-02T21:39:44.789Z",
+        "winner_1": "-NgoyWjF0fXmCeM1l9Uf",
+        "winner_2": "-NgoyhzsMuLFxH5VnQL6",
+        "winner_3": "-Ns-icAgqZnNWi4QMaju",
+        "winner_pulled": false
       }
     ],
     "player_history": {
@@ -15136,6 +15296,106 @@
           "win_status": true,
           "winner_pulled": true,
           "wins": 3
+        },
+        "25": {
+          "elo": 440.71506263420315,
+          "game_id": 25,
+          "losses": 3,
+          "name": "-NdGxDG7DkvaC2vJndxg",
+          "timestamp": "2024-03-02T19:57:08.604Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 4
+        },
+        "26": {
+          "elo": 472.86857173405184,
+          "game_id": 26,
+          "losses": 3,
+          "name": "-NdGxDG7DkvaC2vJndxg",
+          "timestamp": "2024-03-02T19:58:44.596Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 5
+        },
+        "28": {
+          "elo": 443.00822230140096,
+          "game_id": 28,
+          "losses": 4,
+          "name": "-NdGxDG7DkvaC2vJndxg",
+          "timestamp": "2024-03-02T20:25:26.750Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 5
+        },
+        "30": {
+          "elo": 472.97467225176933,
+          "game_id": 30,
+          "losses": 4,
+          "name": "-NdGxDG7DkvaC2vJndxg",
+          "timestamp": "2024-03-02T20:36:55.408Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 7
+        },
+        "31": {
+          "elo": 481.45472987073003,
+          "game_id": 31,
+          "losses": 4,
+          "name": "-NdGxDG7DkvaC2vJndxg",
+          "timestamp": "2024-03-02T20:41:17.313Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 8
+        },
+        "32": {
+          "elo": 465.72929202348183,
+          "game_id": 32,
+          "losses": 5,
+          "name": "-NdGxDG7DkvaC2vJndxg",
+          "timestamp": "2024-03-02T20:46:51.103Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 8
+        },
+        "35": {
+          "elo": 479.3139777966277,
+          "game_id": 35,
+          "losses": 5,
+          "name": "-NdGxDG7DkvaC2vJndxg",
+          "timestamp": "2024-03-02T21:34:28.458Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 9
+        },
+        "36": {
+          "elo": 464.2778541972071,
+          "game_id": 36,
+          "losses": 6,
+          "name": "-NdGxDG7DkvaC2vJndxg",
+          "timestamp": "2024-03-02T21:35:17.418Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 9
+        },
+        "37": {
+          "elo": 483.71371498584966,
+          "game_id": 37,
+          "losses": 6,
+          "name": "-NdGxDG7DkvaC2vJndxg",
+          "timestamp": "2024-03-02T21:37:53.647Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 10
+        },
+        "38": {
+          "elo": 466.1923116990175,
+          "game_id": 38,
+          "losses": 7,
+          "name": "-NdGxDG7DkvaC2vJndxg",
+          "timestamp": "2024-03-02T21:39:44.789Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 10
         },
         "-1": {
           "elo": 400,
@@ -15287,6 +15547,116 @@
           "winner_pulled": true,
           "wins": 3
         },
+        "26": {
+          "elo": 437.251955735141,
+          "game_id": 26,
+          "losses": 2,
+          "name": "-NgoyWjF0fXmCeM1l9Uf",
+          "timestamp": "2024-03-02T19:58:44.596Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 3
+        },
+        "28": {
+          "elo": 469.3765732974952,
+          "game_id": 28,
+          "losses": 2,
+          "name": "-NgoyWjF0fXmCeM1l9Uf",
+          "timestamp": "2024-03-02T20:25:26.750Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 4
+        },
+        "29": {
+          "elo": 593.1002692427834,
+          "game_id": 29,
+          "losses": 2,
+          "name": "-NgoyWjF0fXmCeM1l9Uf",
+          "timestamp": "2024-03-02T20:28:36.352Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 6
+        },
+        "30": {
+          "elo": 598.4441621297916,
+          "game_id": 30,
+          "losses": 2,
+          "name": "-NgoyWjF0fXmCeM1l9Uf",
+          "timestamp": "2024-03-02T20:36:55.408Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 8
+        },
+        "31": {
+          "elo": 577.2815832132518,
+          "game_id": 31,
+          "losses": 3,
+          "name": "-NgoyWjF0fXmCeM1l9Uf",
+          "timestamp": "2024-03-02T20:41:17.313Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 8
+        },
+        "32": {
+          "elo": 561.5561453660035,
+          "game_id": 32,
+          "losses": 4,
+          "name": "-NgoyWjF0fXmCeM1l9Uf",
+          "timestamp": "2024-03-02T20:46:51.103Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 8
+        },
+        "33": {
+          "elo": 569.3322620209834,
+          "game_id": 33,
+          "losses": 4,
+          "name": "-NgoyWjF0fXmCeM1l9Uf",
+          "timestamp": "2024-03-02T21:30:48.899Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 9
+        },
+        "34": {
+          "elo": 542.0158518143506,
+          "game_id": 34,
+          "losses": 5,
+          "name": "-NgoyWjF0fXmCeM1l9Uf",
+          "timestamp": "2024-03-02T21:32:00.935Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 9
+        },
+        "35": {
+          "elo": 551.6550803214163,
+          "game_id": 35,
+          "losses": 5,
+          "name": "-NgoyWjF0fXmCeM1l9Uf",
+          "timestamp": "2024-03-02T21:34:28.458Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 10
+        },
+        "37": {
+          "elo": 526.4515913025714,
+          "game_id": 37,
+          "losses": 6,
+          "name": "-NgoyWjF0fXmCeM1l9Uf",
+          "timestamp": "2024-03-02T21:37:53.647Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 10
+        },
+        "38": {
+          "elo": 539.916983431368,
+          "game_id": 38,
+          "losses": 6,
+          "name": "-NgoyWjF0fXmCeM1l9Uf",
+          "timestamp": "2024-03-02T21:39:44.789Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 11
+        },
         "-1": {
           "elo": 400,
           "game_id": -1,
@@ -15417,6 +15787,66 @@
           "winner_pulled": true,
           "wins": 10
         },
+        "23": {
+          "elo": 594.8113583754317,
+          "game_id": 23,
+          "losses": 2,
+          "name": "-NgoyXIJeJtWy2ZMtXUO",
+          "timestamp": "2024-03-02T19:54:54.706Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 11
+        },
+        "24": {
+          "elo": 572.6531121822405,
+          "game_id": 24,
+          "losses": 3,
+          "name": "-NgoyXIJeJtWy2ZMtXUO",
+          "timestamp": "2024-03-02T19:55:58.286Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 11
+        },
+        "26": {
+          "elo": 582.9200766311338,
+          "game_id": 26,
+          "losses": 3,
+          "name": "-NgoyXIJeJtWy2ZMtXUO",
+          "timestamp": "2024-03-02T19:58:44.596Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 12
+        },
+        "34": {
+          "elo": 555.6036664245011,
+          "game_id": 34,
+          "losses": 4,
+          "name": "-NgoyXIJeJtWy2ZMtXUO",
+          "timestamp": "2024-03-02T21:32:00.935Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 12
+        },
+        "35": {
+          "elo": 539.1072920331773,
+          "game_id": 35,
+          "losses": 5,
+          "name": "-NgoyXIJeJtWy2ZMtXUO",
+          "timestamp": "2024-03-02T21:34:28.458Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 12
+        },
+        "37": {
+          "elo": 514.4772677175449,
+          "game_id": 37,
+          "losses": 6,
+          "name": "-NgoyXIJeJtWy2ZMtXUO",
+          "timestamp": "2024-03-02T21:37:53.647Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 12
+        },
         "-1": {
           "elo": 400,
           "game_id": -1,
@@ -15546,6 +15976,96 @@
           "win_status": false,
           "winner_pulled": true,
           "wins": 4
+        },
+        "23": {
+          "elo": 403.78486739279793,
+          "game_id": 23,
+          "losses": 4,
+          "name": "-NgoyZQsrZqrwvKbMBuu",
+          "timestamp": "2024-03-02T19:54:54.706Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 4
+        },
+        "25": {
+          "elo": 375.1170227451994,
+          "game_id": 25,
+          "losses": 5,
+          "name": "-NgoyZQsrZqrwvKbMBuu",
+          "timestamp": "2024-03-02T19:57:08.604Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 4
+        },
+        "27": {
+          "elo": 346.356451678947,
+          "game_id": 27,
+          "losses": 6,
+          "name": "-NgoyZQsrZqrwvKbMBuu",
+          "timestamp": "2024-03-02T20:19:56.410Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 4
+        },
+        "29": {
+          "elo": 444.9197984753523,
+          "game_id": 29,
+          "losses": 6,
+          "name": "-NgoyZQsrZqrwvKbMBuu",
+          "timestamp": "2024-03-02T20:28:36.352Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 6
+        },
+        "30": {
+          "elo": 404.3185797939034,
+          "game_id": 30,
+          "losses": 8,
+          "name": "-NgoyZQsrZqrwvKbMBuu",
+          "timestamp": "2024-03-02T20:36:55.408Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 6
+        },
+        "32": {
+          "elo": 420.92182277786674,
+          "game_id": 32,
+          "losses": 8,
+          "name": "-NgoyZQsrZqrwvKbMBuu",
+          "timestamp": "2024-03-02T20:46:51.103Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 7
+        },
+        "33": {
+          "elo": 404.0992019583914,
+          "game_id": 33,
+          "losses": 9,
+          "name": "-NgoyZQsrZqrwvKbMBuu",
+          "timestamp": "2024-03-02T21:30:48.899Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 7
+        },
+        "35": {
+          "elo": 420.8977505121975,
+          "game_id": 35,
+          "losses": 9,
+          "name": "-NgoyZQsrZqrwvKbMBuu",
+          "timestamp": "2024-03-02T21:34:28.458Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 8
+        },
+        "37": {
+          "elo": 442.30590685957435,
+          "game_id": 37,
+          "losses": 9,
+          "name": "-NgoyZQsrZqrwvKbMBuu",
+          "timestamp": "2024-03-02T21:37:53.647Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 9
         },
         "-1": {
           "elo": 400,
@@ -15867,6 +16387,86 @@
           "winner_pulled": true,
           "wins": 6
         },
+        "24": {
+          "elo": 431.03204775868045,
+          "game_id": 24,
+          "losses": 8,
+          "name": "-NgoyhzsMuLFxH5VnQL6",
+          "timestamp": "2024-03-02T19:55:58.286Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 7
+        },
+        "25": {
+          "elo": 415.7724438539168,
+          "game_id": 25,
+          "losses": 9,
+          "name": "-NgoyhzsMuLFxH5VnQL6",
+          "timestamp": "2024-03-02T19:57:08.604Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 7
+        },
+        "27": {
+          "elo": 399.65125023865306,
+          "game_id": 27,
+          "losses": 10,
+          "name": "-NgoyhzsMuLFxH5VnQL6",
+          "timestamp": "2024-03-02T20:19:56.410Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 7
+        },
+        "28": {
+          "elo": 417.4376567906854,
+          "game_id": 28,
+          "losses": 10,
+          "name": "-NgoyhzsMuLFxH5VnQL6",
+          "timestamp": "2024-03-02T20:25:26.750Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 8
+        },
+        "33": {
+          "elo": 432.57289748438785,
+          "game_id": 33,
+          "losses": 10,
+          "name": "-NgoyhzsMuLFxH5VnQL6",
+          "timestamp": "2024-03-02T21:30:48.899Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 9
+        },
+        "34": {
+          "elo": 411.26662491586154,
+          "game_id": 34,
+          "losses": 11,
+          "name": "-NgoyhzsMuLFxH5VnQL6",
+          "timestamp": "2024-03-02T21:32:00.935Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 9
+        },
+        "36": {
+          "elo": 423.4845031449719,
+          "game_id": 36,
+          "losses": 11,
+          "name": "-NgoyhzsMuLFxH5VnQL6",
+          "timestamp": "2024-03-02T21:35:17.418Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 10
+        },
+        "38": {
+          "elo": 441.6566833415093,
+          "game_id": 38,
+          "losses": 11,
+          "name": "-NgoyhzsMuLFxH5VnQL6",
+          "timestamp": "2024-03-02T21:39:44.789Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 11
+        },
         "-1": {
           "elo": 400,
           "game_id": -1,
@@ -16147,6 +16747,116 @@
           "winner_pulled": true,
           "wins": 3
         },
+        "23": {
+          "elo": 289.73598614124705,
+          "game_id": 23,
+          "losses": 9,
+          "name": "-NqJKDCdhSAXQSBUtf6M",
+          "timestamp": "2024-03-02T19:54:54.706Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 3
+        },
+        "24": {
+          "elo": 315.1515204603402,
+          "game_id": 24,
+          "losses": 9,
+          "name": "-NqJKDCdhSAXQSBUtf6M",
+          "timestamp": "2024-03-02T19:55:58.286Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 4
+        },
+        "26": {
+          "elo": 306.2666789534843,
+          "game_id": 26,
+          "losses": 10,
+          "name": "-NqJKDCdhSAXQSBUtf6M",
+          "timestamp": "2024-03-02T19:58:44.596Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 4
+        },
+        "27": {
+          "elo": 327.03466177573614,
+          "game_id": 27,
+          "losses": 10,
+          "name": "-NqJKDCdhSAXQSBUtf6M",
+          "timestamp": "2024-03-02T20:19:56.410Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 5
+        },
+        "29": {
+          "elo": 270.521976330312,
+          "game_id": 29,
+          "losses": 12,
+          "name": "-NqJKDCdhSAXQSBUtf6M",
+          "timestamp": "2024-03-02T20:28:36.352Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 5
+        },
+        "30": {
+          "elo": 310.90393061938016,
+          "game_id": 30,
+          "losses": 12,
+          "name": "-NqJKDCdhSAXQSBUtf6M",
+          "timestamp": "2024-03-02T20:36:55.408Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 7
+        },
+        "31": {
+          "elo": 296.6503950172543,
+          "game_id": 31,
+          "losses": 13,
+          "name": "-NqJKDCdhSAXQSBUtf6M",
+          "timestamp": "2024-03-02T20:41:17.313Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 7
+        },
+        "33": {
+          "elo": 317.7076714699062,
+          "game_id": 33,
+          "losses": 13,
+          "name": "-NqJKDCdhSAXQSBUtf6M",
+          "timestamp": "2024-03-02T21:30:48.899Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 8
+        },
+        "35": {
+          "elo": 308.116363464197,
+          "game_id": 35,
+          "losses": 14,
+          "name": "-NqJKDCdhSAXQSBUtf6M",
+          "timestamp": "2024-03-02T21:34:28.458Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 8
+        },
+        "36": {
+          "elo": 296.69191666544236,
+          "game_id": 36,
+          "losses": 15,
+          "name": "-NqJKDCdhSAXQSBUtf6M",
+          "timestamp": "2024-03-02T21:35:17.418Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 8
+        },
+        "37": {
+          "elo": 322.6107614689904,
+          "game_id": 37,
+          "losses": 15,
+          "name": "-NqJKDCdhSAXQSBUtf6M",
+          "timestamp": "2024-03-02T21:37:53.647Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 9
+        },
         "-1": {
           "elo": 400,
           "game_id": -1,
@@ -16367,6 +17077,136 @@
           "winner_pulled": true,
           "wins": 5
         },
+        "23": {
+          "elo": 400.2995565333635,
+          "game_id": 23,
+          "losses": 7,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T19:54:54.706Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 6
+        },
+        "24": {
+          "elo": 383.5211038323533,
+          "game_id": 24,
+          "losses": 8,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T19:55:58.286Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 6
+        },
+        "25": {
+          "elo": 401.3771056385605,
+          "game_id": 25,
+          "losses": 8,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T19:57:08.604Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 7
+        },
+        "27": {
+          "elo": 417.91406000119946,
+          "game_id": 27,
+          "losses": 8,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T20:19:56.410Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 8
+        },
+        "28": {
+          "elo": 403.92760411255676,
+          "game_id": 28,
+          "losses": 9,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T20:25:26.750Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 8
+        },
+        "29": {
+          "elo": 338.1071454582915,
+          "game_id": 29,
+          "losses": 11,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T20:28:36.352Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 8
+        },
+        "30": {
+          "elo": 310.0241541187811,
+          "game_id": 30,
+          "losses": 13,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T20:36:55.408Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 8
+        },
+        "31": {
+          "elo": 295.8181779516209,
+          "game_id": 31,
+          "losses": 14,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T20:41:17.313Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 8
+        },
+        "32": {
+          "elo": 316.2924840170996,
+          "game_id": 32,
+          "losses": 14,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T20:46:51.103Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 9
+        },
+        "33": {
+          "elo": 304.6602733874098,
+          "game_id": 33,
+          "losses": 15,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T21:30:48.899Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 9
+        },
+        "34": {
+          "elo": 329.90770020968114,
+          "game_id": 34,
+          "losses": 15,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T21:32:00.935Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 10
+        },
+        "36": {
+          "elo": 346.3829142701524,
+          "game_id": 36,
+          "losses": 15,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T21:35:17.418Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 11
+        },
+        "38": {
+          "elo": 334.49867167841353,
+          "game_id": 38,
+          "losses": 16,
+          "name": "-NqJKGG0BRJshZZsW_FY",
+          "timestamp": "2024-03-02T21:39:44.789Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 11
+        },
         "-1": {
           "elo": 400,
           "game_id": -1,
@@ -16517,6 +17357,156 @@
           "winner_pulled": true,
           "wins": 8
         },
+        "23": {
+          "elo": 487.2145933403339,
+          "game_id": 23,
+          "losses": 6,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T19:54:54.706Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 9
+        },
+        "24": {
+          "elo": 466.57038700333413,
+          "game_id": 24,
+          "losses": 7,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T19:55:58.286Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 9
+        },
+        "25": {
+          "elo": 480.61996870975736,
+          "game_id": 25,
+          "losses": 7,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T19:57:08.604Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 10
+        },
+        "26": {
+          "elo": 466.40250442195463,
+          "game_id": 26,
+          "losses": 8,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T19:58:44.596Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 10
+        },
+        "27": {
+          "elo": 479.96427166259485,
+          "game_id": 27,
+          "losses": 8,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T20:19:56.410Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 11
+        },
+        "28": {
+          "elo": 494.0685521583697,
+          "game_id": 28,
+          "losses": 8,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T20:25:26.750Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 12
+        },
+        "29": {
+          "elo": 554.3699309521623,
+          "game_id": 29,
+          "losses": 8,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T20:28:36.352Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 14
+        },
+        "30": {
+          "elo": 510.485334381111,
+          "game_id": 30,
+          "losses": 10,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T20:36:55.408Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 14
+        },
+        "31": {
+          "elo": 516.7790288716573,
+          "game_id": 31,
+          "losses": 10,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T20:41:17.313Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 15
+        },
+        "32": {
+          "elo": 528.8928310665186,
+          "game_id": 32,
+          "losses": 10,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T20:46:51.103Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 16
+        },
+        "33": {
+          "elo": 510.8328809692239,
+          "game_id": 33,
+          "losses": 11,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T21:30:48.899Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 16
+        },
+        "34": {
+          "elo": 527.2552614476093,
+          "game_id": 34,
+          "losses": 11,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T21:32:00.935Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 17
+        },
+        "36": {
+          "elo": 533.7752657188217,
+          "game_id": 36,
+          "losses": 11,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T21:35:17.418Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 18
+        },
+        "37": {
+          "elo": 509.3933893365537,
+          "game_id": 37,
+          "losses": 12,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T21:37:53.647Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 18
+        },
+        "38": {
+          "elo": 491.87198604972156,
+          "game_id": 38,
+          "losses": 13,
+          "name": "-NqJKHbeggAYpKmdprmd",
+          "timestamp": "2024-03-02T21:39:44.789Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 18
+        },
         "-1": {
           "elo": 400,
           "game_id": -1,
@@ -16625,6 +17615,156 @@
           "timestamp": "2024-02-10T18:44:20.451Z",
           "wins": 0
         }
+      },
+      "-Ns-icAgqZnNWi4QMaju": {
+        "23": {
+          "elo": 378.5813546660241,
+          "game_id": 23,
+          "losses": 1,
+          "name": "-Ns-icAgqZnNWi4QMaju",
+          "timestamp": "2024-03-02T19:54:54.706Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 0
+        },
+        "25": {
+          "elo": 352.1884953094421,
+          "game_id": 25,
+          "losses": 2,
+          "name": "-Ns-icAgqZnNWi4QMaju",
+          "timestamp": "2024-03-02T19:57:08.604Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 0
+        },
+        "26": {
+          "elo": 392.3138932143214,
+          "game_id": 26,
+          "losses": 2,
+          "name": "-Ns-icAgqZnNWi4QMaju",
+          "timestamp": "2024-03-02T19:58:44.596Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 1
+        },
+        "27": {
+          "elo": 361.97906079745667,
+          "game_id": 27,
+          "losses": 3,
+          "name": "-Ns-icAgqZnNWi4QMaju",
+          "timestamp": "2024-03-02T20:19:56.410Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 1
+        },
+        "28": {
+          "elo": 338.93401895017314,
+          "game_id": 28,
+          "losses": 4,
+          "name": "-Ns-icAgqZnNWi4QMaju",
+          "timestamp": "2024-03-02T20:25:26.750Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 1
+        },
+        "29": {
+          "elo": 227.65422826992864,
+          "game_id": 29,
+          "losses": 6,
+          "name": "-Ns-icAgqZnNWi4QMaju",
+          "timestamp": "2024-03-02T20:28:36.352Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 1
+        },
+        "31": {
+          "elo": 271.7200612205064,
+          "game_id": 31,
+          "losses": 6,
+          "name": "-Ns-icAgqZnNWi4QMaju",
+          "timestamp": "2024-03-02T20:41:17.313Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 2
+        },
+        "32": {
+          "elo": 255.438900740511,
+          "game_id": 32,
+          "losses": 7,
+          "name": "-Ns-icAgqZnNWi4QMaju",
+          "timestamp": "2024-03-02T20:46:51.103Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 2
+        },
+        "34": {
+          "elo": 308.78039832277125,
+          "game_id": 34,
+          "losses": 7,
+          "name": "-Ns-icAgqZnNWi4QMaju",
+          "timestamp": "2024-03-02T21:32:00.935Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 3
+        },
+        "36": {
+          "elo": 297.32590205978875,
+          "game_id": 36,
+          "losses": 8,
+          "name": "-Ns-icAgqZnNWi4QMaju",
+          "timestamp": "2024-03-02T21:35:17.418Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 3
+        },
+        "38": {
+          "elo": 320.7162318076569,
+          "game_id": 38,
+          "losses": 8,
+          "name": "-Ns-icAgqZnNWi4QMaju",
+          "timestamp": "2024-03-02T21:39:44.789Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 4
+        },
+        "-1": {
+          "elo": 400,
+          "game_id": -1,
+          "losses": 0,
+          "name": "-Ns-icAgqZnNWi4QMaju",
+          "timestamp": "2024-03-02T19:53:26.981Z",
+          "wins": 0
+        }
+      },
+      "-Ns-iemGxBqh5AJtHrTJ": {
+        "24": {
+          "elo": 442.98926164260115,
+          "game_id": 24,
+          "losses": 0,
+          "name": "-Ns-iemGxBqh5AJtHrTJ",
+          "timestamp": "2024-03-02T19:55:58.286Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 1
+        },
+        "35": {
+          "elo": 412.09613477935085,
+          "game_id": 35,
+          "losses": 1,
+          "name": "-Ns-iemGxBqh5AJtHrTJ",
+          "timestamp": "2024-03-02T21:34:28.458Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 1
+        },
+        "-1": {
+          "elo": 400,
+          "game_id": -1,
+          "losses": 0,
+          "name": "-Ns-iemGxBqh5AJtHrTJ",
+          "timestamp": "2024-03-02T19:53:37.641Z",
+          "wins": 0
+        }
       }
     },
     "player_now": {
@@ -16635,10 +17775,10 @@
         "wins": 2
       },
       "-NdGxDG7DkvaC2vJndxg": {
-        "elo": 407.16518792389394,
-        "losses": 3,
-        "most_recent_game": 7,
-        "wins": 3
+        "elo": 466.1923116990175,
+        "losses": 7,
+        "most_recent_game": 38,
+        "wins": 10
       },
       "-NdSGs_TBN_MxMjA0Btp": {
         "elo": 369.43965207156776,
@@ -16653,16 +17793,16 @@
         "wins": 2
       },
       "-NgoyWjF0fXmCeM1l9Uf": {
-        "elo": 465.68688431074645,
-        "losses": 1,
-        "most_recent_game": 7,
-        "wins": 3
+        "elo": 539.916983431368,
+        "losses": 6,
+        "most_recent_game": 38,
+        "wins": 11
       },
       "-NgoyXIJeJtWy2ZMtXUO": {
-        "elo": 586.9705587892813,
-        "losses": 2,
-        "most_recent_game": 20,
-        "wins": 10
+        "elo": 514.4772677175449,
+        "losses": 6,
+        "most_recent_game": 37,
+        "wins": 12
       },
       "-NgoyY8wUpZyouK_X3hU": {
         "elo": 403.3737534644787,
@@ -16671,10 +17811,10 @@
         "wins": 2
       },
       "-NgoyZQsrZqrwvKbMBuu": {
-        "elo": 425.20351272677385,
-        "losses": 3,
-        "most_recent_game": 16,
-        "wins": 4
+        "elo": 442.30590685957435,
+        "losses": 9,
+        "most_recent_game": 37,
+        "wins": 9
       },
       "-NgoyaT-TSuJ-0J9m4eY": {
         "elo": 346.96207262847156,
@@ -16701,10 +17841,10 @@
         "wins": 1
       },
       "-NgoyhzsMuLFxH5VnQL6": {
-        "elo": 409.9452997980702,
-        "losses": 8,
-        "most_recent_game": 21,
-        "wins": 6
+        "elo": 441.6566833415093,
+        "losses": 11,
+        "most_recent_game": 38,
+        "wins": 11
       },
       "-NgoyiPhCC2qa1xwpB8G": {
         "elo": 406.7117225213577,
@@ -16719,10 +17859,10 @@
         "wins": 6
       },
       "-NqJKDCdhSAXQSBUtf6M": {
-        "elo": 296.96693166290737,
-        "losses": 8,
-        "most_recent_game": 22,
-        "wins": 3
+        "elo": 322.6107614689904,
+        "losses": 15,
+        "most_recent_game": 37,
+        "wins": 9
       },
       "-NqJKEkdUcBU4zJoVmFM": {
         "elo": 472.53767585114025,
@@ -16731,32 +17871,46 @@
         "wins": 5
       },
       "-NqJKGG0BRJshZZsW_FY": {
-        "elo": 383.9528976686764,
-        "losses": 7,
-        "most_recent_game": 22,
-        "wins": 5
+        "elo": 334.49867167841353,
+        "losses": 16,
+        "most_recent_game": 38,
+        "wins": 11
       },
       "-NqJKHbeggAYpKmdprmd": {
-        "elo": 474.98781405191795,
-        "losses": 6,
-        "most_recent_game": 22,
-        "wins": 8
+        "elo": 491.87198604972156,
+        "losses": 13,
+        "most_recent_game": 38,
+        "wins": 18
       },
       "-NqJKQ0z_jhd9K2dNxLc": {
         "elo": 346.70165722500076,
         "losses": 6,
         "most_recent_game": 22,
         "wins": 3
+      },
+      "-Ns-icAgqZnNWi4QMaju": {
+        "elo": 320.7162318076569,
+        "losses": 8,
+        "most_recent_game": 38,
+        "wins": 4
+      },
+      "-Ns-iemGxBqh5AJtHrTJ": {
+        "elo": 412.09613477935085,
+        "losses": 1,
+        "most_recent_game": 35,
+        "wins": 1
       }
     },
     "player_uid": {
       "andy vande berg": "-Ngoyg8277F4EJhN5NSM",
       "bert": "-NdGxDFrv7IlQqL_S_lO",
       "caleb": "-NqJKHbeggAYpKmdprmd",
+      "cam": "-Ns-icAgqZnNWi4QMaju",
       "clint": "-NgoyXIJeJtWy2ZMtXUO",
       "coffin": "-NgoyW2GYgqgSnrsvX1O",
       "dillon": "-NqJKGG0BRJshZZsW_FY",
       "ferriter": "-NgoyaT-TSuJ-0J9m4eY",
+      "harrison": "-Ns-iemGxBqh5AJtHrTJ",
       "house": "-NqJKQ0z_jhd9K2dNxLc",
       "huffman": "-NqJKEkdUcBU4zJoVmFM",
       "jacob louie": "-NgoyZQsrZqrwvKbMBuu",
@@ -18463,6 +19617,216 @@
         "winner_2": "-NdGxDFlpODF9tIw3XL8",
         "winner_3": "-NdGxDFrv7IlQqL_S_lO",
         "winner_pulled": false
+      },
+      {
+        "loser_1": "-NhOVYU6128w3EIed46g",
+        "loser_2": "-NdGxDFrv7IlQqL_S_lO",
+        "loser_3": "-NdSDoFMJ_sDGacVmvZA",
+        "timestamp": "2024-03-02T21:52:02.824Z",
+        "winner_1": "-NdGxDFlpODF9tIw3XL8",
+        "winner_2": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_3": "-NhxVW5p-kNB4ZzDx4Uo",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-NdGxDG4_x1ogPFMbMaN",
+        "loser_2": "-NhOVYU6128w3EIed46g",
+        "loser_3": "-NdSDsNlZ-deSDKeERiB",
+        "timestamp": "2024-03-02T21:52:30.122Z",
+        "winner_1": "-NdGxDFlpODF9tIw3XL8",
+        "winner_2": "-NhxVW5p-kNB4ZzDx4Uo",
+        "winner_3": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NdGxDFrv7IlQqL_S_lO",
+        "loser_2": "-NhOVYU6128w3EIed46g",
+        "loser_3": "-NdSDoFMJ_sDGacVmvZA",
+        "timestamp": "2024-03-02T21:53:07.218Z",
+        "winner_1": "-NdGxDFlpODF9tIw3XL8",
+        "winner_2": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_3": "-NdSDsNlZ-deSDKeERiB",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-NdGxDFlpODF9tIw3XL8",
+        "loser_2": "-NdSDoFMJ_sDGacVmvZA",
+        "loser_3": "-NdSDsNlZ-deSDKeERiB",
+        "timestamp": "2024-03-02T21:53:46.326Z",
+        "winner_1": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_2": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_3": "-NhxVW5p-kNB4ZzDx4Uo",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-NdGxDFlpODF9tIw3XL8",
+        "loser_2": "-NhxVW5p-kNB4ZzDx4Uo",
+        "loser_3": "-NhOVYU6128w3EIed46g",
+        "timestamp": "2024-03-02T21:54:36.001Z",
+        "winner_1": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_2": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_3": "-NdSDsNlZ-deSDKeERiB",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-NdSDsNlZ-deSDKeERiB",
+        "loser_2": "-NdSDoFMJ_sDGacVmvZA",
+        "loser_3": "-NgGQu3u9JvJCg9A1xOb",
+        "timestamp": "2024-03-02T21:55:03.803Z",
+        "winner_1": "-NdGxDFlpODF9tIw3XL8",
+        "winner_2": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_3": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NdGxDG4_x1ogPFMbMaN",
+        "loser_2": "-No8gw_GsQZSqEosbtL7",
+        "loser_3": "-NgGQu3u9JvJCg9A1xOb",
+        "timestamp": "2024-03-02T21:55:31.238Z",
+        "winner_1": "-NdGxDFlpODF9tIw3XL8",
+        "winner_2": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_3": "-NhxVW5p-kNB4ZzDx4Uo",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NdGxDFrv7IlQqL_S_lO",
+        "loser_2": "-NdSDoFMJ_sDGacVmvZA",
+        "loser_3": "-NdSDsNlZ-deSDKeERiB",
+        "timestamp": "2024-03-02T21:55:54.375Z",
+        "winner_1": "-NdGxDFlpODF9tIw3XL8",
+        "winner_2": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_3": "-NhOVYU6128w3EIed46g",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-NdSDoFMJ_sDGacVmvZA",
+        "loser_2": "-NhxVW5p-kNB4ZzDx4Uo",
+        "loser_3": "-NdSDsNlZ-deSDKeERiB",
+        "timestamp": "2024-03-02T21:56:26.504Z",
+        "winner_1": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_2": "-NdGxDFlpODF9tIw3XL8",
+        "winner_3": "-NgGQu3u9JvJCg9A1xOb",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NdGxDFlpODF9tIw3XL8",
+        "loser_2": "-NdSDoFMJ_sDGacVmvZA",
+        "loser_3": "-NhxVW5p-kNB4ZzDx4Uo",
+        "timestamp": "2024-03-02T21:56:54.894Z",
+        "winner_1": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_2": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_3": "-No8gw_GsQZSqEosbtL7",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NdGxDG4_x1ogPFMbMaN",
+        "loser_2": "-NdSDoFMJ_sDGacVmvZA",
+        "loser_3": "-NdSDsNlZ-deSDKeERiB",
+        "timestamp": "2024-03-02T21:57:27.183Z",
+        "winner_1": "-NdGxDFlpODF9tIw3XL8",
+        "winner_2": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_3": "-NgGQu3u9JvJCg9A1xOb",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-No8gw_GsQZSqEosbtL7",
+        "loser_2": "-NdGxDFrv7IlQqL_S_lO",
+        "loser_3": "-NhxVW5p-kNB4ZzDx4Uo",
+        "timestamp": "2024-03-02T21:57:54.691Z",
+        "winner_1": "-NdGxDFlpODF9tIw3XL8",
+        "winner_2": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_3": "-NgGQu3u9JvJCg9A1xOb",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-NdSDsNlZ-deSDKeERiB",
+        "loser_2": "-NdSDoFMJ_sDGacVmvZA",
+        "loser_3": "-NhxVW5p-kNB4ZzDx4Uo",
+        "timestamp": "2024-03-02T21:58:21.249Z",
+        "winner_1": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_2": "-NdGxDFlpODF9tIw3XL8",
+        "winner_3": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-NdGxDFlpODF9tIw3XL8",
+        "loser_2": "-NdGxDFrv7IlQqL_S_lO",
+        "loser_3": "-NgGQu3u9JvJCg9A1xOb",
+        "timestamp": "2024-03-02T21:58:44.136Z",
+        "winner_1": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_2": "-NdSDoFMJ_sDGacVmvZA",
+        "winner_3": "-NhxVW5p-kNB4ZzDx4Uo",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-No8gw_GsQZSqEosbtL7",
+        "loser_2": "-NdGxDFlpODF9tIw3XL8",
+        "loser_3": "-NdSDsNlZ-deSDKeERiB",
+        "timestamp": "2024-03-02T21:59:14.741Z",
+        "winner_1": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_2": "-NhxVW5p-kNB4ZzDx4Uo",
+        "winner_3": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NdGxDG4_x1ogPFMbMaN",
+        "loser_2": "-NdSDoFMJ_sDGacVmvZA",
+        "loser_3": "-No8gw_GsQZSqEosbtL7",
+        "timestamp": "2024-03-02T21:59:40.383Z",
+        "winner_1": "-NgGQu3u9JvJCg9A1xOb",
+        "winner_2": "-NhxVW5p-kNB4ZzDx4Uo",
+        "winner_3": "-NdGxDFlpODF9tIw3XL8",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NgGQu3u9JvJCg9A1xOb",
+        "loser_2": "-No8gw_GsQZSqEosbtL7",
+        "loser_3": "-NdSDsNlZ-deSDKeERiB",
+        "timestamp": "2024-03-02T22:00:05.241Z",
+        "winner_1": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_2": "-NdGxDFlpODF9tIw3XL8",
+        "winner_3": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_pulled": true
+      },
+      {
+        "loser_1": "-NdGxDFlpODF9tIw3XL8",
+        "loser_2": "-NgGQu3u9JvJCg9A1xOb",
+        "loser_3": "-No8gw_GsQZSqEosbtL7",
+        "timestamp": "2024-03-02T22:00:31.859Z",
+        "winner_1": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_2": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_3": "-NdSDsNlZ-deSDKeERiB",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NdSDsNlZ-deSDKeERiB",
+        "loser_2": "-NgGQu3u9JvJCg9A1xOb",
+        "loser_3": "-NdGxDFlpODF9tIw3XL8",
+        "timestamp": "2024-03-02T22:00:56.066Z",
+        "winner_1": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_2": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_3": "-No8gw_GsQZSqEosbtL7",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NdGxDFrv7IlQqL_S_lO",
+        "loser_2": "-NdSDsNlZ-deSDKeERiB",
+        "loser_3": "-No8gw_GsQZSqEosbtL7",
+        "timestamp": "2024-03-02T22:01:37.718Z",
+        "winner_1": "-NgGQu3u9JvJCg9A1xOb",
+        "winner_2": "-NdGxDFlpODF9tIw3XL8",
+        "winner_3": "-NdGxDG4_x1ogPFMbMaN",
+        "winner_pulled": false
+      },
+      {
+        "loser_1": "-NdGxDG4_x1ogPFMbMaN",
+        "loser_2": "-No8gw_GsQZSqEosbtL7",
+        "loser_3": "-NdSDsNlZ-deSDKeERiB",
+        "timestamp": "2024-03-02T22:01:58.887Z",
+        "winner_1": "-NdGxDFrv7IlQqL_S_lO",
+        "winner_2": "-NdGxDFlpODF9tIw3XL8",
+        "winner_3": "-NgGQu3u9JvJCg9A1xOb",
+        "winner_pulled": true
       }
     ],
     "player_history": {
@@ -19536,6 +20900,216 @@
           "win_status": true,
           "winner_pulled": false,
           "wins": 66
+        },
+        "169": {
+          "elo": 797.7194551616933,
+          "game_id": 169,
+          "losses": 41,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:52:02.824Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 67
+        },
+        "170": {
+          "elo": 815.455871787366,
+          "game_id": 170,
+          "losses": 41,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:52:30.122Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 68
+        },
+        "171": {
+          "elo": 828.8489977548209,
+          "game_id": 171,
+          "losses": 41,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:53:07.218Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 69
+        },
+        "172": {
+          "elo": 808.4362061600119,
+          "game_id": 172,
+          "losses": 42,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:53:46.326Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 69
+        },
+        "173": {
+          "elo": 785.6545676282611,
+          "game_id": 173,
+          "losses": 43,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:54:36.001Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 69
+        },
+        "174": {
+          "elo": 802.5637303965084,
+          "game_id": 174,
+          "losses": 43,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:55:03.803Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 70
+        },
+        "175": {
+          "elo": 820.0921235815163,
+          "game_id": 175,
+          "losses": 43,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:55:31.238Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 71
+        },
+        "176": {
+          "elo": 838.4467902431236,
+          "game_id": 176,
+          "losses": 43,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:55:54.375Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 72
+        },
+        "177": {
+          "elo": 855.0111941333603,
+          "game_id": 177,
+          "losses": 43,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:56:26.504Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 73
+        },
+        "178": {
+          "elo": 847.7795193184867,
+          "game_id": 178,
+          "losses": 44,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:56:54.894Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 73
+        },
+        "179": {
+          "elo": 862.5516596507115,
+          "game_id": 179,
+          "losses": 44,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:57:27.183Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 74
+        },
+        "180": {
+          "elo": 876.8530497221379,
+          "game_id": 180,
+          "losses": 44,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:57:54.691Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 75
+        },
+        "181": {
+          "elo": 883.8560582045046,
+          "game_id": 181,
+          "losses": 44,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:58:21.249Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 76
+        },
+        "182": {
+          "elo": 847.1804595786512,
+          "game_id": 182,
+          "losses": 45,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:58:44.136Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 76
+        },
+        "183": {
+          "elo": 841.5937435672554,
+          "game_id": 183,
+          "losses": 46,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:59:14.741Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 76
+        },
+        "184": {
+          "elo": 856.9693563942657,
+          "game_id": 184,
+          "losses": 46,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T21:59:40.383Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 77
+        },
+        "185": {
+          "elo": 863.350916170179,
+          "game_id": 185,
+          "losses": 46,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T22:00:05.241Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 78
+        },
+        "186": {
+          "elo": 855.9362139715455,
+          "game_id": 186,
+          "losses": 47,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T22:00:31.859Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 78
+        },
+        "187": {
+          "elo": 845.7892487425374,
+          "game_id": 187,
+          "losses": 48,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T22:00:56.066Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 78
+        },
+        "188": {
+          "elo": 859.4511357573205,
+          "game_id": 188,
+          "losses": 48,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T22:01:37.718Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 79
+        },
+        "189": {
+          "elo": 871.3929735990695,
+          "game_id": 189,
+          "losses": 48,
+          "name": "-NdGxDFlpODF9tIw3XL8",
+          "timestamp": "2024-03-02T22:01:58.887Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 80
         },
         "-1": {
           "elo": 400,
@@ -21116,6 +22690,206 @@
           "win_status": true,
           "winner_pulled": false,
           "wins": 71
+        },
+        "169": {
+          "elo": 768.5698014043503,
+          "game_id": 169,
+          "losses": 32,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:52:02.824Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 71
+        },
+        "170": {
+          "elo": 786.8816314058564,
+          "game_id": 170,
+          "losses": 32,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:52:30.122Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 72
+        },
+        "171": {
+          "elo": 767.3319207895734,
+          "game_id": 171,
+          "losses": 33,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:53:07.218Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 72
+        },
+        "172": {
+          "elo": 786.0855789924543,
+          "game_id": 172,
+          "losses": 33,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:53:46.326Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 73
+        },
+        "173": {
+          "elo": 805.2728919775676,
+          "game_id": 173,
+          "losses": 33,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:54:36.001Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 74
+        },
+        "174": {
+          "elo": 821.877178589499,
+          "game_id": 174,
+          "losses": 33,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:55:03.803Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 75
+        },
+        "175": {
+          "elo": 839.0644551452588,
+          "game_id": 175,
+          "losses": 33,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:55:31.238Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 76
+        },
+        "176": {
+          "elo": 814.5083281602843,
+          "game_id": 176,
+          "losses": 34,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:55:54.375Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 76
+        },
+        "177": {
+          "elo": 831.444042926709,
+          "game_id": 177,
+          "losses": 34,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:56:26.504Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 77
+        },
+        "178": {
+          "elo": 852.3013010657959,
+          "game_id": 178,
+          "losses": 34,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:56:54.894Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 78
+        },
+        "179": {
+          "elo": 866.7797555851852,
+          "game_id": 179,
+          "losses": 34,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:57:27.183Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 79
+        },
+        "180": {
+          "elo": 849.551437523458,
+          "game_id": 180,
+          "losses": 35,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:57:54.691Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 79
+        },
+        "181": {
+          "elo": 857.5732757350717,
+          "game_id": 181,
+          "losses": 35,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:58:21.249Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 80
+        },
+        "182": {
+          "elo": 821.3103171958812,
+          "game_id": 182,
+          "losses": 36,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:58:44.136Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 80
+        },
+        "183": {
+          "elo": 835.0667208353981,
+          "game_id": 183,
+          "losses": 36,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T21:59:14.741Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 81
+        },
+        "185": {
+          "elo": 842.1787452585224,
+          "game_id": 185,
+          "losses": 36,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T22:00:05.241Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 82
+        },
+        "186": {
+          "elo": 856.3388759543262,
+          "game_id": 186,
+          "losses": 36,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T22:00:31.859Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 83
+        },
+        "187": {
+          "elo": 871.5415218977209,
+          "game_id": 187,
+          "losses": 36,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T22:00:56.066Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 84
+        },
+        "188": {
+          "elo": 865.7585654346751,
+          "game_id": 188,
+          "losses": 37,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T22:01:37.718Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 84
+        },
+        "189": {
+          "elo": 877.3776645625948,
+          "game_id": 189,
+          "losses": 37,
+          "name": "-NdGxDFrv7IlQqL_S_lO",
+          "timestamp": "2024-03-02T22:01:58.887Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 85
         },
         "-1": {
           "elo": 400,
@@ -22817,6 +24591,206 @@
           "winner_pulled": false,
           "wins": 32
         },
+        "169": {
+          "elo": 692.1204889889254,
+          "game_id": 169,
+          "losses": 22,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:52:02.824Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 33
+        },
+        "170": {
+          "elo": 687.3567813809096,
+          "game_id": 170,
+          "losses": 23,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:52:30.122Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 33
+        },
+        "171": {
+          "elo": 709.5030985427737,
+          "game_id": 171,
+          "losses": 23,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:53:07.218Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 34
+        },
+        "172": {
+          "elo": 732.5725852073044,
+          "game_id": 172,
+          "losses": 23,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:53:46.326Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 35
+        },
+        "173": {
+          "elo": 755.7760835206523,
+          "game_id": 173,
+          "losses": 23,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:54:36.001Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 36
+        },
+        "174": {
+          "elo": 773.1927650209058,
+          "game_id": 174,
+          "losses": 23,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:55:03.803Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 37
+        },
+        "175": {
+          "elo": 769.304759633697,
+          "game_id": 175,
+          "losses": 24,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:55:31.238Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 37
+        },
+        "176": {
+          "elo": 791.7102528146913,
+          "game_id": 176,
+          "losses": 24,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:55:54.375Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 38
+        },
+        "178": {
+          "elo": 813.3739397984331,
+          "game_id": 178,
+          "losses": 24,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:56:54.894Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 39
+        },
+        "179": {
+          "elo": 796.5782112884654,
+          "game_id": 179,
+          "losses": 25,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:57:27.183Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 39
+        },
+        "180": {
+          "elo": 815.2539299487524,
+          "game_id": 180,
+          "losses": 25,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:57:54.691Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 40
+        },
+        "181": {
+          "elo": 824.7266233751157,
+          "game_id": 181,
+          "losses": 25,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:58:21.249Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 41
+        },
+        "182": {
+          "elo": 851.5477453921164,
+          "game_id": 182,
+          "losses": 25,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:58:44.136Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 42
+        },
+        "183": {
+          "elo": 864.5310765734835,
+          "game_id": 183,
+          "losses": 25,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:59:14.741Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 43
+        },
+        "184": {
+          "elo": 857.6857618541146,
+          "game_id": 184,
+          "losses": 26,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T21:59:40.383Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 43
+        },
+        "185": {
+          "elo": 864.0445377084176,
+          "game_id": 185,
+          "losses": 26,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T22:00:05.241Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 44
+        },
+        "186": {
+          "elo": 877.6140199417777,
+          "game_id": 186,
+          "losses": 26,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T22:00:31.859Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 45
+        },
+        "187": {
+          "elo": 892.1867703224842,
+          "game_id": 187,
+          "losses": 26,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T22:00:56.066Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 46
+        },
+        "188": {
+          "elo": 904.704251244772,
+          "game_id": 188,
+          "losses": 26,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T22:01:37.718Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 47
+        },
+        "189": {
+          "elo": 892.9243212096526,
+          "game_id": 189,
+          "losses": 27,
+          "name": "-NdGxDG4_x1ogPFMbMaN",
+          "timestamp": "2024-03-02T22:01:58.887Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 47
+        },
         "-1": {
           "elo": 400,
           "game_id": -1,
@@ -24067,6 +26041,116 @@
           "winner_pulled": true,
           "wins": 18
         },
+        "169": {
+          "elo": 463.71194126331653,
+          "game_id": 169,
+          "losses": 24,
+          "name": "-NdSDoFMJ_sDGacVmvZA",
+          "timestamp": "2024-03-02T21:52:02.824Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 18
+        },
+        "171": {
+          "elo": 453.52597941124515,
+          "game_id": 171,
+          "losses": 25,
+          "name": "-NdSDoFMJ_sDGacVmvZA",
+          "timestamp": "2024-03-02T21:53:07.218Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 18
+        },
+        "172": {
+          "elo": 444.80727618588736,
+          "game_id": 172,
+          "losses": 26,
+          "name": "-NdSDoFMJ_sDGacVmvZA",
+          "timestamp": "2024-03-02T21:53:46.326Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 18
+        },
+        "174": {
+          "elo": 443.29674713631897,
+          "game_id": 174,
+          "losses": 27,
+          "name": "-NdSDoFMJ_sDGacVmvZA",
+          "timestamp": "2024-03-02T21:55:03.803Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 18
+        },
+        "176": {
+          "elo": 433.6747539780693,
+          "game_id": 176,
+          "losses": 28,
+          "name": "-NdSDoFMJ_sDGacVmvZA",
+          "timestamp": "2024-03-02T21:55:54.375Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 18
+        },
+        "177": {
+          "elo": 431.55727801670383,
+          "game_id": 177,
+          "losses": 29,
+          "name": "-NdSDoFMJ_sDGacVmvZA",
+          "timestamp": "2024-03-02T21:56:26.504Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 18
+        },
+        "178": {
+          "elo": 429.0102957141196,
+          "game_id": 178,
+          "losses": 30,
+          "name": "-NdSDoFMJ_sDGacVmvZA",
+          "timestamp": "2024-03-02T21:56:54.894Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 18
+        },
+        "179": {
+          "elo": 422.85401740950465,
+          "game_id": 179,
+          "losses": 31,
+          "name": "-NdSDoFMJ_sDGacVmvZA",
+          "timestamp": "2024-03-02T21:57:27.183Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 18
+        },
+        "181": {
+          "elo": 420.26865796570956,
+          "game_id": 181,
+          "losses": 32,
+          "name": "-NdSDoFMJ_sDGacVmvZA",
+          "timestamp": "2024-03-02T21:58:21.249Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 18
+        },
+        "182": {
+          "elo": 464.8384408370932,
+          "game_id": 182,
+          "losses": 32,
+          "name": "-NdSDoFMJ_sDGacVmvZA",
+          "timestamp": "2024-03-02T21:58:44.136Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 19
+        },
+        "184": {
+          "elo": 461.4219546027712,
+          "game_id": 184,
+          "losses": 33,
+          "name": "-NdSDoFMJ_sDGacVmvZA",
+          "timestamp": "2024-03-02T21:59:40.383Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 19
+        },
         "-1": {
           "elo": 400,
           "game_id": -1,
@@ -25096,6 +27180,156 @@
           "win_status": false,
           "winner_pulled": false,
           "wins": 25
+        },
+        "170": {
+          "elo": 483.2005636125064,
+          "game_id": 170,
+          "losses": 32,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T21:52:30.122Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 25
+        },
+        "171": {
+          "elo": 521.0111984249556,
+          "game_id": 171,
+          "losses": 32,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T21:53:07.218Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 26
+        },
+        "172": {
+          "elo": 509.04921149632304,
+          "game_id": 172,
+          "losses": 33,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T21:53:46.326Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 26
+        },
+        "173": {
+          "elo": 549.0525194245176,
+          "game_id": 173,
+          "losses": 33,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T21:54:36.001Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 27
+        },
+        "174": {
+          "elo": 546.7237878554615,
+          "game_id": 174,
+          "losses": 34,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T21:55:03.803Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 27
+        },
+        "176": {
+          "elo": 531.1745265115661,
+          "game_id": 176,
+          "losses": 35,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T21:55:54.375Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 27
+        },
+        "177": {
+          "elo": 527.7569498394569,
+          "game_id": 177,
+          "losses": 36,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T21:56:26.504Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 27
+        },
+        "179": {
+          "elo": 517.6335020460529,
+          "game_id": 179,
+          "losses": 37,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T21:57:27.183Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 27
+        },
+        "181": {
+          "elo": 513.3185717443894,
+          "game_id": 181,
+          "losses": 38,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T21:58:21.249Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 27
+        },
+        "183": {
+          "elo": 510.17862519623645,
+          "game_id": 183,
+          "losses": 39,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T21:59:14.741Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 27
+        },
+        "185": {
+          "elo": 506.64087889409376,
+          "game_id": 185,
+          "losses": 40,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T22:00:05.241Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 27
+        },
+        "186": {
+          "elo": 531.7759200391957,
+          "game_id": 186,
+          "losses": 40,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T22:00:31.859Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 28
+        },
+        "187": {
+          "elo": 527.0491061498474,
+          "game_id": 187,
+          "losses": 41,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T22:00:56.066Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 28
+        },
+        "188": {
+          "elo": 523.8994046242256,
+          "game_id": 188,
+          "losses": 42,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T22:01:37.718Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 28
+        },
+        "189": {
+          "elo": 517.9193879863217,
+          "game_id": 189,
+          "losses": 43,
+          "name": "-NdSDsNlZ-deSDKeERiB",
+          "timestamp": "2024-03-02T22:01:58.887Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 28
         },
         "-1": {
           "elo": 400,
@@ -27387,6 +29621,126 @@
           "winner_pulled": true,
           "wins": 18
         },
+        "174": {
+          "elo": 500.25078080345236,
+          "game_id": 174,
+          "losses": 28,
+          "name": "-NgGQu3u9JvJCg9A1xOb",
+          "timestamp": "2024-03-02T21:55:03.803Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 18
+        },
+        "175": {
+          "elo": 497.60853931241115,
+          "game_id": 175,
+          "losses": 29,
+          "name": "-NgGQu3u9JvJCg9A1xOb",
+          "timestamp": "2024-03-02T21:55:31.238Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 18
+        },
+        "177": {
+          "elo": 521.9669294466597,
+          "game_id": 177,
+          "losses": 29,
+          "name": "-NgGQu3u9JvJCg9A1xOb",
+          "timestamp": "2024-03-02T21:56:26.504Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 19
+        },
+        "179": {
+          "elo": 564.3290813467531,
+          "game_id": 179,
+          "losses": 29,
+          "name": "-NgGQu3u9JvJCg9A1xOb",
+          "timestamp": "2024-03-02T21:57:27.183Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 20
+        },
+        "180": {
+          "elo": 600.8202048165356,
+          "game_id": 180,
+          "losses": 29,
+          "name": "-NgGQu3u9JvJCg9A1xOb",
+          "timestamp": "2024-03-02T21:57:54.691Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 21
+        },
+        "182": {
+          "elo": 580.977178929298,
+          "game_id": 182,
+          "losses": 30,
+          "name": "-NgGQu3u9JvJCg9A1xOb",
+          "timestamp": "2024-03-02T21:58:44.136Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 21
+        },
+        "184": {
+          "elo": 603.5782149786512,
+          "game_id": 184,
+          "losses": 30,
+          "name": "-NgGQu3u9JvJCg9A1xOb",
+          "timestamp": "2024-03-02T21:59:40.383Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 22
+        },
+        "185": {
+          "elo": 599.6223524347831,
+          "game_id": 185,
+          "losses": 31,
+          "name": "-NgGQu3u9JvJCg9A1xOb",
+          "timestamp": "2024-03-02T22:00:05.241Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 22
+        },
+        "186": {
+          "elo": 594.1284606042306,
+          "game_id": 186,
+          "losses": 32,
+          "name": "-NgGQu3u9JvJCg9A1xOb",
+          "timestamp": "2024-03-02T22:00:31.859Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 22
+        },
+        "187": {
+          "elo": 587.8816527398769,
+          "game_id": 187,
+          "losses": 33,
+          "name": "-NgGQu3u9JvJCg9A1xOb",
+          "timestamp": "2024-03-02T22:00:56.066Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 22
+        },
+        "188": {
+          "elo": 609.998048371237,
+          "game_id": 188,
+          "losses": 33,
+          "name": "-NgGQu3u9JvJCg9A1xOb",
+          "timestamp": "2024-03-02T22:01:37.718Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 23
+        },
+        "189": {
+          "elo": 637.9328007022733,
+          "game_id": 189,
+          "losses": 33,
+          "name": "-NgGQu3u9JvJCg9A1xOb",
+          "timestamp": "2024-03-02T22:01:58.887Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 24
+        },
         "-1": {
           "elo": 400,
           "game_id": -1,
@@ -28337,6 +30691,56 @@
           "winner_pulled": false,
           "wins": 8
         },
+        "169": {
+          "elo": 469.10464347575396,
+          "game_id": 169,
+          "losses": 16,
+          "name": "-NhOVYU6128w3EIed46g",
+          "timestamp": "2024-03-02T21:52:02.824Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 8
+        },
+        "170": {
+          "elo": 466.3496746887246,
+          "game_id": 170,
+          "losses": 17,
+          "name": "-NhOVYU6128w3EIed46g",
+          "timestamp": "2024-03-02T21:52:30.122Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 8
+        },
+        "171": {
+          "elo": 456.03694607975694,
+          "game_id": 171,
+          "losses": 18,
+          "name": "-NhOVYU6128w3EIed46g",
+          "timestamp": "2024-03-02T21:53:07.218Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 8
+        },
+        "173": {
+          "elo": 446.9306292847907,
+          "game_id": 173,
+          "losses": 19,
+          "name": "-NhOVYU6128w3EIed46g",
+          "timestamp": "2024-03-02T21:54:36.001Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 8
+        },
+        "176": {
+          "elo": 496.53408958610623,
+          "game_id": 176,
+          "losses": 19,
+          "name": "-NhOVYU6128w3EIed46g",
+          "timestamp": "2024-03-02T21:55:54.375Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 9
+        },
         "-1": {
           "elo": 400,
           "game_id": -1,
@@ -28526,6 +30930,126 @@
           "win_status": false,
           "winner_pulled": false,
           "wins": 6
+        },
+        "169": {
+          "elo": 547.3175888229498,
+          "game_id": 169,
+          "losses": 12,
+          "name": "-NhxVW5p-kNB4ZzDx4Uo",
+          "timestamp": "2024-03-02T21:52:02.824Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 7
+        },
+        "170": {
+          "elo": 571.1316101843511,
+          "game_id": 170,
+          "losses": 12,
+          "name": "-NhxVW5p-kNB4ZzDx4Uo",
+          "timestamp": "2024-03-02T21:52:30.122Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 8
+        },
+        "172": {
+          "elo": 605.0535588341347,
+          "game_id": 172,
+          "losses": 12,
+          "name": "-NhxVW5p-kNB4ZzDx4Uo",
+          "timestamp": "2024-03-02T21:53:46.326Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 9
+        },
+        "173": {
+          "elo": 587.506754005717,
+          "game_id": 173,
+          "losses": 13,
+          "name": "-NhxVW5p-kNB4ZzDx4Uo",
+          "timestamp": "2024-03-02T21:54:36.001Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 9
+        },
+        "175": {
+          "elo": 610.084553160624,
+          "game_id": 175,
+          "losses": 13,
+          "name": "-NhxVW5p-kNB4ZzDx4Uo",
+          "timestamp": "2024-03-02T21:55:31.238Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 10
+        },
+        "177": {
+          "elo": 606.1967528428755,
+          "game_id": 177,
+          "losses": 14,
+          "name": "-NhxVW5p-kNB4ZzDx4Uo",
+          "timestamp": "2024-03-02T21:56:26.504Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 10
+        },
+        "178": {
+          "elo": 600.7412832093062,
+          "game_id": 178,
+          "losses": 15,
+          "name": "-NhxVW5p-kNB4ZzDx4Uo",
+          "timestamp": "2024-03-02T21:56:54.894Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 10
+        },
+        "180": {
+          "elo": 588.4012545261847,
+          "game_id": 180,
+          "losses": 16,
+          "name": "-NhxVW5p-kNB4ZzDx4Uo",
+          "timestamp": "2024-03-02T21:57:54.691Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 10
+        },
+        "181": {
+          "elo": 583.5072019341654,
+          "game_id": 181,
+          "losses": 17,
+          "name": "-NhxVW5p-kNB4ZzDx4Uo",
+          "timestamp": "2024-03-02T21:58:21.249Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 10
+        },
+        "182": {
+          "elo": 623.6088014856296,
+          "game_id": 182,
+          "losses": 17,
+          "name": "-NhxVW5p-kNB4ZzDx4Uo",
+          "timestamp": "2024-03-02T21:58:44.136Z",
+          "win_status": true,
+          "winner_pulled": true,
+          "wins": 11
+        },
+        "183": {
+          "elo": 643.7596512654392,
+          "game_id": 183,
+          "losses": 17,
+          "name": "-NhxVW5p-kNB4ZzDx4Uo",
+          "timestamp": "2024-03-02T21:59:14.741Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 12
+        },
+        "184": {
+          "elo": 664.4400313170056,
+          "game_id": 184,
+          "losses": 17,
+          "name": "-NhxVW5p-kNB4ZzDx4Uo",
+          "timestamp": "2024-03-02T21:59:40.383Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 13
         },
         "-1": {
           "elo": 400,
@@ -28897,6 +31421,106 @@
           "winner_pulled": false,
           "wins": 0
         },
+        "175": {
+          "elo": 343.2694195603661,
+          "game_id": 175,
+          "losses": 5,
+          "name": "-No8gw_GsQZSqEosbtL7",
+          "timestamp": "2024-03-02T21:55:31.238Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 0
+        },
+        "178": {
+          "elo": 403.38668731056737,
+          "game_id": 178,
+          "losses": 5,
+          "name": "-No8gw_GsQZSqEosbtL7",
+          "timestamp": "2024-03-02T21:56:54.894Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 1
+        },
+        "180": {
+          "elo": 394.0467161453833,
+          "game_id": 180,
+          "losses": 6,
+          "name": "-No8gw_GsQZSqEosbtL7",
+          "timestamp": "2024-03-02T21:57:54.691Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 1
+        },
+        "183": {
+          "elo": 390.67093822074315,
+          "game_id": 183,
+          "losses": 7,
+          "name": "-No8gw_GsQZSqEosbtL7",
+          "timestamp": "2024-03-02T21:59:14.741Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 1
+        },
+        "184": {
+          "elo": 385.9496721774024,
+          "game_id": 184,
+          "losses": 8,
+          "name": "-No8gw_GsQZSqEosbtL7",
+          "timestamp": "2024-03-02T21:59:40.383Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 1
+        },
+        "185": {
+          "elo": 382.35340183431293,
+          "game_id": 185,
+          "losses": 9,
+          "name": "-No8gw_GsQZSqEosbtL7",
+          "timestamp": "2024-03-02T22:00:05.241Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 1
+        },
+        "186": {
+          "elo": 380.480356305799,
+          "game_id": 186,
+          "losses": 10,
+          "name": "-No8gw_GsQZSqEosbtL7",
+          "timestamp": "2024-03-02T22:00:31.859Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 1
+        },
+        "187": {
+          "elo": 409.4478479298019,
+          "game_id": 187,
+          "losses": 10,
+          "name": "-No8gw_GsQZSqEosbtL7",
+          "timestamp": "2024-03-02T22:00:56.066Z",
+          "win_status": true,
+          "winner_pulled": false,
+          "wins": 2
+        },
+        "188": {
+          "elo": 407.73913526770133,
+          "game_id": 188,
+          "losses": 11,
+          "name": "-No8gw_GsQZSqEosbtL7",
+          "timestamp": "2024-03-02T22:01:37.718Z",
+          "win_status": false,
+          "winner_pulled": false,
+          "wins": 2
+        },
+        "189": {
+          "elo": 404.4768660755574,
+          "game_id": 189,
+          "losses": 12,
+          "name": "-No8gw_GsQZSqEosbtL7",
+          "timestamp": "2024-03-02T22:01:58.887Z",
+          "win_status": false,
+          "winner_pulled": true,
+          "wins": 2
+        },
         "-1": {
           "elo": 400,
           "game_id": -1,
@@ -28989,10 +31613,10 @@
     },
     "player_now": {
       "-NdGxDFlpODF9tIw3XL8": {
-        "elo": 781.5485668375859,
-        "losses": 41,
-        "most_recent_game": 168,
-        "wins": 66
+        "elo": 871.3929735990695,
+        "losses": 48,
+        "most_recent_game": 189,
+        "wins": 80
       },
       "-NdGxDFoVaqLArhEXdm3": {
         "elo": 347.7227690261159,
@@ -29013,10 +31637,10 @@
         "wins": 9
       },
       "-NdGxDFrv7IlQqL_S_lO": {
-        "elo": 789.7845469618908,
-        "losses": 31,
-        "most_recent_game": 168,
-        "wins": 71
+        "elo": 877.3776645625948,
+        "losses": 37,
+        "most_recent_game": 189,
+        "wins": 85
       },
       "-NdGxDFsmxmc4ve6-RpN": {
         "elo": 580.2647336260804,
@@ -29037,10 +31661,10 @@
         "wins": 24
       },
       "-NdGxDG4_x1ogPFMbMaN": {
-        "elo": 667.6083273732871,
-        "losses": 22,
-        "most_recent_game": 167,
-        "wins": 32
+        "elo": 892.9243212096526,
+        "losses": 27,
+        "most_recent_game": 189,
+        "wins": 47
       },
       "-NdGxDG7DkvaC2vJndxg": {
         "elo": 601.1946408329414,
@@ -29049,10 +31673,10 @@
         "wins": 48
       },
       "-NdSDoFMJ_sDGacVmvZA": {
-        "elo": 475.04790903484843,
-        "losses": 23,
-        "most_recent_game": 134,
-        "wins": 18
+        "elo": 461.4219546027712,
+        "losses": 33,
+        "most_recent_game": 184,
+        "wins": 19
       },
       "-NdSDp5vGnlxFLNZUXVy": {
         "elo": 388.6755892230394,
@@ -29067,10 +31691,10 @@
         "wins": 4
       },
       "-NdSDsNlZ-deSDKeERiB": {
-        "elo": 486.19431209912295,
-        "losses": 31,
-        "most_recent_game": 167,
-        "wins": 25
+        "elo": 517.9193879863217,
+        "losses": 43,
+        "most_recent_game": 189,
+        "wins": 28
       },
       "-NdSGs_TBN_MxMjA0Btp": {
         "elo": 647.9487227375741,
@@ -29127,10 +31751,10 @@
         "wins": 2
       },
       "-NgGQu3u9JvJCg9A1xOb": {
-        "elo": 502.28858213702216,
-        "losses": 27,
-        "most_recent_game": 158,
-        "wins": 18
+        "elo": 637.9328007022733,
+        "losses": 33,
+        "most_recent_game": 189,
+        "wins": 24
       },
       "-Ngzsw1gVmMQCipKLP2o": {
         "elo": 497.21152715986557,
@@ -29181,16 +31805,16 @@
         "wins": 10
       },
       "-NhOVYU6128w3EIed46g": {
-        "elo": 480.73865312467876,
-        "losses": 15,
-        "most_recent_game": 168,
-        "wins": 8
+        "elo": 496.53408958610623,
+        "losses": 19,
+        "most_recent_game": 176,
+        "wins": 9
       },
       "-NhxVW5p-kNB4ZzDx4Uo": {
-        "elo": 510.6765140905664,
-        "losses": 12,
-        "most_recent_game": 168,
-        "wins": 6
+        "elo": 664.4400313170056,
+        "losses": 17,
+        "most_recent_game": 184,
+        "wins": 13
       },
       "-Nj4Rk4g74-S5KLuss_F": {
         "elo": 544.6927813137883,
@@ -29205,10 +31829,10 @@
         "wins": 7
       },
       "-No8gw_GsQZSqEosbtL7": {
-        "elo": 345.6386223075697,
-        "losses": 4,
-        "most_recent_game": 157,
-        "wins": 0
+        "elo": 404.4768660755574,
+        "losses": 12,
+        "most_recent_game": 189,
+        "wins": 2
       },
       "-NqZfndVyYDHbE9duMMi": {
         "elo": 563.1116190402374,

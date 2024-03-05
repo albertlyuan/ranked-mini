@@ -27,9 +27,11 @@ export default function LeagueUpdateForm(props) {
   const initialValues = {
     leagueName: "",
     adminUID: "",
+    breaks: "",
   };
   const [leagueName, setLeagueName] = React.useState(initialValues.leagueName);
   const [adminUID, setAdminUID] = React.useState(initialValues.adminUID);
+  const [breaks, setBreaks] = React.useState(initialValues.breaks);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = leagueRecord
@@ -37,6 +39,7 @@ export default function LeagueUpdateForm(props) {
       : initialValues;
     setLeagueName(cleanValues.leagueName);
     setAdminUID(cleanValues.adminUID);
+    setBreaks(cleanValues.breaks);
     setErrors({});
   };
   const [leagueRecord, setLeagueRecord] = React.useState(leagueModelProp);
@@ -58,6 +61,7 @@ export default function LeagueUpdateForm(props) {
   const validations = {
     leagueName: [],
     adminUID: [],
+    breaks: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -87,6 +91,7 @@ export default function LeagueUpdateForm(props) {
         let modelFields = {
           leagueName: leagueName ?? null,
           adminUID: adminUID ?? null,
+          breaks: breaks ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -149,6 +154,7 @@ export default function LeagueUpdateForm(props) {
             const modelFields = {
               leagueName: value,
               adminUID,
+              breaks,
             };
             const result = onChange(modelFields);
             value = result?.leagueName ?? value;
@@ -174,6 +180,7 @@ export default function LeagueUpdateForm(props) {
             const modelFields = {
               leagueName,
               adminUID: value,
+              breaks,
             };
             const result = onChange(modelFields);
             value = result?.adminUID ?? value;
@@ -187,6 +194,32 @@ export default function LeagueUpdateForm(props) {
         errorMessage={errors.adminUID?.errorMessage}
         hasError={errors.adminUID?.hasError}
         {...getOverrideProps(overrides, "adminUID")}
+      ></TextField>
+      <TextField
+        label="Breaks"
+        isRequired={false}
+        isReadOnly={false}
+        value={breaks}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              leagueName,
+              adminUID,
+              breaks: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.breaks ?? value;
+          }
+          if (errors.breaks?.hasError) {
+            runValidationTasks("breaks", value);
+          }
+          setBreaks(value);
+        }}
+        onBlur={() => runValidationTasks("breaks", breaks)}
+        errorMessage={errors.breaks?.errorMessage}
+        hasError={errors.breaks?.hasError}
+        {...getOverrideProps(overrides, "breaks")}
       ></TextField>
       <Flex
         justifyContent="space-between"

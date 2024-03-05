@@ -4,18 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import SearchPlayer from '../Leaderboard/searchPlayer.js';
 import { leagueExists } from '../Firebase/database.js';
 
-export default function GamesLog({gamesLog, eloGain, setLeagueid}){
+export default function GamesLog({gamesLog, eloGain}){
     const [gameList, setGameList] =  useState([]);
+
+    // WIP
     const [dateFilter, setDateFilter] = useState('');
     const [playerFilter, setPlayerFilter] = useState('');
-    const {leagueid} = useParams()
-    const navigate = useNavigate();
-    leagueExists(leagueid).then((res)=>{
-        if (!res){
-            setLeagueid(null)
-            navigate("/page/not/found")
-        }
-    })
+
 
     useEffect(() => {
         if (gamesLog.length > 0){
@@ -29,7 +24,6 @@ export default function GamesLog({gamesLog, eloGain, setLeagueid}){
             )
             setGameList(temp)
         }
-        setLeagueid(leagueid)
     },[gamesLog, dateFilter, playerFilter])
     
     return(

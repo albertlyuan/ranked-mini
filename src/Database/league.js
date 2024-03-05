@@ -4,7 +4,7 @@ import { listLeagues, getLeague } from "../graphql/queries.js";
 
 const client = generateClient()
 
-export async function createLeague_wrapper(leaguename, adminUID){
+export async function aws_createLeague(leaguename, adminUID){
     const newLeague = await client.graphql({
         query: createLeague,
         variables: {
@@ -12,26 +12,39 @@ export async function createLeague_wrapper(leaguename, adminUID){
             "players": [],
             "games": [],
             "leagueName": leaguename,
-            "adminUID": adminUID
-        }
-        }
-    });
-}
-export async function updateLeague_wrapper(leaguename, adminUID){
-    const updatedLeague = await client.graphql({
-        query: updateLeague,
-        variables: {
-            input: {
-            "players": [],
-            "games": [],
-            "leagueName": leaguename,
-            "adminUID": adminUID
+            "adminUID": adminUID,
+            "breaks": ""
         }
         }
     });
 }
 
-export async function deleteLeague_wrapper(leagueid){
+
+export async function aws_updateLeagueBreaks(leagueid, breaks){
+    const updatedLeague = await client.graphql({
+        query: updateLeague,
+        variables: {
+            input: {
+            "id": leagueid,
+            "breaks": breaks
+        }
+        }
+    });
+}
+
+export async function aws_updateLeaguename(leagueid, leaguename){
+    const updatedLeague = await client.graphql({
+        query: updateLeague,
+        variables: {
+            input: {
+            "id": leagueid,
+            "leagueName": leaguename
+        }
+        }
+    });
+}
+
+export async function aws_deleteLeague(leagueid){
     const deletedGame = await client.graphql({
         query: deleteLeague,
         variables: {
@@ -42,7 +55,7 @@ export async function deleteLeague_wrapper(leagueid){
     });
 }
 
-export async function getAllLeagues_wrapper(){
+export async function aws_getAllLeagues(){
     // List all items
     const allLeagues = await client.graphql({
         query: listLeagues
@@ -50,7 +63,7 @@ export async function getAllLeagues_wrapper(){
     return allLeagues
 }
 
-export async function getLeague_wrapper(leagueid){
+export async function aws_getLeague(leagueid){
     // Get a specific item
     const oneLeague = await client.graphql({
         query: getLeague,
@@ -59,11 +72,10 @@ export async function getLeague_wrapper(leagueid){
     return oneLeague
 }
 
-export async function listAdminLeagues(adminuid){
+export async function aws_listAdminLeagues(adminuid){
     const allLeagues = await client.graphql({
         query: listLeagues,
         variables: { filter: { adminUID: { eq: adminuid } } }
     });
     return allLeagues
 }
-

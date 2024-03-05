@@ -137,9 +137,59 @@ async function randomgame(players){
 // f(...Object.values(a),"b")
 
 import * as league from "./Database/league.js"
+import * as game from "./Database/game.js"
+import * as player from "./Database/player.js"
+
 import { Amplify } from 'aws-amplify';
 import config from './aws-exports.js';
+import { reportNewGame } from './Database/reportNewGame.js';
 Amplify.configure(config);
-league.listAdminLeagues("f1bb9540-e061-70bc-866e-7b4a4cd5c5fa").then((d)=>{
-  console.log(d['data']['listLeagues']['items'])
-})
+
+const testleague = 'ccf1d43d-98ca-4320-8bf6-09d1183eb658'
+const dynamicPF = true
+const breakwin = false
+// await player.aws_createPlayer(testleague,"p1")
+// await player.aws_createPlayer(testleague,"p2")
+// await player.aws_createPlayer(testleague,"p3")
+// await player.aws_createPlayer(testleague,"p4")
+// await player.aws_createPlayer(testleague,"p5")
+// await player.aws_createPlayer(testleague,"p6")
+
+await reportNewGame(testleague, 'p1','p2','p3','p4','p5','p6',breakwin, dynamicPF)
+// await reportNewGame(testleague, 'p1','p2','p3','p4','p5','p6',!breakwin, dynamicPF)
+// await reportNewGame(testleague, 'p1','p2','p5', 'p3','p4','p6',breakwin, dynamicPF)
+
+// game.aws_getGame("8eab4d52-d564-4666-8cd5-01c6ead511e4").then(data=>{
+//   console.log(data)
+//   const game = data['data']['getGame']
+//   const winners = [game['winner1'],game['winner2'],game['winner3']]
+//   const losers = [game['loser1'],game['loser2'],game['loser3']]
+//   getGamePlayerData(winners, game['timestamp'])
+
+// })
+// game.aws_getLeagueGames(testleague).then((x)=>{
+//   console.log(x['data']['listGames']['items'])
+// })
+// let a = '1010110101011'
+// for (const i in a){
+//   console.log(i)
+// }
+// console.log(a)
+// a = a.substring(1) + '1'
+// console.log(a)
+
+// league.aws_getLeague(testleague).then(console.log)
+
+// league.aws_getLeague("ccf1d43d-98ca-4320-8bf6-09d1183eb658").then((d)=>{
+//   const adminid = d['data']['getLeague']['adminUID']
+//   console.log(adminid)
+// })
+
+
+// player.aws_duplicateNameExists("ccf1d43d-98ca-4320-8bf6-09d1183eb658","p2").then((d)=>{
+//   console.log(d)
+// })
+
+// league.aws_listAdminLeagues("f1bb9540-e061-70bc-866e-7b4a4cd5c5fa").then((d)=>{
+//   console.log(d['data']['listLeagues']['items'])
+// })
