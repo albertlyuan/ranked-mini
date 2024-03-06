@@ -22,9 +22,9 @@ export default function Games({setLeagueid}){
     })
 
     useEffect(()=>{
-        aws_getLeagueGames(leagueid,pagenum).then(log => {
+        aws_getLeagueGames(leagueid, 10).then(log => {
             if (log['data'] != null){
-                setCurrPageGames(log['data']['listGames']['items'])
+                setCurrPageGames(log['data']['gamesByLeagueIDAndTimestamp']['items'])
             }
         })
     }, [pagenum])

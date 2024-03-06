@@ -130,16 +130,18 @@ export const listGames = /* GraphQL */ `
     }
   }
 `;
-export const gamesByLeagueID = /* GraphQL */ `
-  query GamesByLeagueID(
+export const gamesByLeagueIDAndTimestamp = /* GraphQL */ `
+  query GamesByLeagueIDAndTimestamp(
     $leagueID: ID!
+    $timestamp: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelGameFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    gamesByLeagueID(
+    gamesByLeagueIDAndTimestamp(
       leagueID: $leagueID
+      timestamp: $timestamp
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit

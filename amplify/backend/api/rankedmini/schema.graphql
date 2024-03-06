@@ -18,7 +18,7 @@ type Game @model @auth(rules: [{allow: public}]) {
   winner3data: AWSJSON
   winnerPulled: Boolean
   pullfactor: Float
-  leagueID: ID! @index(name: "byLeague")
+  leagueID: ID! @index(name: "byLeague", sortKeyFields: ["timestamp"])
   loser1: String
   loser2: String
   loser3: String

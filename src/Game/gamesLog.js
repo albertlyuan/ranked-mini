@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import SearchPlayer from '../Leaderboard/searchPlayer.js';
 import { leagueExists } from '../Firebase/database.js';
 
-export default function GamesLog({gamesLog, eloGain}){
+export default function GamesLog({gamesLog, playerid}){
     const [gameList, setGameList] =  useState([]);
 
     // WIP
@@ -17,7 +17,7 @@ export default function GamesLog({gamesLog, eloGain}){
             const temp = gamesLog.map((game) =>
                 <GameRow 
                     game={game}
-                    eloGain={eloGain}
+                    playerid={playerid}//for player bio
                     dateFilter={dateFilter}
                     playerFilter={playerFilter}
                 />
@@ -44,7 +44,7 @@ export default function GamesLog({gamesLog, eloGain}){
                     <th>Timestamp</th>
                     <th>Winning Team</th>
                     <th>Losing Team</th>
-                    {eloGain ? <th>+/- Elo</th> : <></>}
+                    {playerid ? <th>+/- Elo</th> : <></>}
                     <th>Broke to Win</th>
                 </tr>
                 

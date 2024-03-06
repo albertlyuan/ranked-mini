@@ -2,5 +2,5 @@
   "AppSyncApiName": "rankedmini",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2024-02-19T04:54:49.554Z"
+  "AuthModeLastUpdated": "2024-03-05T17:30:39.584Z"
 }

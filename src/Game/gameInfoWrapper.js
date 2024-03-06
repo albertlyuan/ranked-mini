@@ -1,4 +1,3 @@
-import { AppLoader } from "../loader.js";
 import { useParams ,useNavigate} from 'react-router-dom';
 import {useState, useEffect} from 'react'
 import GameInfo from "./gameInfo.js";
@@ -19,21 +18,13 @@ export default function GameInfoWrapper({setLeagueid}){
             navigate("/page/not/found")
         }
     })
+
     useEffect(() => {
         aws_getGame(gameid).then((g)=>{
-            if (g){
-                setGame(g)
+            if (g['data']){
+                setGame(g['data']['getGame'])
             }
         })
-
-        // getGame(leagueid, `${parseInt(gameid)+1}`).then((g)=>{
-        //     if (g[0] == parseInt(gameid)+1){
-        //         setNextgame(g)
-        //     }else{
-        //         setNextgame(null)
-        //     }
-            
-        // })
     }, [game])
     const goToPrevGame = () => {
         navigate(`/${leagueid}/games/${parseInt(gameid)-1}`);
@@ -42,20 +33,14 @@ export default function GameInfoWrapper({setLeagueid}){
         navigate(`/${leagueid}/games/${parseInt(gameid)+1}`);
     };
     
-    if (game!=null){
-        return(
-            <GameInfo 
-                game={game} 
-                goToNextGame={goToNextGame} 
-                goToPrevGame={goToPrevGame} 
-                nextgame={nextgame}
-                />
-        );
-    }else{
-        return (
-            <AppLoader />
-        )
-    }
+    return(
+        <GameInfo 
+            game={game} 
+            goToNextGame={goToNextGame} 
+            goToPrevGame={goToPrevGame} 
+            nextgame={nextgame}
+            />
+    )
 }
 
 

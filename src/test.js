@@ -155,21 +155,32 @@ const breakwin = false
 // await player.aws_createPlayer(testleague,"p5")
 // await player.aws_createPlayer(testleague,"p6")
 
-await reportNewGame(testleague, 'p1','p2','p3','p4','p5','p6',breakwin, dynamicPF)
+// await reportNewGame(testleague, 'p1','p2','p3','p4','p5','p6',breakwin, dynamicPF)
+// await reportNewGame(testleague, 'p1','p2','p3','p4','p5','p6',!breakwin, dynamicPF)
+// await reportNewGame(testleague, 'p1','p2','p5', 'p3','p4','p6',breakwin, dynamicPF)
+// await reportNewGame(testleague, 'p1','p2','p3','p4','p5','p6',breakwin, dynamicPF)
 // await reportNewGame(testleague, 'p1','p2','p3','p4','p5','p6',!breakwin, dynamicPF)
 // await reportNewGame(testleague, 'p1','p2','p5', 'p3','p4','p6',breakwin, dynamicPF)
 
-// game.aws_getGame("8eab4d52-d564-4666-8cd5-01c6ead511e4").then(data=>{
-//   console.log(data)
-//   const game = data['data']['getGame']
-//   const winners = [game['winner1'],game['winner2'],game['winner3']]
-//   const losers = [game['loser1'],game['loser2'],game['loser3']]
-//   getGamePlayerData(winners, game['timestamp'])
+// game.aws_getLeagueGames("ccf1d43d-98ca-4320-8bf6-09d1183eb658", 10).then(log => {
+//         if (log['data'] != null){
+//             console.log(log['data']['gamesByLeagueIDAndTimestamp']['items'])
+//         }
+//     })
+game.aws_getGame("6892e729-6779-483d-9138-f19fe76cb6ab").then((g)=>{
+    if (g){
+        console.log(g)
+    }
+})
+// game.aws_getLeagueGames(testleague, 3).then(log => {
+//     if (log['data'] != null){
+//         // setCurrPageGames(log['data']['listGames']['items'])
+//         console.log(log['data'])
 
+//         console.log(log['data']['listGames']['items'])
+//     }
 // })
-// game.aws_getLeagueGames(testleague).then((x)=>{
-//   console.log(x['data']['listGames']['items'])
-// })
+
 // let a = '1010110101011'
 // for (const i in a){
 //   console.log(i)
