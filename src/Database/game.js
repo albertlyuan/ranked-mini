@@ -117,7 +117,7 @@ export async function aws_getLeagueGames(leagueid, numgames, nexttoken) {
     }
 }
 
-export async function aws_getPlayerGames(leagueid, playeruid, numgames) {
+export async function aws_getPlayerGames(leagueid, playeruid, numgames, nexttoken) {
     try {
         const allGames = await client.graphql({
             query: gamesByLeagueIDAndTimestamp,
@@ -125,8 +125,9 @@ export async function aws_getPlayerGames(leagueid, playeruid, numgames) {
                 "leagueID": leagueid, 
                 "sortDirection": "DESC",
                 "limit": numgames,
-                "filter": {players: { contains: playeruid }}
-            },
+                "filter": {players: { contains: playeruid }},
+                "nextToken":nexttoken
+        },
         
         });
         return allGames

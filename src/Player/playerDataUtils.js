@@ -1,4 +1,4 @@
-export function createChartData(elos, timestamps, elogain, gameWinners, gameLosers, pullers){
+export function formatChartData(elos, timestamps, elogain, gameWinners, gameLosers, pullers){
     const dataobj = {
         labels: Array.from({length: elos.length}, (_, n) => n),
         datasets: [
@@ -87,9 +87,39 @@ export function getEloHistory(playerdata, playeruid){
                 break;
         }  
         const json = JSON.parse(jsonstr)
+        if (json==null){
+            alert('json null')
+        }
         const ts = new Date(game['timestamp'])
         json['timestamp'] = `${ts.getMonth()+1}/${ts.getDate()}/${ts.getFullYear()}`
         data.push(json)
     }
     return data
+}
+
+export function createChartData(playerdata, uid){
+    if (playerdata.length == 0){
+        return
+    }
+    const justPlayerData = getEloHistory(playerdata, uid)
+    const mostRecentGame = justPlayerData[0]
+
+    const elos = []
+    const timestamps = []
+    const elogain = []
+    const gameWinners = []
+    const gameLosers = []
+    const pullers = []
+    for (let i = justPlayerData.length - 1; i >= 0; i--){
+        elos.push(justPlayerData[i].newElo)
+        timestamps.push(justPlayerData[i].timestamp)
+        elogain.push(justPlayerData[i].newElo - justPlayerData[i].oldElo)
+        gameWinners.push([playerdata[i]['winner1'], playerdata[i]['winner2'], playerdata[i]['winner3']])
+        gameLosers.push([playerdata[i]['loser1'], playerdata[i]['loser2'], playerdata[i]['loser3']])
+        pullers.push(playerdata[i].winnerPulled)
+    }
+
+    const chartData = formatChartData(elos, timestamps, elogain, gameWinners, gameLosers, pullers)        
+    
+    return [chartData, mostRecentGame]
 }

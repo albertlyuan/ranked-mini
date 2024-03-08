@@ -11,16 +11,23 @@ import { createChartData, getMostRecentGame, getGamePlayers, getEloHistory, clea
 import GamesLog from '../Game/gamesLog.js';
 import { aws_getLeague } from '../Database/league.js';
 import { aws_getPlayerGames } from '../Database/game.js';
+import { PageSelector } from '../Game/pageSelector.js';
 
 export default function PlayerBio({setLeagueid, uidPlayerMap}){
     const { leagueid, uid } = useParams();
     setLeagueid(leagueid)
 
     const [playerName, setPlayerName] = useState()
-    const [playerData, setPlayerData] = useState([])
-    const [currWins, setCurrWins] = useState(0)
-    const [currLosses, setCurrLosses] = useState(0)
-    const [currElo, setCurrElo] = useState(0)
+    const [currWins, setCurrWins] = useState(null)
+    const [currLosses, setCurrLosses] = useState(null)
+    const [currElo, setCurrElo] = useState(null)
+
+    const [loadedPages, setLoadedPages] = useState([])
+    const [nexttoken, setNextToken] = useState(null)
+    const [pagenum, setPageNum] = useState(0)
+    const [maxPagenum, setMaxPagenum] = useState(0)
+
+    const [currPlayerData, setCurrPlayerData] = useState([])
     const [chartData, setChartData] = useState(blankChartData)
 
     const navigate = useNavigate();
@@ -31,46 +38,42 @@ export default function PlayerBio({setLeagueid, uidPlayerMap}){
     })
     
     useEffect(() => {   
-
-        aws_getPlayerGames(leagueid, uid, 30).then((games) => {
-            const data = games['data']['gamesByLeagueIDAndTimestamp']['items']
-            setPlayerData(data)
-            return data
-        }).then((playerData)=>{
-            if (playerData.length == 0){
+        if (pagenum >= loadedPages.length){
+            if (nexttoken == null && loadedPages.length > 0){
                 return
+            }else{
+                aws_getPlayerGames(leagueid, uid, 10, nexttoken).then((data) => {
+                    if (data != null){
+                        const games = data['data']['gamesByLeagueIDAndTimestamp']['items']
+                        setCurrPlayerData(games)
+                        setLoadedPages([...loadedPages, games])
+                        const token = data['data']['gamesByLeagueIDAndTimestamp']['nextToken']
+                        setNextToken(token)
+                        if (token){
+                            setMaxPagenum(maxPagenum+1)
+                        }
+
+                        const [chartdata, mostRecentGame] = createChartData(games, uid)
+                        if (currElo==null){
+                            setCurrElo(mostRecentGame.newElo)
+                            setCurrLosses(mostRecentGame.losses)
+                            setCurrWins(mostRecentGame.wins)
+                        }
+                        setChartData(chartdata)
+                    }
+                })
             }
-            const justPlayerData = getEloHistory(playerData, uid)
+        }else{
+            setCurrPlayerData(loadedPages[pagenum], uid)
+            const [chartdata, mostRecentGame] = createChartData(loadedPages[pagenum], uid)
+            setChartData(chartdata)
+        }
 
-            const mostRecentGame = justPlayerData[0]
-            setCurrElo(mostRecentGame.newElo)
-            setCurrLosses(mostRecentGame.losses)
-            setCurrWins(mostRecentGame.wins)
-            const elos = []
-            const timestamps = []
-            const elogain = []
-            const gameWinners = []
-            const gameLosers = []
-            const pullers = []
-            for (let i = justPlayerData.length - 1; i >= 0; i--){
-                elos.push(justPlayerData[i].newElo)
-                timestamps.push(justPlayerData[i].timestamp)
-                elogain.push(justPlayerData[i].newElo - justPlayerData[i].oldElo)
-                gameWinners.push([playerData[i]['winner1'], playerData[i]['winner2'], playerData[i]['winner3']])
-                gameLosers.push([playerData[i]['loser1'], playerData[i]['loser2'], playerData[i]['loser3']])
-                pullers.push(playerData[i].winnerPulled)
-            }
-        
-            const chartData = createChartData(elos, timestamps, elogain, gameWinners, gameLosers, pullers)        
-            setChartData(chartData)
-            
-        })
-                
-    }, [uid])
+    }, [uid, pagenum])
 
 
 
-    if (!chartData){
+    if (!chartData || uidPlayerMap == null){
         <AppLoader></AppLoader>
     }else{
         return(
@@ -87,8 +90,9 @@ export default function PlayerBio({setLeagueid, uidPlayerMap}){
                 <br></br>
                 <div>
                     <h3>Game History</h3>
-                    {playerData ? <GamesLog
-                        gamesLog={playerData}
+                    <PageSelector pageNum={pagenum} setPageNum={setPageNum} maxPagenum={maxPagenum}/>
+                    {currPlayerData ? <GamesLog
+                        gamesLog={currPlayerData}
                         playerid={uid}
                         uidPlayerMap={uidPlayerMap} 
                     /> : null}

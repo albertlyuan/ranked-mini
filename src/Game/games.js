@@ -51,8 +51,6 @@ export default function Games({setLeagueid, uidPlayerMap}){
     }else{
         return (
             <div>
-                <p>loadedpages {loadedPages.length}</p>
-                <p>{Object.keys(loadedPages)}</p>
                 <PageSelector pageNum={pagenum} setPageNum={setPageNum} maxPagenum={maxPagenum}/>
                 <GamesLog gamesLog={currPageGames} uidPlayerMap={uidPlayerMap} />
             </div>
