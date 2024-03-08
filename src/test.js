@@ -7,13 +7,15 @@ import * as player from "./Database/player.js"
 
 import { Amplify } from 'aws-amplify';
 import config from './aws-exports.js';
+
 import { reportNewGame } from './Database/reportNewGame_functions.js';
 import { createChartData, getEloHistory } from './Player/playerDataUtils.js';
+import { gamesByLeagueIDAndTimestamp } from './graphql/queries.js'
 Amplify.configure(config);
 
 const testleague = 'ccf1d43d-98ca-4320-8bf6-09d1183eb658'
 const testplayer = "c85e9b90-dec3-463a-8f83-ea74ed20a404"
-
+const stoneleague = 'fa6db074-adf2-4364-9f76-aa6902a5dd3d'
 const dynamicPF = true
 const breakwin = true
 // let i = 0
@@ -32,8 +34,15 @@ const breakwin = true
 // }
 // league.aws_getLeague('fa6db074-adf2-4364-9f76-aa6902a5dd3d').then(console.log)
 
-const a = [1,2,3,4]
-console.log(a.slice(1))
+player.aws_getPlayerUID(stoneleague, 'bos').then(data =>{
+    console.log(data['data']['listPlayers']['items'])
+})
+
+game.aws_getPlayerGames(stoneleague,'bebccb0b-6ed0-4d88-b8be-9099edc336f2',100).then(data =>{
+    console.log(data['data']['gamesByLeagueIDAndTimestamp']['items'])
+    console.log(data['data']['gamesByLeagueIDAndTimestamp']['items'].length)
+})
+
 // await player.aws_createPlayer(testleague,"p1")
 // await player.aws_createPlayer(testleague,"p2")
 // await player.aws_createPlayer(testleague,"p3")
