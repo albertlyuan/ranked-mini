@@ -21,12 +21,12 @@ import {
     Card,
 } from "@aws-amplify/ui-react";
 import AdminButton from './Login/loginbutton.js';
+import { aws_getUIDPlayerMap } from './Database/player.js';
 
 const Leaderboard = lazy(() => import('./Leaderboard/leaderboard.js'));
 const ReportScoreWrapper = lazy(() => import('./ReportScore/reportscoreWrapper.js'));
 const CalculatingElo = lazy(() => import('./About/calculatingElo.js'));
 const RankTable = lazy(() => import('./About/rankTable.js'));
-// const GamesLog = lazy(() => import('./Game/gamesLog.js'));
 const Games = lazy(() => import('./Game/games.js'));
 
 const GameInfoWrapper = lazy(() => import('./Game/gameInfoWrapper.js'));
@@ -36,6 +36,15 @@ const GettingStarted = lazy(() => import('./Home/gettingStarted.js'));
 
 function App() {
   const [leagueid, setLeagueid] = useState(null)
+  const [uidPlayerMap, setUidPlayerMap] = useState()
+
+  useEffect(() => {   
+    if (leagueid != null){
+      aws_getUIDPlayerMap(leagueid).then(data=>{
+        setUidPlayerMap(data)
+      })
+    }
+  })
 
   return (
     <BrowserRouter>    
@@ -54,13 +63,13 @@ function App() {
 
           <Route path="/:leagueid/" element={<Leaderboard setLeagueid={setLeagueid}/>} />
           <Route path="/:leagueid/reportscore" element={<ReportScoreWrapper setLeagueid={setLeagueid}/>} />
-          <Route path="/:leagueid/games" element={<Games setLeagueid={setLeagueid}/>} />
+          <Route path="/:leagueid/games" element={<Games uidPlayerMap={uidPlayerMap} setLeagueid={setLeagueid}/>} />
           <Route path="/elo" element={<CalculatingElo/>} />
           <Route path="/ranks" element={<RankTable/>} />
 
 
-          <Route path="/:leagueid/games/:gameid" element={<GameInfoWrapper setLeagueid={setLeagueid}/>} />
-          <Route path="/:leagueid/player/:uid" element={<PlayerBio setLeagueid={setLeagueid}/>} />
+          <Route path="/:leagueid/games/:gameid" element={<GameInfoWrapper uidPlayerMap={uidPlayerMap} setLeagueid={setLeagueid}/>} />
+          <Route path="/:leagueid/player/:uid" element={<PlayerBio uidPlayerMap={uidPlayerMap} setLeagueid={setLeagueid}/>} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>

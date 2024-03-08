@@ -1,4 +1,4 @@
-export function PageSelector({pageNum, setPageNum, nextPageExists}){
+export function PageSelector({pageNum, setPageNum, maxPagenum}){
     function nextPage(){
         setPageNum(pageNum+1)
     }
@@ -13,7 +13,7 @@ export function PageSelector({pageNum, setPageNum, nextPageExists}){
             <div>
                 <h3>Current Page: {pageNum}</h3>
             </div> 
-            <a class="clickable highlights arrowbutton" style={{display: nextPageExists ? "block" : "none"}} onClick={nextPage}>
+            <a class="clickable highlights arrowbutton" style={{display: pageNum < maxPagenum ? "block" : "none"}} onClick={nextPage}>
                 &gt;
             </a>
         </div>

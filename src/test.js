@@ -1,141 +1,6 @@
 import * as firebase from './Firebase/database.js'
 import * as elo from './Elo/elo.js'
 
-// THIS FILE IS SOLELY USED FOR THE TESTING FUNCTIONS OUTSIDE OF REACT
-
-
-  
-async function randomgame(players){
-    const min = 0;
-    const max = players.length-1;
-
-    const winnerIdx = new Set();
-    const loserIdx = new Set();
-
-
-    while (winnerIdx.size < 3) {
-        const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-        winnerIdx.add(randomNumber);
-    }
-
-    while (loserIdx.size < 3) {
-        const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-        if (! winnerIdx.has(randomNumber)){
-            loserIdx.add(randomNumber);
-        }
-    }
-
-
-    const winners = []
-    const losers = []
-    for (let i = 0; i < players.length; i++){
-        if (winnerIdx.has(i)){
-            winners.push(players[i])
-        }
-        if (loserIdx.has(i)){
-            losers.push(players[i])
-        }
-        
-    }
-    console.log("winners: "+winners)
-    console.log("losers: "+losers)
-    
-    await firebase.firebase_logNewGame(winners[0], winners[1], winners[2], losers[0], losers[1], losers[2])
-}
-
-// const players = ["Alpha", "Bravo", "Charlie", 
-//                 "Delta", "Echo", "Foxtrot", "Golf", "Hotel", 
-//                 "India", "Juliett", "Kilo", "Lima", "Mike", 
-//                 "November", "Oscar", "Papa", "Quebec", "Romeo", 
-//                 "Sierra", "Tango", "Uniform", "Victor", "Whiskey", 
-//                 "X-ray", "Yankee", "Zulu"]
-
-// addPlayers(players)
-
-// for (let i=0; i < 100;i++){
-//     await randomgame(players)
-// }
-
-// firebase.deleteGame(9)
-//edit file to just have "games" and "player_uid" lists
-// function addPlayers(players){
-//     for (let player of players){
-//         firebase.firebase_addNewPlayer(player)
-//     }
-// }
-
-// const uid = "-NdGxDFrv7IlQqL_S_lO"
-// firebase.addTeam(uid,"brimstone").then(console.log)
-
-// firebase.firebase_addNewPlayer("test1")
-// firebase.firebase_changeName("andrew li", "ders")
-// firebase.getNameFromUID("-Nas6jgxwAcPPbJDdEV1").then(console.log)
-// console.log(firebase.getUIDFromName("andrew li"))
-// console.log(
-// // dawn @199 team 198, lost to 188 received
-// elo.calculateNewElo(199,188,198,false,14,true)
-// 32*(0-elo.expectedValue(198,188))/.3
-// )
-
-// console.log(
-//    // a li @192 team 188, won 199 pulled
-//     elo.calculateNewElo(192,188,198,true,14,true) 
-//     32*(1-elo.expectedValue(192,198))/.3
-//     )
-// console.log(elo.calculateNewElo(152.05,446.77,505.38,true,7,false))
-// console.log(elo.calculateNewElo(152.05,446.77,505.38,true,7,false)-152.05)
-
-
-
-// console.log('chris')
-// console.log(elo.calculateNewElo(152.05,505.38,446.77,false,7,true))
-// console.log(elo.calculateNewElo(152.05,505.38,446.77,false,7,true)-152.05)
-
-// console.log('bert')
-// console.log(elo.calculateNewElo(683.49,505.38,446.77,true,25,true))
-// console.log(elo.calculateNewElo(683.49,505.38,446.77,true,25,true)-683.49)
-
-
-// firebase.firebase_addNewPlayer("test1")
-
-
-// firebase.changeDatesToISO().then(console.log)
-
-// console.log(
-//     elo.calculateNewElo(192,188,198,true,14,true,await firebase.getCurrPullFactor(100)),
-//     elo.calculateNewElo(192,188,198,true,14,true) 
-
-//     )
-
-// firebase.getCurrPullFactor(firebase.PULLFACTORGAMES).then(console.log)
-// firebase.getUIDFromName("andy").then((uid)=>{
-//     firebase.getPlayerGameLog(uid)
-// })
-// firebase.getGame(firebase.albertuser,"174").then((g)=>{
-//     console.log(g)
-// })
-// import * as fs from 'fs'
-// fs.readFile("./tests/testData.json", 'utf8', (err, data) => {
-//     if (err) {
-//         console.error('Error reading the file:', err);
-//         return;
-//     }
-//     // Parse the JSON data
-//     try {
-//         const jsonData = JSON.parse(data);
-//         firebase.firebase_loadTest("test",jsonData)
-//     } catch (jsonError) {
-//         console.error('Error parsing JSON:', jsonError);
-//     }
-//   });
-// function f(a,b,c,d,e,f,g){
-//     console.log(a,b,c,d,e,f,g)
-//     return true
-// }
-// const a = {winner1: "a", winner2: "a",winner3:"a",loser1:"a",loser2:"a",loser3:"a"}
-
-// f(...Object.values(a),"b")
-
 import * as league from "./Database/league.js"
 import * as game from "./Database/game.js"
 import * as player from "./Database/player.js"
@@ -143,11 +8,29 @@ import * as player from "./Database/player.js"
 import { Amplify } from 'aws-amplify';
 import config from './aws-exports.js';
 import { reportNewGame } from './Database/reportNewGame.js';
+import { createChartData, getEloHistory } from './Player/playerDataUtils.js';
 Amplify.configure(config);
 
 const testleague = 'ccf1d43d-98ca-4320-8bf6-09d1183eb658'
+const testplayer = "c85e9b90-dec3-463a-8f83-ea74ed20a404"
+
 const dynamicPF = true
-const breakwin = false
+const breakwin = true
+let i = 0
+let token = null
+while (true){
+    i += 1
+    const d = await game.aws_getLeagueGames(testleague, 10, token)
+    token = d['data']['gamesByLeagueIDAndTimestamp']['nextToken']
+    console.log(d['data'])
+    console.log(i)
+    if (token == null){
+        break
+    }
+    
+    
+}
+
 // await player.aws_createPlayer(testleague,"p1")
 // await player.aws_createPlayer(testleague,"p2")
 // await player.aws_createPlayer(testleague,"p3")
@@ -162,16 +45,22 @@ const breakwin = false
 // await reportNewGame(testleague, 'p1','p2','p3','p4','p5','p6',!breakwin, dynamicPF)
 // await reportNewGame(testleague, 'p1','p2','p5', 'p3','p4','p6',breakwin, dynamicPF)
 
+
+// game.aws_getPlayerGames(testleague, testplayer, 10).then((d)=>{
+//     console.log(d['data']['gamesByLeagueIDAndTimestamp'])
+// })
 // game.aws_getLeagueGames("ccf1d43d-98ca-4320-8bf6-09d1183eb658", 10).then(log => {
 //         if (log['data'] != null){
 //             console.log(log['data']['gamesByLeagueIDAndTimestamp']['items'])
 //         }
 //     })
-game.aws_getGame("6892e729-6779-483d-9138-f19fe76cb6ab").then((g)=>{
-    if (g){
-        console.log(g)
-    }
-})
+
+// game.aws_getGame("6892e729-6779-483d-9138-f19fe76cb6ab").then((g)=>{
+//     if (g){
+//         console.log(g)
+//     }
+// })
+
 // game.aws_getLeagueGames(testleague, 3).then(log => {
 //     if (log['data'] != null){
 //         // setCurrPageGames(log['data']['listGames']['items'])

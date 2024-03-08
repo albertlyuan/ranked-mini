@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react";
 import { Line  } from "react-chartjs-2"
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from '../Firebase/auth.js';
 import {Chart, LinearScale, CategoryScale, PointElement, LineElement, Tooltip} from "chart.js";
 Chart.register(CategoryScale,LinearScale, PointElement, LineElement, Tooltip);
 
 var blankChartData = {
     labels: [],
-    datasets: [{ //const elos
+    datasets: [
+    { //const elos
         label: "Elo",
         data: [],
         backgroundColor: "black",
@@ -22,12 +20,7 @@ var blankChartData = {
     ]
 }
 
-function EloChart({rawChartData}) {    
-    const [chartData, setChartData] = useState(rawChartData);
-    
-    useEffect(() => {
-        setChartData(rawChartData)
-    })
+function EloChart({chartData}) {    
 
     const options = {
         scales: {
@@ -45,15 +38,15 @@ function EloChart({rawChartData}) {
             tooltip: {
                 // enabled: true,
                 callbacks: {
-                    beforeTitle: (context) => {
-                        return "Game ID: " + Object.values(context)[0].label 
-                    },
+                    // beforeTitle: (context) => {
+                    //     return "Game ID: " + Object.values(context)[0].label 
+                    // },
                     title: (context) => {
                         return "Timestamp: " + chartData.datasets[1].data[Object.values(context)[0].dataIndex]
                     },
                     label: function(context){
                         const elogain = chartData.datasets[2].data[context.dataIndex]
-                        return context.formattedValue + ` (${elogain > 0 ? "+" : ""}${elogain ? elogain.toFixed(2) : "-"})`
+                        return context.formattedValue + ` (${elogain > 0 ? "+" : ""}${typeof elogain === 'number' ? elogain.toFixed(2) : "-"})`
                     },
                     labelTextColor: function(context) {
                         const elogain = chartData.datasets[2].data[context.dataIndex]

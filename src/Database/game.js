@@ -5,7 +5,7 @@ import { getGame, gamesByLeagueIDAndTimestamp } from "../graphql/queries.js";
 const client = generateClient()
 
 export async function aws_createGame(
-    leagueID, ts, winner1, winner2, winner3, loser1, loser2, loser3,
+    leagueID, ts, players, winner1, winner2, winner3, loser1, loser2, loser3,
     winner1data, winner2data, winner3data, loser1data, loser2data, loser3data,
     breakwin, pullFactor) {
     try {
@@ -15,6 +15,7 @@ export async function aws_createGame(
                 input: {
                     "leagueID": leagueID,
                     "timestamp": ts,
+                    "players": players,
                     "loser1": loser1,
                     "loser1data": loser1data,
                     "loser2": loser2,
@@ -35,6 +36,7 @@ export async function aws_createGame(
         return newGame
     } catch (error) {
         console.log(error)
+        alert("creategame")
     }
 
 
@@ -82,8 +84,40 @@ export async function aws_deleteGame(gameid) {
     });
 }
 
-export async function aws_getLeagueGames(leagueid, numgames) {
-    // List all items
+export async function aws_getLeagueGames(leagueid, numgames, nexttoken) {
+    try {
+        if (nexttoken == null){
+            const allGames = await client.graphql({
+                query: gamesByLeagueIDAndTimestamp,
+                variables: { 
+                    "leagueID": leagueid, 
+                    "sortDirection": "DESC",
+                    "limit": numgames
+                },
+            });
+            return allGames
+        }else{
+            const allGames = await client.graphql({
+                query: gamesByLeagueIDAndTimestamp,
+                variables: { 
+                    "leagueID": leagueid, 
+                    "sortDirection": "DESC",
+                    "limit": numgames,
+                    "nextToken":nexttoken,
+                },
+            });
+            return allGames
+        }
+        
+        
+    } catch (error) {
+        console.log(error)
+        alert("getleaguegames")
+
+    }
+}
+
+export async function aws_getPlayerGames(leagueid, playeruid, numgames) {
     try {
         const allGames = await client.graphql({
             query: gamesByLeagueIDAndTimestamp,
@@ -91,21 +125,27 @@ export async function aws_getLeagueGames(leagueid, numgames) {
                 "leagueID": leagueid, 
                 "sortDirection": "DESC",
                 "limit": numgames,
+                "filter": {players: { contains: playeruid }}
             },
-            
-            
+        
         });
         return allGames
     } catch (error) {
         console.log(error)
+        alert("getplayergames")
+
     }
 }
 
 export async function aws_getGame(gameid) {
     // Get a specific item
-    const oneGame = await client.graphql({
-        query: getGame,
-        variables: { id: gameid }
-    });
-    return oneGame
+    try{
+        const oneGame = await client.graphql({
+            query: getGame,
+            variables: { id: gameid }
+        });
+        return oneGame
+    }catch(error){
+        alert("getgame")
+    }
 }

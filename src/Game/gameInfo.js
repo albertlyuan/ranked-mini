@@ -6,19 +6,18 @@ import {useNavigate, useParams  } from "react-router-dom"
 import { AppLoader } from "../loader.js";
 
 // [gameid, date string, winners, losers, broke to win]
-export default function GameInfo({game, goToNextGame, goToPrevGame, nextgame}){
+export default function GameInfo({game, uidPlayerMap, goToNextGame, goToPrevGame, nextgame}){
     
-    //data = [player,[before.elo, after.elo], before.wins, before.losses]
     const [hypothetical, setHypothetical] = useState(false);  
     if (game == null){
         return(<AppLoader />)
     }
-    const winners = [game['winner1'],game['winner2'],game['winner3']]
-    const losers = [game['loser1'],game['loser2'],game['loser3']]
+    const winners = [uidPlayerMap[game['winner1']],uidPlayerMap[game['winner2']],uidPlayerMap[game['winner3']]]
+    const losers = [uidPlayerMap[game['loser1']],uidPlayerMap[game['loser2']],uidPlayerMap[game['loser3']]]
     const breakToWin = game['winnerPulled']
     const loserData = [JSON.parse(game['loser1data']),JSON.parse(game['loser2data']),JSON.parse(game['loser3data'])]
     const winnerData = [JSON.parse(game['winner1data']),JSON.parse(game['winner2data']),JSON.parse(game['winner3data'])]
-
+    const pullFactor = game['pullfactor']
     const toggleHypothetical = () => {
         setHypothetical(!hypothetical)
     }
@@ -38,11 +37,12 @@ export default function GameInfo({game, goToNextGame, goToPrevGame, nextgame}){
                 </a> */}
             </div>
             <button style={{textAlign:"center"}} class="scoreReportButton clickable highlights" onClick={toggleHypothetical}>Flip Result (Currently: {hypothetical ? "Alternate": "Normal"})</button>
-            <br></br>
             {hypothetical 
                 ? <h3 style={{textAlign:"center"}}>Broke to win: {breakToWin  ? "False" : "True"}</h3>
                 : <h3 style={{textAlign:"center"}}>Broke to win: {breakToWin  ? "True" : "False"}</h3>
             }
+            <h3 style={{textAlign:"center"}} >Pull Factor: {pullFactor.toFixed(2)}</h3>
+
             <Teams gameID={game['id']} winners={winners} losers={losers} winnerData={winnerData} loserData={loserData} alternateResult={hypothetical} breakToWin={breakToWin}/>
         </div>        
     );
@@ -105,7 +105,7 @@ function PlayerCell({playeruid, playerdata, alternateResult, winningTeamElo, los
         
         set_wins(playerdata['wins'])
         set_losses(playerdata['losses'])
-        const hypotheticalNewElo = calculateNewElo(before_elo, winningTeamElo, losingTeamElo, !win, wins+losses, !breakToWin)
+        const hypotheticalNewElo = calculateNewElo(before_elo, losingTeamElo, winningTeamElo, !win, wins+losses, !breakToWin)
         set_after_elo(hypotheticalNewElo)
       }else{
         set_before_elo(playerdata['oldElo'])

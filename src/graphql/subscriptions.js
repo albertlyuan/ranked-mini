@@ -66,6 +66,7 @@ export const onCreateGame = /* GraphQL */ `
       winner1
       winner2
       winner3
+      players
       createdAt
       updatedAt
       __typename
@@ -92,6 +93,7 @@ export const onUpdateGame = /* GraphQL */ `
       winner1
       winner2
       winner3
+      players
       createdAt
       updatedAt
       __typename
@@ -118,6 +120,7 @@ export const onDeleteGame = /* GraphQL */ `
       winner1
       winner2
       winner3
+      players
       createdAt
       updatedAt
       __typename

@@ -56,44 +56,75 @@ export async function aws_getAllPlayers(){
     return allPlayers
 }
 
+export async function aws_getUIDPlayerMap(leagueid){
+    // List all items
+    const data = (await aws_getLeaguePlayers(leagueid))
+    if (data == null){
+        return {}
+    }
+    const map = {}
+
+    for (const player of data['data']['listPlayers']['items']){
+        map[player.id] =  player.displayName
+    }
+    return map
+
+}
+
 export async function aws_getPlayer(userid){
     // Get a specific item
-    const onePlayer = await client.graphql({
-        query: getPlayer,
-        variables: { id: userid }
-    });
-    return onePlayer
+    try{
+        const onePlayer = await client.graphql({
+            query: getPlayer,
+            variables: { id: userid }
+        });
+        return onePlayer
+    }catch(error){
+        alert("getplayer")
+    }
 }
 
 export async function aws_getPlayerUID(leagueid, displayName){
     // Get a specific item
-    const onePlayer = await client.graphql({
-        query: listPlayers,
-        variables: { filter: { 
-            leagueID: { eq: leagueid },
-            displayName: { eq: displayName }
-        } }
-    });
-    return onePlayer
+    try{
+        const onePlayer = await client.graphql({
+            query: listPlayers,
+            variables: { filter: { 
+                leagueID: { eq: leagueid },
+                displayName: { eq: displayName }
+            } }
+        });
+        return onePlayer
+    }catch(error){
+        alert("getplayeruid")
+    }
     
 }
 
 
 export async function aws_getLeaguePlayers(leagueid){
-    const leaguePlayers = await client.graphql({
-        query: listPlayers,
-        variables: { filter: { leagueID: { eq: leagueid } } }
-    });
-    return leaguePlayers
+    try{
+        const leaguePlayers = await client.graphql({
+            query: listPlayers,
+            variables: { filter: { leagueID: { eq: leagueid } } }
+        });
+        return leaguePlayers
+    }catch(error){
+        alert("getleagueplayers")
+    }
 }
 
 export async function aws_duplicateNameExists(leagueid, name){
-    const leaguePlayers = await client.graphql({
-        query: listPlayers,
-        variables: { filter: { 
-            leagueID: { eq: leagueid },
-            displayName: {eq: name}
-        } }
-    });
-    return leaguePlayers['data']['listPlayers']['items']
+    try{
+        const leaguePlayers = await client.graphql({
+            query: listPlayers,
+            variables: { filter: { 
+                leagueID: { eq: leagueid },
+                displayName: {eq: name}
+            } }
+        });
+        return leaguePlayers['data']['listPlayers']['items']
+    }catch(error){
+        alert("aws_duplicateNameExists")
+    }
 }

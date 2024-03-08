@@ -6,12 +6,15 @@ import { AppLoader } from "../loader.js";
 import { aws_getLeague } from "../Database/league.js";
 import { aws_getLeagueGames } from "../Database/game.js";
 
-export default function Games({setLeagueid}){
+export default function Games({setLeagueid, uidPlayerMap}){
     const [currPageGames, setCurrPageGames] = useState([])
 
     // WIP
-    const [nextPageExists, setNextPageExists] = useState(false)
+    const [loadedPages, setLoadedPages] = useState([])
+    const [nexttoken, setNextToken] = useState(null)
     const [pagenum, setPageNum] = useState(0)
+    const [maxPagenum, setMaxPagenum] = useState(0)
+
 
     const {leagueid} = useParams()
     const navigate = useNavigate();
@@ -22,11 +25,26 @@ export default function Games({setLeagueid}){
     })
 
     useEffect(()=>{
-        aws_getLeagueGames(leagueid, 10).then(log => {
-            if (log['data'] != null){
-                setCurrPageGames(log['data']['gamesByLeagueIDAndTimestamp']['items'])
+        if (pagenum >= loadedPages.length){
+            if (nexttoken == null && loadedPages.length > 0){
+                return
+            }else{
+                aws_getLeagueGames(leagueid, 10, nexttoken).then(data => {
+                    if (data != null){
+                        setCurrPageGames(data['data']['gamesByLeagueIDAndTimestamp']['items'])        
+                        setLoadedPages([...loadedPages, data['data']['gamesByLeagueIDAndTimestamp']['items']])       
+                        const token = data['data']['gamesByLeagueIDAndTimestamp']['nextToken']
+                        setNextToken(token)
+                        if (token){
+                            setMaxPagenum(maxPagenum+1)
+                        }
+                        
+                    }
+                })
             }
-        })
+        }else{
+            setCurrPageGames(loadedPages[pagenum])
+        }
     }, [pagenum])
 
     if (currPageGames.length == 0){
@@ -34,8 +52,10 @@ export default function Games({setLeagueid}){
     }else{
         return (
             <div>
-                <PageSelector pageNum={pagenum} setPageNum={setPageNum} nextPageExists={nextPageExists}/>
-                <GamesLog gamesLog={currPageGames}/>
+                <p>loadedpages {loadedPages.length}</p>
+                <p>{Object.keys(loadedPages)}</p>
+                <PageSelector pageNum={pagenum} setPageNum={setPageNum} maxPagenum={maxPagenum}/>
+                <GamesLog gamesLog={currPageGames} uidPlayerMap={uidPlayerMap} />
             </div>
         )
     }

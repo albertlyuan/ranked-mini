@@ -90,6 +90,7 @@ export const getGame = /* GraphQL */ `
       winner1
       winner2
       winner3
+      players
       createdAt
       updatedAt
       __typename
@@ -121,6 +122,7 @@ export const listGames = /* GraphQL */ `
         winner1
         winner2
         winner3
+        players
         createdAt
         updatedAt
         __typename
@@ -165,6 +167,7 @@ export const gamesByLeagueIDAndTimestamp = /* GraphQL */ `
         winner1
         winner2
         winner3
+        players
         createdAt
         updatedAt
         __typename

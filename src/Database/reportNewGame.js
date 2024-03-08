@@ -22,7 +22,8 @@ export async function reportNewGame(leagueID, winner1, winner2,winner3, loser1, 
 
     const winnerData = await updatePlayers(winners, winningTeamElo, losingTeamElo, true, breakwin,currPullFactor)
     const loserData = await updatePlayers(losers, winningTeamElo, losingTeamElo,false, breakwin,currPullFactor)
-    const gameid = (await aws_createGame(leagueID, ts, winners[0].id, winners[1].id,winners[2].id, 
+    const players = [winners[0].id, winners[1].id,winners[2].id, losers[0].id, losers[1].id, losers[2].id]
+    const gameid = (await aws_createGame(leagueID, ts, players, winners[0].id, winners[1].id,winners[2].id, 
                                                     losers[0].id, losers[1].id, losers[2].id, 
                                                     winnerData[0], winnerData[1], winnerData[2], 
                                                     loserData[0],loserData[1],loserData[2],

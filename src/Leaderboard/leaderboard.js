@@ -27,17 +27,18 @@ export default function Leaderboard({setLeagueid}){
             }
             return data['data']['listPlayers']['items']
         }).then((roster) =>{
+            roster.sort((a,b) => b.elo-a.elo)
 
             const playerrows = roster.map((person) => {
                 return (<PlayerRow
                     name={person['displayName']}
+                    uid={person['id']}
                     elo={person['elo']}
                     wins={person['wins']}
                     losses={person['losses']}
                     filter={filter}
                 />)
             }); 
-    
             setListItems(playerrows)
         })
       },[filter])

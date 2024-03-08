@@ -65,17 +65,30 @@ export async function aws_getAllLeagues(){
 
 export async function aws_getLeague(leagueid){
     // Get a specific item
-    const oneLeague = await client.graphql({
-        query: getLeague,
-        variables: { id: leagueid }
-    });
-    return oneLeague
+    try{
+        if (leagueid == null){
+            return
+        }
+        const oneLeague = await client.graphql({
+            query: getLeague,
+            variables: { id: leagueid }
+        });
+        return oneLeague
+    }catch(error){
+        console.log(error)
+        // alert('getleague')
+        alert(error)
+    }
 }
 
 export async function aws_listAdminLeagues(adminuid){
-    const allLeagues = await client.graphql({
-        query: listLeagues,
-        variables: { filter: { adminUID: { eq: adminuid } } }
-    });
-    return allLeagues
+    try{
+        const allLeagues = await client.graphql({
+            query: listLeagues,
+            variables: { filter: { adminUID: { eq: adminuid } } }
+        });
+        return allLeagues
+    }catch(error){
+        alert('listadminleagues')
+    }
 }

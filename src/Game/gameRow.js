@@ -6,14 +6,16 @@ import { useEffect, useState } from "react";
  * @param {*} param0 game, setTab, setGame
  * @returns <tr> with gameID, timestamp, winning team, losing team
  */
-export default function GameRow({game, dateFilter, playerFilter, playerid}){
+export default function GameRow({game, uidPlayerMap, dateFilter, playerFilter, playerid}){
     const formattedDate = DayMonthDateYear(game['timestamp'])
-    const winners = [game['winner1'],game['winner2'],game['winner3']]
+    const winners = [uidPlayerMap[game['winner1']],uidPlayerMap[game['winner2']],uidPlayerMap[game['winner3']]]
     const winnerdata = [JSON.parse(game['winner1data']),JSON.parse(game['winner2data']),JSON.parse(game['winner3data'])]
-    const losers = [game['loser1'],game['loser2'],game['loser3']]
+    const losers = [uidPlayerMap[game['loser1']],uidPlayerMap[game['loser2']],uidPlayerMap[game['loser3']]]
     const loserdata = [JSON.parse(game['loser1data']),JSON.parse(game['loser2data']),JSON.parse(game['loser3data'])]
 
     const navigate = useNavigate();
+    const [deltaElo, setdeltaElo] = useState(null)
+
     const [showRow, setShowRow] = useState(satisfiesFilter(winners,losers,formattedDate,playerFilter,dateFilter) ? "table-row" : "none")
     const {leagueid} = useParams()
 
@@ -22,25 +24,28 @@ export default function GameRow({game, dateFilter, playerFilter, playerid}){
         navigate(`/${leagueid}/games/${game['id']}`);
     };
 
-
-    const deltaElo = () => {
+    useEffect(()=>{
         if (playerid){
-            const players = winners.concat(losers)
+            const players = [game['winner1'], game['winner2'], game['winner3'], game['loser1'], game['loser2'], game['loser3']]
             const playerdata = winnerdata.concat(loserdata)
             for (const i in players){
                 if (players[i] == playerid){
-                    return playerdata[i]['newElo'] - playerdata[i]['oldElo']
+                    setdeltaElo((playerdata[i]['newElo'] - playerdata[i]['oldElo']).toFixed(2))
+                    break
                 }
             }
-        }   
-        return 0
-    }
+        }else{
+            setdeltaElo(null)
+        }
+        
+    },[playerid])
+        
 
 
     if (playerid){ //for player bio
         return(
             <tr 
-                class={(deltaElo() > 0 ? "elogain " : deltaElo() < 0 ? "eloloss " : "")  + "clickable highlights"} 
+                class={(deltaElo > 0 ? "elogain " : deltaElo < 0 ? "eloloss " : "")  + "clickable highlights"} 
                 onClick={goToGame}
                 style={{display: showRow}}
             >   
@@ -48,7 +53,7 @@ export default function GameRow({game, dateFilter, playerFilter, playerid}){
                 <td>{formattedDate}</td>
                 <td>{winners.join(", ")} </td>
                 <td>{losers.join(", ")} </td>
-                <td>{deltaElo() ? deltaElo().toFixed(2) : deltaElo()}</td>
+                <td>{deltaElo}</td>
                 <td>{game['winnerPulled']  ? "True" : "False"}</td>
             </tr>
         )
