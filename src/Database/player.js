@@ -90,14 +90,14 @@ export async function aws_getPlayerUID(leagueid, displayName){
     try{
         const onePlayer = await client.graphql({
             query: listPlayers,
-            variables: { filter: { 
-                leagueID: { eq: leagueid },
-                displayName: { eq: displayName }
-            } }
+            variables: { 
+                filter: {leagueID: {eq: leagueid}, and: {displayName: {eq: displayName}}}
+            }
         });
         return onePlayer
     }catch(error){
-        alert("getplayeruid")
+        // alert("getplayeruid")
+        console.log(error)
     }
     
 }

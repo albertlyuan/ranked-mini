@@ -16,21 +16,24 @@ const testplayer = "c85e9b90-dec3-463a-8f83-ea74ed20a404"
 
 const dynamicPF = true
 const breakwin = true
-let i = 0
-let token = null
-while (true){
-    i += 1
-    const d = await game.aws_getLeagueGames(testleague, 10, token)
-    token = d['data']['gamesByLeagueIDAndTimestamp']['nextToken']
-    console.log(d['data'])
-    console.log(i)
-    if (token == null){
-        break
-    }
+// let i = 0
+// let token = null
+// while (true){
+//     i += 1
+//     const d = await game.aws_getLeagueGames(testleague, 10, token)
+//     token = d['data']['gamesByLeagueIDAndTimestamp']['nextToken']
+//     console.log(d['data'])
+//     console.log(i)
+//     if (token == null){
+//         break
+//     }
     
     
-}
+// }
+// league.aws_getLeague('fa6db074-adf2-4364-9f76-aa6902a5dd3d').then(console.log)
 
+const a = [1,2,3,4]
+console.log(a.slice(1))
 // await player.aws_createPlayer(testleague,"p1")
 // await player.aws_createPlayer(testleague,"p2")
 // await player.aws_createPlayer(testleague,"p3")

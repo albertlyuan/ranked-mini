@@ -67,7 +67,7 @@ export async function aws_getLeague(leagueid){
     // Get a specific item
     try{
         if (leagueid == null){
-            return
+            return null
         }
         const oneLeague = await client.graphql({
             query: getLeague,

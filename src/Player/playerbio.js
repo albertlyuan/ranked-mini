@@ -27,7 +27,7 @@ export default function PlayerBio({setLeagueid, uidPlayerMap}){
     const [pagenum, setPageNum] = useState(0)
     const [maxPagenum, setMaxPagenum] = useState(0)
 
-    const [currPlayerData, setCurrPlayerData] = useState([])
+    const [currPlayerData, setCurrPlayerData] = useState(null)
     const [chartData, setChartData] = useState(blankChartData)
 
     const navigate = useNavigate();
@@ -60,6 +60,8 @@ export default function PlayerBio({setLeagueid, uidPlayerMap}){
                             setCurrWins(mostRecentGame.wins)
                         }
                         setChartData(chartdata)
+                    }else{
+                        setCurrPlayerData([])
                     }
                 })
             }
@@ -73,8 +75,8 @@ export default function PlayerBio({setLeagueid, uidPlayerMap}){
 
 
 
-    if (!chartData || uidPlayerMap == null){
-        <AppLoader></AppLoader>
+    if (uidPlayerMap == null || currPlayerData == null){
+        return(<AppLoader/>)
     }else{
         return(
             <div class="animatedLoad">

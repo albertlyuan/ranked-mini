@@ -46,7 +46,7 @@ export default function Games({setLeagueid, uidPlayerMap}){
         }
     }, [pagenum])
 
-    if (currPageGames.length == 0 || uidPlayerMap == null){
+    if (uidPlayerMap == null){
         return(<AppLoader/>)
     }else{
         return (
