@@ -11,15 +11,6 @@ import Toolbar from './Home/toolbar.js';
 
 // amplify stuff
 import "@aws-amplify/ui-react/styles.css";
-import {
-    useAuthenticator,
-    Authenticator,
-    Button,
-    Heading,
-    Image,
-    View,
-    Card,
-} from "@aws-amplify/ui-react";
 import AdminButton from './Login/loginbutton.js';
 import { aws_getUIDPlayerMap } from './Database/player.js';
 
@@ -36,7 +27,7 @@ const GettingStarted = lazy(() => import('./Home/gettingStarted.js'));
 
 function App() {
   const [leagueid, setLeagueid] = useState(null)
-  const [uidPlayerMap, setUidPlayerMap] = useState()
+  const [uidPlayerMap, setUidPlayerMap] = useState(null)
 
   useEffect(() => {   
     if (leagueid != null){
@@ -44,7 +35,7 @@ function App() {
         setUidPlayerMap(data)
       })
     }
-  })
+  },[leagueid])
 
   return (
     <BrowserRouter>    

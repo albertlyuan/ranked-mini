@@ -14,25 +14,6 @@ export default function ReportScoreWrapper({ setLeagueid}){
     
     const {leagueid} = useParams()
     const [roster, setRoster] = useState([])
-    setLeagueid(leagueid)
-    
-    if (user != null){
-        aws_getLeague(leagueid).then((leagueobj) =>{
-            const adminid = leagueobj['data']['getLeague']['adminUID']
-            setShowReportscore(adminid == user.userId)
-
-        }).then(()=>{
-            if (showReportscore){
-                aws_getLeaguePlayers(leagueid).then((data) =>{
-                    if (data==null){
-                        return []
-                    }
-                    setRoster(data['data']['listPlayers']['items'])
-                })
-            }
-        })
-    }
-
     const navigate = useNavigate();
     aws_getLeague(leagueid).then((res)=>{
         if (!res){
@@ -40,7 +21,27 @@ export default function ReportScoreWrapper({ setLeagueid}){
             navigate("/page/not/found")
         }
     })
-
+    setLeagueid(leagueid)
+    
+    useEffect(()=>{
+        if (user != null){
+            aws_getLeague(leagueid).then((leagueobj) =>{
+                if (leagueobj){
+                    const adminid = leagueobj['data']['getLeague']['adminUID']
+                    setShowReportscore(adminid == user.userId)
+                }
+            })
+        }
+        if (showReportscore){
+            aws_getLeaguePlayers(leagueid).then((data) =>{
+                if (data==null){
+                    return []
+                }
+                setRoster(data['data']['listPlayers']['items'])
+            })
+        }
+    }, [leagueid, showReportscore])
+    
     if(user != null){
         if (showReportscore){
             return(

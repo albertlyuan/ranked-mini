@@ -11,8 +11,10 @@ export default function Toolbar({leagueid}){
     
     if (user != null){
         aws_getLeague(leagueid).then((leagueobj) =>{
-            const adminid = leagueobj['data']['getLeague']['adminUID']
-            setShowReportscore(adminid == user.userId)
+            if (leagueobj){
+                const adminid = leagueobj['data']['getLeague']['adminUID']
+                setShowReportscore(adminid == user.userId)
+            }
         })
     }
 

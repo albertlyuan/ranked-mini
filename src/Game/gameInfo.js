@@ -12,11 +12,7 @@ export default function GameInfo({game, uidPlayerMap, goToNextGame, goToPrevGame
     if (game == null){
         return(<AppLoader />)
     }
-    const winners = [uidPlayerMap[game['winner1']],uidPlayerMap[game['winner2']],uidPlayerMap[game['winner3']]]
-    const losers = [uidPlayerMap[game['loser1']],uidPlayerMap[game['loser2']],uidPlayerMap[game['loser3']]]
     const breakToWin = game['winnerPulled']
-    const loserData = [JSON.parse(game['loser1data']),JSON.parse(game['loser2data']),JSON.parse(game['loser3data'])]
-    const winnerData = [JSON.parse(game['winner1data']),JSON.parse(game['winner2data']),JSON.parse(game['winner3data'])]
     const pullFactor = game['pullfactor']
     const toggleHypothetical = () => {
         setHypothetical(!hypothetical)
@@ -43,15 +39,21 @@ export default function GameInfo({game, uidPlayerMap, goToNextGame, goToPrevGame
             }
             <h3 style={{textAlign:"center"}} >Pull Factor: {pullFactor.toFixed(2)}</h3>
 
-            <Teams gameID={game['id']} winners={winners} losers={losers} winnerData={winnerData} loserData={loserData} alternateResult={hypothetical} breakToWin={breakToWin}/>
+            <Teams game={game} uidPlayerMap={uidPlayerMap} alternateResult={hypothetical} breakToWin={breakToWin}/>
         </div>        
     );
 }
 
-function Teams({gameID, winners, losers, winnerData, loserData, alternateResult, breakToWin}){
+function Teams({game, uidPlayerMap, alternateResult, breakToWin}){
     const [winnerTeamElo, setWinnerTeamElo] = useState(0);
     const [loserTeamElo, setLoserTeamElo] = useState(0);
     const [rows, setRows] = useState();
+
+    const winners = [game['winner1'],game['winner2'],game['winner3']]
+    const losers = [game['loser1'],game['loser2'],game['loser3']]
+    const loserData = [JSON.parse(game['loser1data']),JSON.parse(game['loser2data']),JSON.parse(game['loser3data'])]
+    const winnerData = [JSON.parse(game['winner1data']),JSON.parse(game['winner2data']),JSON.parse(game['winner3data'])]
+
 
     useEffect(() => {
         if (loserData==null || winnerData==null){
@@ -67,12 +69,12 @@ function Teams({gameID, winners, losers, winnerData, loserData, alternateResult,
 
         const players = loserData.map((_,index) => 
             <tr>
-                <PlayerCell playeruid={winners[index]} playerdata={winnerData[index]} alternateResult={alternateResult} winningTeamElo={winnerTeamElo} losingTeamElo={loserTeamElo} win={true} breakToWin={breakToWin}/>
-                <PlayerCell playeruid={losers[index]} playerdata={loserData[index]} alternateResult={alternateResult} winningTeamElo={winnerTeamElo} losingTeamElo={loserTeamElo} win={false} breakToWin={breakToWin}/>
+                <PlayerCell playeruid={winners[index]} playername={uidPlayerMap[winners[index]]} playerdata={winnerData[index]} alternateResult={alternateResult} winningTeamElo={winnerTeamElo} losingTeamElo={loserTeamElo} win={true} breakToWin={breakToWin}/>
+                <PlayerCell playeruid={losers[index]} playername={uidPlayerMap[losers[index]]} playerdata={loserData[index]} alternateResult={alternateResult} winningTeamElo={winnerTeamElo} losingTeamElo={loserTeamElo} win={false} breakToWin={breakToWin}/>
             </tr>
         ); 
         setRows(players)
-    }, [gameID, winnerData, loserData, alternateResult])
+    }, [game, winnerData, loserData, alternateResult])
 
     
 
@@ -88,7 +90,7 @@ function Teams({gameID, winners, losers, winnerData, loserData, alternateResult,
     )
 }
 
-function PlayerCell({playeruid, playerdata, alternateResult, winningTeamElo, losingTeamElo, win, breakToWin}){
+function PlayerCell({playeruid, playername, playerdata, alternateResult, winningTeamElo, losingTeamElo, win, breakToWin}){
     const {leagueid} = useParams()
     //player = [name,[before.elo, after.elo], before.wins, before.losses]
     const [before_elo, set_before_elo] = useState(0);
@@ -116,7 +118,7 @@ function PlayerCell({playeruid, playerdata, alternateResult, winningTeamElo, los
       setRank(getRankFromElo(before_elo, wins, losses))
       setRankTitle(getRankTitleFromElo(before_elo, wins, losses))
 
-    }, [playeruid, alternateResult])
+    }, [playerdata, alternateResult])
     const navigate = useNavigate();
     const goToPlayer = () => {
         navigate(`/${leagueid}/player/${playeruid}`);
@@ -124,7 +126,7 @@ function PlayerCell({playeruid, playerdata, alternateResult, winningTeamElo, los
 
     return(
         <td class="clickable highlights" onClick={goToPlayer}>
-            <h3>{playeruid} ({wins}-{losses}) <img src={rank} class="rankImg" title={rankTitle}/></h3>
+            <h3>{playername} ({wins}-{losses}) <img src={rank} class="rankImg" title={rankTitle}/></h3>
             {wins + losses >= 10 ? <p>elo: {before_elo.toFixed(2)} ({after_elo-before_elo > 0 ? "+" : ""}{(after_elo-before_elo).toFixed(2)})</p> : null}
         </td>
     );

@@ -2,9 +2,11 @@ import { aws_getPlayerUID, aws_updatePlayer } from "./player.js";
 import { PULL_FACTOR, calculateNewElo, calculateTeamElo, PULLFACTORGAMES } from "../Elo/elo.js";
 import { aws_getLeague, aws_updateLeagueBreaks } from "./league.js";
 import { aws_createGame } from "./game.js";
+import { useEffect, useState } from "react";
 
 
-export async function reportNewGame(leagueID, winner1, winner2,winner3, loser1, loser2, loser3, breakwin, dynamic_pull_factor=false){
+export async function reportNewGame(leagueID, leaguebreaks, winner1, winner2,winner3, loser1, loser2, loser3, breakwin, dynamic_pull_factor=false){
+    
     const ts = new Date().toISOString()
     
     const winners = await getPlayerData(leagueID, [winner1,winner2,winner3])
@@ -13,12 +15,10 @@ export async function reportNewGame(leagueID, winner1, winner2,winner3, loser1, 
     const winningTeamElo = calculateTeamElo(winners)
     const losingTeamElo = calculateTeamElo(losers)
 
-    const breaks = (await aws_getLeague(leagueID))['data']['getLeague'].breaks
-
-    let currPullFactor = getPullfactor(dynamic_pull_factor, breaks)
+    let currPullFactor = getPullfactor(dynamic_pull_factor, leaguebreaks)
 
 
-    aws_updateLeagueBreaks(leagueID, updateBreaks(breaks, breakwin) )
+    aws_updateLeagueBreaks(leagueID, updateBreaks(leaguebreaks, breakwin) )
 
     const winnerData = await updatePlayers(winners, winningTeamElo, losingTeamElo, true, breakwin,currPullFactor)
     const loserData = await updatePlayers(losers, winningTeamElo, losingTeamElo,false, breakwin,currPullFactor)
@@ -28,8 +28,6 @@ export async function reportNewGame(leagueID, winner1, winner2,winner3, loser1, 
                                                     winnerData[0], winnerData[1], winnerData[2], 
                                                     loserData[0],loserData[1],loserData[2],
                                                     breakwin, currPullFactor))
-    // console.log(winnerData)
-    // console.log(loserData)
 }
 
 

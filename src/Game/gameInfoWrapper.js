@@ -21,7 +21,7 @@ export default function GameInfoWrapper({setLeagueid, uidPlayerMap}){
 
     useEffect(() => {
         aws_getGame(gameid).then((g)=>{
-            if (g['data']){
+            if (g){
                 setGame(g['data']['getGame'])
             }
         })

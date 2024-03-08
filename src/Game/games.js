@@ -8,8 +8,6 @@ import { aws_getLeagueGames } from "../Database/game.js";
 
 export default function Games({setLeagueid, uidPlayerMap}){
     const [currPageGames, setCurrPageGames] = useState([])
-
-    // WIP
     const [loadedPages, setLoadedPages] = useState([])
     const [nexttoken, setNextToken] = useState(null)
     const [pagenum, setPageNum] = useState(0)
@@ -22,6 +20,7 @@ export default function Games({setLeagueid, uidPlayerMap}){
         if (!res){
             navigate("/page/not/found")
         }
+        setLeagueid(leagueid)
     })
 
     useEffect(()=>{
@@ -47,7 +46,7 @@ export default function Games({setLeagueid, uidPlayerMap}){
         }
     }, [pagenum])
 
-    if (currPageGames.length == 0){
+    if (currPageGames.length == 0 || uidPlayerMap == null){
         return(<AppLoader/>)
     }else{
         return (

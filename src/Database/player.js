@@ -59,10 +59,11 @@ export async function aws_getAllPlayers(){
 export async function aws_getUIDPlayerMap(leagueid){
     // List all items
     const data = (await aws_getLeaguePlayers(leagueid))
-    if (data == null){
-        return {}
-    }
     const map = {}
+
+    if (data == null){
+        return map
+    }
 
     for (const player of data['data']['listPlayers']['items']){
         map[player.id] =  player.displayName
@@ -123,7 +124,9 @@ export async function aws_duplicateNameExists(leagueid, name){
                 displayName: {eq: name}
             } }
         });
-        return leaguePlayers['data']['listPlayers']['items']
+        if (leaguePlayers!=null){
+            return leaguePlayers['data']['listPlayers']['items']
+        }
     }catch(error){
         alert("aws_duplicateNameExists")
     }

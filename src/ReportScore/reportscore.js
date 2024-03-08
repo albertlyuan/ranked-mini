@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import Dropdown from "./dropdown.js"
 import { useParams } from 'react-router-dom';
 import {PullFactorSetter, PullSelector, SwapTeamsButton, RandomizeTeamsButton} from "./reportscoreButtons.js"
-import { reportNewGame } from '../Database/reportNewGame.js';
+import { reportNewGame } from '../Database/reportNewGame_functions.js';
+import { aws_getLeague } from '../Database/league.js';
 
 export default function ReportScore({ roster, setLeagueid }) {
     const [availablePlayers, setAvailablePlayers] = useState(new Set());
@@ -15,6 +16,8 @@ export default function ReportScore({ roster, setLeagueid }) {
     const [didSetPuller, setDidSetPuller] = useState(false);
 
     const [dynamicPullFactor, toggleDynamicPullFactor] = useState(true);
+
+    const [breaks, setBreaks] = useState('')
     
     const playerSelectors = [1,2,3].map((n)=>{
         const winner = `winner${n}`
@@ -52,7 +55,13 @@ export default function ReportScore({ roster, setLeagueid }) {
         if (availablePlayers.size == 0) {
             setAvailablePlayers(new Set(roster.map((person) => person['displayName'])))
         }
-    })
+
+        aws_getLeague(leagueid).then(data=>{
+            if (data != null){
+                setBreaks(data['data']['getLeague'].breaks)
+            }
+        })
+    }, [leagueid, roster])
 
     useEffect(() => {
         if (checkForSixPlayers()) {
@@ -89,13 +98,14 @@ export default function ReportScore({ roster, setLeagueid }) {
         if (!checkForSixPlayers()) {
             return
         }
-        await reportNewGame(leagueid, ...Object.values(players), winnerPulled, dynamicPullFactor)
+        await reportNewGame(leagueid, breaks, ...Object.values(players), winnerPulled, dynamicPullFactor)
         clearSelection()
         setStatusMsg("Success!")
     }
     
     return (
         <div className="scoreReport animatedLoad">
+            <p>{roster.length}</p>
             <div className='reportscoreTeamButtons'>
                 <SwapTeamsButton players={players} setPlayers={setPlayers}/>       
                 <RandomizeTeamsButton players={players} setPlayers={setPlayers}/>       

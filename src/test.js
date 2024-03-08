@@ -7,7 +7,7 @@ import * as player from "./Database/player.js"
 
 import { Amplify } from 'aws-amplify';
 import config from './aws-exports.js';
-import { reportNewGame } from './Database/reportNewGame.js';
+import { reportNewGame } from './Database/reportNewGame_functions.js';
 import { createChartData, getEloHistory } from './Player/playerDataUtils.js';
 Amplify.configure(config);
 
