@@ -8,8 +8,6 @@ import { createChartData} from './playerDataUtils.js';
 import GamesLog from '../Game/gamesLog.js';
 import { aws_getLeague } from '../Database/league.js';
 import { aws_getPlayerGames } from '../Database/game.js';
-import { PageSelector } from '../Game/pageSelector.js';
-import { truncate } from 'fs';
 
 export default function PlayerBio({setLeagueid, uidPlayerMap}){
     const { leagueid, uid } = useParams();
@@ -29,6 +27,7 @@ export default function PlayerBio({setLeagueid, uidPlayerMap}){
         if (!res){
             navigate("/page/not/found")
         }
+        setLeagueid(leagueid)
     })
 
     async function queryGames(){
@@ -56,7 +55,6 @@ export default function PlayerBio({setLeagueid, uidPlayerMap}){
     }
     
     useEffect(() => {   
-        setLeagueid(leagueid)
         queryGames()     
     }, [uid])
 
