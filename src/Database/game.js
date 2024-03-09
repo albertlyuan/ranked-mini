@@ -119,22 +119,33 @@ export async function aws_getLeagueGames(leagueid, numgames, nexttoken) {
 
 export async function aws_getPlayerGames(leagueid, playeruid, numgames, nexttoken) {
     try {
-        const allGames = await client.graphql({
-            query: gamesByLeagueIDAndTimestamp,
-            variables: { 
-                "leagueID": leagueid, 
-                "sortDirection": "DESC",
-                "limit": numgames,
-                "filter": {players: { contains: playeruid }},
-                "nextToken":nexttoken
-        },
-        
-        });
-        return allGames
+        if (nexttoken != null){
+            const allGames = await client.graphql({
+                query: gamesByLeagueIDAndTimestamp,
+                variables: { 
+                    "leagueID": leagueid, 
+                    "sortDirection": "DESC",
+                    "limit": numgames,
+                    "filter": {players: { contains: playeruid }},
+                    "nextToken":nexttoken
+                }
+            });
+            return allGames
+        }else{
+            const allGames = await client.graphql({
+                query: gamesByLeagueIDAndTimestamp,
+                variables: { 
+                    "leagueID": leagueid, 
+                    "sortDirection": "DESC",
+                    "limit": numgames,
+                    "filter": {players: { contains: playeruid }},
+                }
+            });
+            return allGames
+        }
     } catch (error) {
+        console.log("getplayergames")
         console.log(error)
-        alert("getplayergames")
-
     }
 }
 

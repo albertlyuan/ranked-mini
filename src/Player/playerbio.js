@@ -1,34 +1,28 @@
-import {firebase_get30PlayerData, get30PlayerGameLog, getNameFromUID, leagueExists} from '../Firebase/database.js'
 import { useEffect, useState } from 'react'
 import { AppLoader } from "../loader.js";
 import {EloChart, blankChartData} from "./eloChart.js"
 import {getRankFromElo} from '../rank-images/rankImages.js';
 import { useNavigate, useParams } from 'react-router-dom';
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from '../Firebase/auth.js';
 import TextInputAlert from './textInputAlert.js';
-import { createChartData, getMostRecentGame, getGamePlayers, getEloHistory, cleanPlayerData} from './playerDataUtils.js';
+import { createChartData} from './playerDataUtils.js';
 import GamesLog from '../Game/gamesLog.js';
 import { aws_getLeague } from '../Database/league.js';
 import { aws_getPlayerGames } from '../Database/game.js';
 import { PageSelector } from '../Game/pageSelector.js';
+import { truncate } from 'fs';
 
 export default function PlayerBio({setLeagueid, uidPlayerMap}){
     const { leagueid, uid } = useParams();
-    setLeagueid(leagueid)
 
     const [playerName, setPlayerName] = useState()
     const [currWins, setCurrWins] = useState(null)
     const [currLosses, setCurrLosses] = useState(null)
     const [currElo, setCurrElo] = useState(null)
 
-    const [loadedPages, setLoadedPages] = useState([])
     const [nexttoken, setNextToken] = useState(null)
-    const [pagenum, setPageNum] = useState(0)
-    const [maxPagenum, setMaxPagenum] = useState(0)
-
-    const [currPlayerData, setCurrPlayerData] = useState(null)
+    const [currPlayerData, setCurrPlayerData] = useState([])
     const [chartData, setChartData] = useState(blankChartData)
+    const [gamesExist, setGamesExist] = useState(true)
 
     const navigate = useNavigate();
     aws_getLeague(leagueid).then((res)=>{
@@ -36,42 +30,51 @@ export default function PlayerBio({setLeagueid, uidPlayerMap}){
             navigate("/page/not/found")
         }
     })
-    
-    useEffect(() => {   
-        if (pagenum >= loadedPages.length){
-            if (nexttoken == null && loadedPages.length > 0){
-                return
-            }else{
-                aws_getPlayerGames(leagueid, uid, 10, nexttoken).then((data) => {
-                    if (data != null){
-                        const games = data['data']['gamesByLeagueIDAndTimestamp']['items']
-                        setCurrPlayerData(games)
-                        setLoadedPages([...loadedPages, games])
-                        const token = data['data']['gamesByLeagueIDAndTimestamp']['nextToken']
-                        setNextToken(token)
-                        if (token){
-                            setMaxPagenum(maxPagenum+1)
-                        }
 
-                        const [chartdata, mostRecentGame] = createChartData(games, uid)
-                        if (currElo==null){
-                            setCurrElo(mostRecentGame.newElo)
-                            setCurrLosses(mostRecentGame.losses)
-                            setCurrWins(mostRecentGame.wins)
-                        }
-                        setChartData(chartdata)
-                    }else{
-                        setCurrPlayerData([])
-                    }
-                })
-            }
-        }else{
-            setCurrPlayerData(loadedPages[pagenum], uid)
-            const [chartdata, mostRecentGame] = createChartData(loadedPages[pagenum], uid)
-            setChartData(chartdata)
+    async function queryGames(){
+        if (!gamesExist){
+            return
+        }
+        const data = await aws_getPlayerGames(leagueid, uid, 50, nexttoken)
+        if (data == null){
+            // error catching: revert to initial states
+            setCurrPlayerData([])
+            setChartData(blankChartData)
+            setNextToken(null)
+            setCurrElo(null)
+            return
         }
 
-    }, [uid, pagenum])
+        const games = data['data']['gamesByLeagueIDAndTimestamp']['items']
+        const token = data['data']['gamesByLeagueIDAndTimestamp']['nextToken']
+
+        setNextToken(token)  
+        
+        // make sure games isn't empty list
+        // update loaded pages
+        setCurrPlayerData(currPlayerData.concat(games))
+    }
+    
+    useEffect(() => {   
+        setLeagueid(leagueid)
+        queryGames()     
+    }, [uid])
+
+    useEffect(()=>{
+        if (currPlayerData.length > 0){
+            // create chart data
+            const [chartdata, mostRecentGame] = createChartData(currPlayerData, uid, uidPlayerMap)
+            if (currElo==null){
+                setCurrElo(mostRecentGame.newElo)
+                setCurrLosses(mostRecentGame.losses)
+                setCurrWins(mostRecentGame.wins)
+            }
+            setChartData(chartdata)
+            if (nexttoken==null){
+                setGamesExist(false)
+            }
+        }
+    },[currPlayerData])
 
 
 
@@ -80,6 +83,7 @@ export default function PlayerBio({setLeagueid, uidPlayerMap}){
     }else{
         return(
             <div class="animatedLoad">
+                <p>here {gamesExist ? "true": "false"}</p>
                 <h2>
                     {uidPlayerMap[uid]} ({currWins}-{currLosses})  
                     <img title={getRankFromElo(currElo, currWins, currLosses).split("static/media/")[1].split(".")[0]} class="rankImg" src={getRankFromElo(currElo, currWins, currLosses)}/>
@@ -92,7 +96,7 @@ export default function PlayerBio({setLeagueid, uidPlayerMap}){
                 <br></br>
                 <div>
                     <h3>Game History</h3>
-                    <PageSelector pageNum={pagenum} setPageNum={setPageNum} maxPagenum={maxPagenum}/>
+                    <button style={{textAlign:"center"}} class={`scoreReportButton ${gamesExist ? "clickable highlights":""}`} onClick={queryGames}>Load More Data (Current Amount of Games: {currPlayerData.length})</button>
                     {currPlayerData ? <GamesLog
                         gamesLog={currPlayerData}
                         playerid={uid}

@@ -20,7 +20,7 @@ var blankChartData = {
     ]
 }
 
-function EloChart({chartData}) {    
+function EloChart({chartData, uidPlayerMap}) {    
 
     const options = {
         scales: {

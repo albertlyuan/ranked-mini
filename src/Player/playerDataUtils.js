@@ -97,7 +97,7 @@ export function getEloHistory(playerdata, playeruid){
     return data
 }
 
-export function createChartData(playerdata, uid){
+export function createChartData(playerdata, uid, uidPlayerMap){
     if (playerdata.length == 0){
         return
     }
@@ -114,8 +114,8 @@ export function createChartData(playerdata, uid){
         elos.push(justPlayerData[i].newElo)
         timestamps.push(justPlayerData[i].timestamp)
         elogain.push(justPlayerData[i].newElo - justPlayerData[i].oldElo)
-        gameWinners.push([playerdata[i]['winner1'], playerdata[i]['winner2'], playerdata[i]['winner3']])
-        gameLosers.push([playerdata[i]['loser1'], playerdata[i]['loser2'], playerdata[i]['loser3']])
+        gameWinners.push([uidPlayerMap[playerdata[i]['winner1']], uidPlayerMap[playerdata[i]['winner2']], uidPlayerMap[playerdata[i]['winner3']]])
+        gameLosers.push([uidPlayerMap[playerdata[i]['loser1']], uidPlayerMap[playerdata[i]['loser2']], uidPlayerMap[playerdata[i]['loser3']]])
         pullers.push(playerdata[i].winnerPulled)
     }
 
